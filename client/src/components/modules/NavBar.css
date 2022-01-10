@@ -1,3 +1,43 @@
 .navbar {
   background-color: #73937e;
+  height: 100px;
+  position: relative;
+  vertical-align: middle;
+}
+
+.logo {
+  position: absolute;
+  height: 75%;
+  width: 5%;
+  top: 5%;
+  left: 1%;
+  border-radius: 50%;
+}
+
+.navbar-brand {
+  position: absolute;
+  top: 35%;
+  left: 7%;
+  font-family: Helvetica;
+  font-weight: bolder;
+  font-size: 24px;
+}
+
+.search {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+}
+.searchBox {
+  border-radius: 10%;
+}
+.profile {
+  position: absolute;
+  right: 10%;
+  top: 35%;
+}
+.notifs {
+  position: absolute;
+  right: 25%;
+  top: 35%;
 }
