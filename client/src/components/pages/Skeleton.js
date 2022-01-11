@@ -6,7 +6,7 @@ import "./Skeleton.css";
 
 const GOOGLE_CLIENT_ID = "246300047403-nuejgdlajaq1mpbkamh3orikdb3ievor.apps.googleusercontent.com";
 
-const Skeleton = ({ userId, handleLogin, handleLogout }) => {
+const Skeleton = () => {
   return (
     <>
       <h1>Good luck on your project :)</h1>
