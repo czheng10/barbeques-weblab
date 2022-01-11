@@ -1,43 +1,42 @@
-.navbar {
+.Navbar {
   background-color: #73937e;
-  height: 100px;
-  position: relative;
-  vertical-align: middle;
+  justify-content: space-between;
 }
 
-.logo {
-  position: absolute;
-  height: 75%;
-  width: 5%;
-  top: 5%;
-  left: 1%;
+.Navbar-logo {
+  height: auto;
+  width: 8%;
   border-radius: 50%;
 }
 
 .navbar-brand {
-  position: absolute;
-  top: 35%;
-  left: 7%;
   font-family: Helvetica;
   font-weight: bolder;
-  font-size: 24px;
+  color: black;
 }
 
-.search {
-  position: absolute;
-  top: 40%;
-  left: 40%;
+.nav-link {
+  color: black !important;
 }
-.searchBox {
+
+.nav-link:hover {
+  color: black;
+  opacity: 0.8;
+}
+
+.navbar-brand:hover {
+  color: black;
+  opacity: 0.8;
+}
+
+.Navbar-link:hover {
+  opacity: 0.8;
+}
+
+.Navbar-link.Navbar-login {
+  opacity: 1;
+}
+
+.Navbar-search {
   border-radius: 10%;
-}
-.profile {
-  position: absolute;
-  right: 10%;
-  top: 35%;
-}
-.notifs {
-  position: absolute;
-  right: 25%;
-  top: 35%;
 }

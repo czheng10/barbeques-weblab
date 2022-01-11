@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import NavBar from "./modules/NavBar.js";
+import Skeleton from "./pages/Skeleton.js";
 
 import "../utilities.css";
 
@@ -14,12 +15,14 @@ import { get, post } from "../utilities";
  */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
         setUserId(user._id);
+        get(`/api/user`, { userid: user._id }).then((userObj) => setUser(userObj));
       }
     });
   }, []);
@@ -30,6 +33,7 @@ const App = () => {
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
+      get(`/api/user`, { userid: user._id }).then((userObj) => setUser(userObj));
     });
   };
 
@@ -40,14 +44,13 @@ const App = () => {
 
   return (
     <>
-      <NavBar />
-    </>
-  );
-};
-/**
- * <Router>
+      <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} user={user} />
+      <Router>
         <Skeleton path="/" handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         <NotFound default />
       </Router>
- */
+    </>
+  );
+};
+
 export default App;
