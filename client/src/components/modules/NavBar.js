@@ -46,6 +46,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
         {userId ? (
           <Nav.Item>
             <NavDropdown title={user ? user.name : ""} id="basic-nav-dropdown">
+              <NavDropdown.Item href={`/profile/${userId}`}>My Profile</NavDropdown.Item>
               <NavDropdown.Item>
                 <GoogleLogout
                   clientId={GOOGLE_CLIENT_ID}

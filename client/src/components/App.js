@@ -3,6 +3,7 @@ import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import NavBar from "./modules/NavBar.js";
 import Skeleton from "./pages/Skeleton.js";
+import Profile from "./pages/Profile.js";
 
 import "../utilities.css";
 
@@ -47,6 +48,7 @@ const App = () => {
       <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} user={user} />
       <Router>
         <Skeleton path="/" />
+        <Profile path="/profile/:userId" />
         <NotFound default />
       </Router>
     </>

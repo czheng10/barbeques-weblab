@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 import "../../utilities.css";
 import "./Skeleton.css";
 
-const GOOGLE_CLIENT_ID = "246300047403-nuejgdlajaq1mpbkamh3orikdb3ievor.apps.googleusercontent.com";
-
 const Skeleton = () => {
   return (
     <>
-      <h1>Good luck on your project :)</h1>
+      <div>Please Log in First</div>
+      {/* <h1>Good luck on your project :)</h1>
       <h2> What you need to change in this skeleton</h2>
       <ul>
         <li>
@@ -24,7 +22,7 @@ const Skeleton = () => {
         <li>Change the Database Name for MongoDB to whatever you put in the SRV (server.js)</li>
       </ul>
       <h2>How to go from this skeleton to our actual app</h2>
-      <a href="http://weblab.to/get-started">Check out this getting started guide</a>
+      <a href="http://weblab.to/get-started">Check out this getting started guide</a> */}
     </>
   );
 };
