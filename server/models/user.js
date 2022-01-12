@@ -7,10 +7,12 @@ const UserSchema = new mongoose.Schema({
   email: String,
   total_parties: Number,
   parties: {
-      party_id: Number,
-      status: Number
+    party_id: Number,
+    status: Number,
   },
-  achievements: [Number]
+  achievements: [Number],
+  bio: String,
+  pictures: [String],
 });
 
 // compile model from schema
