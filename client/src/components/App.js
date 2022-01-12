@@ -4,7 +4,7 @@ import NotFound from "./pages/NotFound.js";
 import NavBar from "./modules/NavBar.js";
 import Skeleton from "./pages/Skeleton.js";
 import Profile from "./pages/Profile.js";
-
+import Home from "./pages/Home.js"
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -49,6 +49,7 @@ const App = () => {
       <Router>
         <Skeleton path="/" />
         <Profile path="/profile/:userId" />
+        <Home path= "/home/"/>
         <NotFound default />
       </Router>
     </>
