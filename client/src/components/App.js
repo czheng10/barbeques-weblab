@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import NavBar from "./modules/NavBar.js";
 import Skeleton from "./pages/Skeleton.js";
@@ -36,6 +36,7 @@ const App = () => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
       get(`/api/user`, { userid: user._id }).then((userObj) => setUser(userObj));
+      navigate(`/profile/${user._id}`);
     });
   };
 
@@ -49,7 +50,7 @@ const App = () => {
       <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} user={user} />
       <Router>
         <Skeleton path="/" />
-        <Profile path="/profile/:userId" />
+        <Profile path="/profile/:targetUserId" userId={userId} />
         <Home path="/home/" />
         <SearchResult path="/search/:searchPhrase?" userId={userId} />
         <SearchResult path="/search/" userId={userId} />
