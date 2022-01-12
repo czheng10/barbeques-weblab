@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import "../../utilities.css";
-import "./Skeleton.css";
+import "./Home.css";
 
 const Home = () => {
   return (
