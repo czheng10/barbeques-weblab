@@ -11,7 +11,9 @@ const SearchResult = (props) => {
   }
   return (
     <>
-      <h1>{searchPhrase ? `Search Results for: ${searchPhrase}` : `All Search Results`}</h1>
+      <h1 className="u-textCenter">
+        {searchPhrase ? `Search Results for: ${searchPhrase}` : `All Search Results`}
+      </h1>
     </>
   );
 };
