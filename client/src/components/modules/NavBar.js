@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./NavBar.css";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import {
   Navbar,
@@ -18,6 +18,14 @@ const logo = require("../../images/logo2.jpg");
 const GOOGLE_CLIENT_ID = "246300047403-nuejgdlajaq1mpbkamh3orikdb3ievor.apps.googleusercontent.com";
 
 const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
+  const [searchPhrase, setSearchPhrase] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate(`/search/${searchPhrase}`);
+    setSearchPhrase("");
+  };
+
   return (
     <Navbar className="Navbar" expand="sm">
       <div>
@@ -32,10 +40,16 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
             <input
               type="text"
               name="text"
+              value={searchPhrase}
+              onChange={(event) => {
+                setSearchPhrase(event.target.value);
+              }}
               placeholder="search users..."
               className="bg-white p-2 w-3/4 outline-none Navbar-search"
             />
-            <Button variant="primary">Search</Button>
+            <button onClick={handleSubmit} type="submit" className="btn btn-primary">
+              Search
+            </button>
           </Form>
         </Nav.Item>
         <Nav.Item className="mx-3">
@@ -71,21 +85,6 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
         )}
       </Nav>
     </Navbar>
-    // <Navbar>
-    //     <img src={logo.default} className="logo"/>
-    //     <NavbarBrand>Barbeque</NavbarBrand>
-    //     <Form className="d-flex search">
-    //     <input
-    //       type="text"
-    //       name="text"
-    //       placeholder="search users..."
-    //       className="bg-white p-2 w-3/4 outline-none"
-    //     />
-    //     <Button>Search</Button>
-    //   </Form>
-    //     <NavItem className="notifs">Notifications</NavItem>
-    //     <NavItem className="profile">Username </NavItem>
-    // </Navbar>
   );
 };
 
