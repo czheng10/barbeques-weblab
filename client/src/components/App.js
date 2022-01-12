@@ -23,8 +23,10 @@ const App = () => {
     get("/api/whoami").then((user) => {
       if (user._id) {
         // they are registed in the database, and currently logged in.
-        setUserId(user._id);
-        get(`/api/user`, { userid: user._id }).then((userObj) => setUser(userObj));
+        get(`/api/user`, { userid: user._id }).then((userObj) => {
+          setUser(userObj);
+          setUserId(user._id);
+        });
       }
     });
   }, []);
@@ -33,9 +35,11 @@ const App = () => {
     console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
-      setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
-      get(`/api/user`, { userid: user._id }).then((userObj) => setUser(userObj));
+      get(`/api/user`, { userid: user._id }).then((userObj) => {
+        setUser(userObj);
+        setUserId(user._id);
+      });
       navigate(`/profile/${user._id}`);
     });
   };
@@ -43,6 +47,7 @@ const App = () => {
   const handleLogout = () => {
     setUserId(undefined);
     post("/api/logout");
+    navigate("/");
   };
 
   return (

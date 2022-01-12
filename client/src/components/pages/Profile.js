@@ -8,9 +8,7 @@ const Profile = (props) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (props.userId) {
-      get(`/api/user`, { userid: props.targetUserId }).then((userObj) => setUser(userObj));
-    }
+    get(`/api/user`, { userid: props.targetUserId }).then((userObj) => setUser(userObj));
   }, []);
 
   if (!props.userId) {
