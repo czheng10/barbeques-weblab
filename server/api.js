@@ -51,8 +51,8 @@ router.get("/user", (req, res) => {
   });
 });
 
-router.get("/search/:searchPhrase?", async (req, res) => {
-  const phrase = req.params["searchPhrase"] ? req.params["searchPhrase"] : "";
+router.get("/search", async (req, res) => {
+  const phrase = req.query.phrase;
   const findNamePromise = User.find({ name: { $regex: phrase, $options: "i" } });
   const findBioPromise = User.find({ bio: { $regex: phrase, $options: "i" } });
   const allPromises = [findNamePromise, findBioPromise];
@@ -66,6 +66,20 @@ router.get("/search/:searchPhrase?", async (req, res) => {
       }
     }
     res.send(results);
+  });
+});
+
+router.get("/active-parties", async (req, res) => {
+  const user = await User.findById(req.query.userId);
+  const partyIds = user.parties
+    .filter((party) => party.status === 1)
+    .map((party) => party.party_id);
+  Party.find({ _id: { $in: partyIds } }).then((results) => {
+    if (results) {
+      res.send(results);
+    } else {
+      res.send([]);
+    }
   });
 });
 

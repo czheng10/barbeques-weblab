@@ -6,10 +6,12 @@ const UserSchema = new mongoose.Schema({
   allergies: [String],
   email: String,
   total_parties: Number,
-  parties: {
-    party_id: Number,
-    status: Number,
-  },
+  parties: [
+    {
+      party_id: Number,
+      status: Number,
+    },
+  ],
   achievements: [Number],
   bio: String,
   pictures: [String],
