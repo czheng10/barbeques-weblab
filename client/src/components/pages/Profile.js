@@ -35,9 +35,12 @@ const Profile = (props) => {
         <div className="profile-bio">
           <h3>Bio</h3>
           <p className="profile-introText">
-            Hi I'm {user.name}! I can't really cook, but I'm looking for someone to explore cafes
-            with! Contact me at {user.email}.
+            Hi I'm {user.name}! Contact me at {user.email}.
           </p>
+          <form>
+            <input type="text" placeholder="Personalize your bio" />
+            <button type="submit"> Add </button>
+          </form>
         </div>
         <div className="profile-allergies">
           <h3>Allergies</h3>
