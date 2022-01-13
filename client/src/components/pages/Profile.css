@@ -1,0 +1,30 @@
+.profile-pfp {
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 10px;
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+  border-color: var(--primary);
+  display: block;
+}
+
+.profile-username {
+  font-size: 30px;
+  margin: 5px 20px 5px 20px;
+  color: var(--primary);
+  display: block;
+}
+
+.profile-email {
+  font-size: 15px;
+  margin: 5px 20px 5px 20px;
+  color: var(--darkgrey);
+  display: block;
+}
+
+.profile-basicIntroBox {
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+}

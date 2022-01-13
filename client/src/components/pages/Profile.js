@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { get } from "../../utilities.js";
 import "../../utilities.css";
-import PopupCard from "../modules/popup.js";
 import "./Profile.css";
-import UserProfile from "./UserProfile.js";
+import PopupCard from "../modules/popup.js";
 
 const Profile = (props) => {
+  const pfp = require("../../images/logo2.jpg");
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
 
@@ -26,12 +26,14 @@ const Profile = (props) => {
 
   return (
     <>
-      <UserProfile />
-      <div>{user.name}</div>
+      <div className="profile-basicIntroBox u-flex">
+        <img className="profile-pfp" src={pfp.default} alt="Profile picture" />
+        <div className="profile-username">{user.name}</div>
+        <div className="profile-email">{user.email}</div>
+      </div>
       <div>{allergies}</div>
       <button onClick={() => toggleModal(true)}> Edit </button>
       <PopupCard show={modalShow} onHide={() => toggleModal(false)} />
-      <div>{user.email}</div>
     </>
   );
 };
