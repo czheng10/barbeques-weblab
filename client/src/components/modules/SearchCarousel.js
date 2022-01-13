@@ -15,6 +15,10 @@ const SearchCarousel = (props) => {
             <h2>{user.name}</h2>
             <br />
             <p>{user.bio}</p>
+            <span className="d-flex Carousel-buttons">
+              <button className="btn btn-light">Ask to Join Party</button>
+              <button className="btn btn-light">Invite to Party</button>
+            </span>
           </Carousel.Caption>
         </Carousel.Item>
       ))}
