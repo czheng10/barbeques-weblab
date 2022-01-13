@@ -14,7 +14,7 @@ const Profile = (props) => {
   };
   console.log(modalShow);
   useEffect(() => {
-    get(`/api/user`, { userid: props.targetUserId }).then((userObj) => setUser(userObj));
+    get("/api/user", { userid: props.targetUserId }).then((userObj) => setUser(userObj));
   }, []);
   if (!props.userId) {
     return <div>Please log in first.</div>;

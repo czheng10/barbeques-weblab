@@ -11,8 +11,8 @@ const SearchResult = (props) => {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    get(`/api/search/${props.searchPhrase ? props.searchPhrase : ""}`).then((results) => {
-      setSearchResults(results);
+    get("/api/search", { phrase: props.searchPhrase ? props.searchPhrase : "" }).then((results) => {
+      setSearchResults(results.filter((id) => id !== props.userId));
     });
   }, [props.searchPhrase]);
 
