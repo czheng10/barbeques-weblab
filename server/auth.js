@@ -31,7 +31,6 @@ function getOrCreateUser(user) {
       total_parties: 0,
       parties: {},
       achievements: [],
-      bio: "",
       pictures: [],
     });
 

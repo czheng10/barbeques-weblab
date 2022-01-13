@@ -51,8 +51,20 @@ router.get("/user", (req, res) => {
   });
 });
 
-router.get("/search", (req, res) => {
-  User.find().then((results) => {
+router.get("/search/:searchPhrase?", async (req, res) => {
+  const phrase = req.params["searchPhrase"] ? req.params["searchPhrase"] : "";
+  const findNamePromise = User.find({ name: { $regex: phrase, $options: "i" } });
+  const findBioPromise = User.find({ bio: { $regex: phrase, $options: "i" } });
+  const allPromises = [findNamePromise, findBioPromise];
+  Promise.all(allPromises).then((allResults) => {
+    const results = [];
+    const seen = new Set();
+    for (const user of allResults.flat()) {
+      if (!seen.has(user.id)) {
+        results.push(user);
+        seen.add(user.id);
+      }
+    }
     res.send(results);
   });
 });
