@@ -3,12 +3,21 @@ import { Carousel } from "react-bootstrap";
 
 import "./SearchCarousel.css";
 
+const background = require("../../images/black-background.jpg");
+
 const SearchCarousel = (props) => {
   return (
-    <Carousel>
-      {props.results.map((user, i) => {
-        <Carousel.Item key={i}></Carousel.Item>;
-      })}
+    <Carousel className="u-flex-alignCenter" indicators={false} interval={null}>
+      {props.results.map((user, i) => (
+        <Carousel.Item key={i}>
+          <img className="d-block mx-auto w-100" src={background.default} alt="background" />
+          <Carousel.Caption className="u-flex-justifyCenter">
+            <h2>{user.name}</h2>
+            <br />
+            <p>{user.bio}</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      ))}
     </Carousel>
   );
 };

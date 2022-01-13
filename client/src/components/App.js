@@ -10,7 +10,7 @@ import "../utilities.css";
 
 import { socket } from "../client-socket.js";
 
-import { get, post } from "../utilities";
+import { get, post } from "../utilities.js";
 
 /**
  * Define the "App" component
@@ -57,7 +57,7 @@ const App = () => {
         <Skeleton path="/" />
         <Profile path="/profile/:targetUserId" userId={userId} />
         <Home path="/home/" />
-        <SearchResult path="/search/:searchPhrase?" userId={userId} />
+        <SearchResult path="/search/:searchPhrase" userId={userId} />
         <SearchResult path="/search/" userId={userId} />
         <NotFound default />
       </Router>
