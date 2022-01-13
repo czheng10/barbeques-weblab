@@ -6,7 +6,9 @@ import "./Home.css";
 const Home = () => {
   return (
     <>
-      <div>Please Log in First</div>
+      <div>
+        <h1>Please Log in First</h1>
+      </div>
     </>
   );
 };

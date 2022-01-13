@@ -3,13 +3,15 @@ import { get } from "../../utilities.js";
 import "../../utilities.css";
 import PopupCard from "../modules/popup.js";
 import "./Profile.css";
+import UserProfile from "./UserProfile.js";
+
 const Profile = (props) => {
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
 
   const toggleModal = (toggle) => {
     setModalShow(toggle);
-  }
+  };
   console.log(modalShow);
   useEffect(() => {
     get(`/api/user`, { userid: props.targetUserId }).then((userObj) => setUser(userObj));
@@ -20,15 +22,15 @@ const Profile = (props) => {
   if (!user) {
     return <div>Loading</div>;
   }
-  const allergies = (user.allergies == [] ? user.allergies.join(", ") : "N/A");
-
+  const allergies = user.allergies == [] ? user.allergies.join(", ") : "N/A";
 
   return (
     <>
+      <UserProfile />
       <div>{user.name}</div>
       <div>{allergies}</div>
-      <button onClick = {() => toggleModal(true)}> Edit </button>
-      <PopupCard show = {modalShow} onHide = {() => toggleModal(false)}/>
+      <button onClick={() => toggleModal(true)}> Edit </button>
+      <PopupCard show={modalShow} onHide={() => toggleModal(false)} />
       <div>{user.email}</div>
     </>
   );

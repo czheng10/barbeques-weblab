@@ -1,0 +1,9 @@
+.pfp {
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 10px;
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+  border-color: var(--primary);
+}
