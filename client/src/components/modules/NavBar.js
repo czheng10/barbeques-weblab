@@ -17,7 +17,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
   };
 
   return (
-    <Navbar className="Navbar" expand="sm">
+    <Navbar className="Navbar" variant="dark" expand="sm">
       <div>
         <img src={logo.default} className="d-inline-block Navbar-logo" alt="" />
         <Link to="/" className="navbar-brand mx-3 Navbar-link">

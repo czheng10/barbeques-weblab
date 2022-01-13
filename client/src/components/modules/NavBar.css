@@ -12,20 +12,13 @@
 .navbar-brand {
   font-family: "Dosis", sans-serif;
   font-weight: bolder;
-  color: white;
 }
 
 .nav-link {
   color: white !important;
 }
 
-.nav-link:hover {
-  color: white;
-  opacity: 0.8;
-}
-
 .navbar-brand:hover {
-  color: black;
   opacity: 0.8;
 }
 
