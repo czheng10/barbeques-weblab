@@ -13,6 +13,7 @@ const Profile = (props) => {
     setModalShow(toggle);
   };
   console.log(modalShow);
+
   useEffect(() => {
     get("/api/user", { userid: props.targetUserId }).then((userObj) => setUser(userObj));
   }, []);
@@ -23,17 +24,28 @@ const Profile = (props) => {
     return <div>Loading</div>;
   }
   const allergies = user.allergies == [] ? user.allergies.join(", ") : "N/A";
-
   return (
     <>
-      <div className="profile-basicIntroBox u-flex">
+      <div className="u-flexColumn u-flex-alignCenter">
         <img className="profile-pfp" src={pfp.default} alt="Profile picture" />
         <div className="profile-username">{user.name}</div>
         <div className="profile-email">{user.email}</div>
       </div>
-      <div>{allergies}</div>
-      <button onClick={() => toggleModal(true)}> Edit </button>
-      <PopupCard show={modalShow} onHide={() => toggleModal(false)} />
+      <div className="profile-intro u-flexColumn">
+        <div className="profile-bio">
+          <h3>Bio</h3>
+          <p className="profile-introText">
+            Hi I'm {user.name}! I can't really cook, but I'm looking for someone to explore cafes
+            with! Contact me at {user.email}.
+          </p>
+        </div>
+        <div className="profile-allergies">
+          <h3>Allergies</h3>
+          <p className="profile-introText">{allergies}</p>
+        </div>
+        <button onClick={() => toggleModal(true)}> Edit </button>
+        <PopupCard show={modalShow} onHide={() => toggleModal(false)} />
+      </div>
     </>
   );
 };

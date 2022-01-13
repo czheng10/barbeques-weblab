@@ -11,6 +11,7 @@
 
 .profile-username {
   font-size: 30px;
+  font-weight: bold;
   margin: 5px 20px 5px 20px;
   color: var(--primary);
   display: block;
@@ -23,8 +24,20 @@
   display: block;
 }
 
-.profile-basicIntroBox {
-  vertical-align: top;
-  display: inline-block;
-  text-align: center;
+.profile-intro {
+  background-color: var(--primary--dim);
+  margin: 10px;
+  padding: 15px;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: var(--primary);
+  color: var(--black);
+}
+
+.profile-introText {
+  background-color: var(--medgrey);
+  padding: 10px;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: var(--primary);
 }
