@@ -11,13 +11,7 @@ const Profile = (props) => {
   const [allergies, setAllergy] = useState([]);
   const toggleModal = (toggle) => {
     setModalShow(toggle);
-<<<<<<< HEAD
   }
-=======
-  };
-  console.log(modalShow);
-
->>>>>>> ea927995f52891fdb8f97158ac7287809310f8a5
   useEffect(() => {
     get("/api/user", { userid: props.targetUserId }).then((userObj) => setUser(userObj));
   }, []);
@@ -36,16 +30,6 @@ const Profile = (props) => {
   if (!user) {
     return <div>Loading</div>;
   }
-<<<<<<< HEAD
-  return (
-    <>
-      <div>{user.name}</div>
-      <div>{renderAllergy()}</div>
-      <button onClick = {() => toggleModal(true)}> Edit </button>
-      <PopupCard show = {modalShow} userId = {props.userId} data = {allergies} onHide = {() => toggleModal(false)}/>
-      <div>{user.email}</div>
-=======
-  const allergies = user.allergies == [] ? user.allergies.join(", ") : "N/A";
   return (
     <>
       <div className="u-flexColumn u-flex-alignCenter">
@@ -66,12 +50,12 @@ const Profile = (props) => {
         </div>
         <div className="profile-allergies">
           <h3>Allergies</h3>
-          <p className="profile-introText">{allergies}</p>
+          <p className="profile-introText">{renderAllergy()}</p>
         </div>
         <button onClick={() => toggleModal(true)}> Edit </button>
-        <PopupCard show={modalShow} onHide={() => toggleModal(false)} />
+        <PopupCard show = {modalShow} userId = {props.userId} data = {allergies} onHide = {() => toggleModal(false)} />
       </div>
->>>>>>> ea927995f52891fdb8f97158ac7287809310f8a5
+
     </>
   );
 };
