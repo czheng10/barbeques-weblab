@@ -16,7 +16,7 @@ const Profile = (props) => {
     get("/api/user", { userid: props.targetUserId }).then((userObj) => setUser(userObj));
   }, []);
  useEffect(() =>{
-    get(`/api/allergy`, {userid: props.targetUserId}).then((allergy) => setAllergy(allergy)); 
+    get(`/api/allergy`, {userid: props.targetUserId}).then((allergy) => setAllergy(allergy));
   }, [modalShow]);
   const renderAllergy = () =>{
     if(allergies == []){
@@ -31,32 +31,36 @@ const Profile = (props) => {
     return <div>Loading</div>;
   }
   return (
-    <>
+  <>
+    <div>
       <div className="u-flexColumn u-flex-alignCenter">
         <img className="profile-pfp" src={pfp.default} alt="Profile picture" />
         <div className="profile-username">{user.name}</div>
         <div className="profile-email">{user.email}</div>
-      </div>
-      <div className="profile-intro u-flexColumn">
-        <div className="profile-bio">
-          <h3>Bio</h3>
-          <p className="profile-introText">
-            Hi I'm {user.name}! Contact me at {user.email}.
-          </p>
-          <form>
-            <input type="text" placeholder="Personalize your bio" />
-            <button type="submit"> Add </button>
-          </form>
+          <div className="profile-intro u-flexColumn">
+            <div className="profile-bio">
+              <p className="profile-introText">
+                Hi I'm {user.name}! Contact me at {user.email}.
+              </p>
+              <form>
+                <input type="text" placeholder="Personalize your bio" />
+                <button type="submit"> Add </button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div className="profile-allergies">
-          <h3>Allergies</h3>
-          <p className="profile-introText">{renderAllergy()}</p>
+    <div className="u-inlineBlock">
+      <div className="profile-allergies">
+        <h3 className="profile-titles">Allergies</h3>
+        <div className="profile-allergiesList profile-Text">
+          <p className="profile-allergiesContainer">{renderAllergy()}</p>
+          <button className="profile-allergiesEditButton" onClick={() => toggleModal(true)}> Edit </button>
+          <PopupCard show = {modalShow} userId = {props.userId} data = {allergies} onHide = {() => toggleModal(false)} />
         </div>
-        <button onClick={() => toggleModal(true)}> Edit </button>
-        <PopupCard show = {modalShow} userId = {props.userId} data = {allergies} onHide = {() => toggleModal(false)} />
       </div>
-
-    </>
+    </div>
+  </div>
+</>
   );
 };
 
