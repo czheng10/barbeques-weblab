@@ -5,7 +5,7 @@
   width: 250px;
   height: 250px;
   margin: 20px;
-  border-color: var(--primary);
+  border-color: var(--primary-dark);
   display: block;
 }
 
@@ -13,7 +13,7 @@
   font-size: 30px;
   font-weight: bold;
   margin: 5px 20px 5px 20px;
-  color: var(--primary);
+  color: var(--primary-xdark);
   display: block;
 }
 
@@ -25,19 +25,15 @@
 }
 
 .profile-intro {
-  background-color: var(--primary--dim);
+  background-color: var(--primary-light);
   margin: 10px;
   padding: 15px;
-  border-style: solid;
   border-radius: 10px;
-  border-color: var(--primary);
   color: var(--black);
 }
 
 .profile-introText {
-  background-color: var(--medgrey);
+  background-color: white;
   padding: 10px;
-  border-style: solid;
   border-radius: 10px;
-  border-color: var(--primary);
 }

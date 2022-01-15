@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
 
 .Navbar {
-  background-color: #2c489c;
+  background-color: #f7607d;
   justify-content: space-between;
 }
 
@@ -11,8 +11,6 @@
   width: 55px;
   padding: 1px;
   border-radius: 50%;
-  border-style: solid;
-  border-color: white;
   border-width: 0.5px;
   margin: 0px 5px 0px 12px;
   background-color: #e3f2fd;
