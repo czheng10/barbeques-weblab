@@ -1,0 +1,39 @@
+.profile-pfp {
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 10px;
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+  border-color: var(--primary-dark);
+  display: block;
+}
+
+.profile-username {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 5px 20px 5px 20px;
+  color: var(--primary-xdark);
+  display: block;
+}
+
+.profile-email {
+  font-size: 15px;
+  margin: 5px 20px 5px 20px;
+  color: var(--darkgrey);
+  display: block;
+}
+
+.profile-intro {
+  background-color: var(--primary-light);
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  color: var(--black);
+}
+
+.profile-introText {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}

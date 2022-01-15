@@ -4,7 +4,7 @@ import { Link, navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { Navbar, Nav, NavDropdown, Form } from "react-bootstrap";
 
-const logo = require("../../images/logo2.jpg");
+const logo = require("../../images/BarbequeLogo.png");
 const GOOGLE_CLIENT_ID = "246300047403-nuejgdlajaq1mpbkamh3orikdb3ievor.apps.googleusercontent.com";
 
 const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
@@ -17,7 +17,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
   };
 
   return (
-    <Navbar className="Navbar" expand="sm">
+    <Navbar className="Navbar" variant="dark" expand="sm">
       <div>
         <img src={logo.default} className="d-inline-block Navbar-logo" alt="" />
         <Link to="/" className="navbar-brand mx-3 Navbar-link">

@@ -18,12 +18,13 @@
 @import url("https://fonts.googleapis.com/css?family=Dosis&display=swap");
 
 :root {
-  --primary: #2c489c;
-  --primary--dim: #e3f2fd;
-  --darkgrey: #d4d4d4;
-  --medgrey: #e0e0e0;
-  --black: #000000;
-  --white: #fff;
+  --primary: #f7607d;
+  --primary-dark: #d22e4d;
+  --primary-xdark: #8f2136;
+  --primary-light: #f5dcdc;
+  --cream: #fff7ec;
+  --orange: #fcdfd3;
+  -green: #e5e4d6;
 
   --xs: 4px;
   --s: 8px;
@@ -86,5 +87,5 @@ form {
 }
 
 .u-link:hover {
-  color: var(--primary--dim);
+  color: white;
 }

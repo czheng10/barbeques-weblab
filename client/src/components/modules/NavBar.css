@@ -1,31 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
+
 .Navbar {
-  background-color: #2c489c;
+  background-color: #f7607d;
   justify-content: space-between;
 }
 
 .Navbar-logo {
-  height: auto;
-  width: 8%;
+  float: left;
+  height: 55px;
+  width: 55px;
+  padding: 1px;
   border-radius: 50%;
+  border-width: 0.5px;
+  margin: 0px 5px 0px 12px;
+  background-color: #e3f2fd;
 }
 
 .navbar-brand {
-  font-family: "Dosis", sans-serif;
+  font-family: "Nanum Pen Script", cursive;
+  font-size: 40px;
+  padding: 0px;
   font-weight: bolder;
-  color: white;
 }
 
 .nav-link {
   color: white !important;
 }
 
-.nav-link:hover {
-  color: white;
-  opacity: 0.8;
-}
-
 .navbar-brand:hover {
-  color: black;
   opacity: 0.8;
 }
 

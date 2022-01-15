@@ -51,11 +51,25 @@ router.get("/user", (req, res) => {
   });
 });
 
-router.get("/search", (req, res) => {
-  User.findById(req.query.userid).then((results) => {
+
+router.get("/search", async (req, res) => {
+  const phrase = req.query.phrase;
+  const findNamePromise = User.find({ name: { $regex: phrase, $options: "i" } });
+  const findBioPromise = User.find({ bio: { $regex: phrase, $options: "i" } });
+  const allPromises = [findNamePromise, findBioPromise];
+  Promise.all(allPromises).then((allResults) => {
+    const results = [];
+    const seen = new Set();
+    for (const user of allResults.flat()) {
+      if (!seen.has(user.id)) {
+        results.push(user);
+        seen.add(user.id);
+      }
+    }
     res.send(results);
   });
 });
+
 
 router.post("/newallergy", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
@@ -68,6 +82,22 @@ router.get("/allergy", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.query.userid).then((results) => {
     res.send(results.allergies)});
 });
+
+
+router.get("/active-parties", async (req, res) => {
+  const user = await User.findById(req.query.userId);
+  const partyIds = user.parties
+    .filter((party) => party.status === 1)
+    .map((party) => party.party_id);
+  Party.find({ _id: { $in: partyIds } }).then((results) => {
+    if (results) {
+      res.send(results);
+    } else {
+      res.send([]);
+    }
+  });
+});
+
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
