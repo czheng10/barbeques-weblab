@@ -6,29 +6,34 @@ import "./Profile.css";
 const Profile = (props) => {
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
-
+  const [allergies, setAllergy] = useState([]);
   const toggleModal = (toggle) => {
     setModalShow(toggle);
   }
-  console.log(modalShow);
   useEffect(() => {
     get(`/api/user`, { userid: props.targetUserId }).then((userObj) => setUser(userObj));
   }, []);
+ useEffect(() =>{
+    get(`/api/allergy`, {userid: props.targetUserId}).then((allergy) => setAllergy(allergy)); 
+  }, [modalShow]);
+  const renderAllergy = () =>{
+    if(allergies == []){
+      return "N/A";
+    }
+    return allergies.join(", ");
+  }
   if (!props.userId) {
     return <div>Please log in first.</div>;
   }
   if (!user) {
     return <div>Loading</div>;
   }
-  const allergies = (user.allergies == [] ? user.allergies.join(", ") : "N/A");
-
-
   return (
     <>
       <div>{user.name}</div>
-      <div>{allergies}</div>
+      <div>{renderAllergy()}</div>
       <button onClick = {() => toggleModal(true)}> Edit </button>
-      <PopupCard show = {modalShow} onHide = {() => toggleModal(false)}/>
+      <PopupCard show = {modalShow} userId = {props.userId} data = {allergies} onHide = {() => toggleModal(false)}/>
       <div>{user.email}</div>
     </>
   );

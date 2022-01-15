@@ -52,9 +52,21 @@ router.get("/user", (req, res) => {
 });
 
 router.get("/search", (req, res) => {
-  User.find().then((results) => {
+  User.findById(req.query.userid).then((results) => {
     res.send(results);
   });
+});
+
+router.post("/newallergy", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.body.userid).then((results) => {
+    results.allergies = req.body.new_allergies;
+    results.save().then((person) => res.send(person));
+  });
+});
+
+router.get("/allergy", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.query.userid).then((results) => {
+    res.send(results.allergies)});
 });
 
 // anything else falls to this "not found" case
