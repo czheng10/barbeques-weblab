@@ -38,3 +38,13 @@
 .Navbar-link.Navbar-login {
   opacity: 1;
 }
+
+.btn,
+btn-primary {
+  background-color: var(--primary-dark);
+  border-color: black;
+}
+
+.btn,btn-primary: hover {
+  background-color: var(--primary-xdark);
+}
