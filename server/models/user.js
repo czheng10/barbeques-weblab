@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const UserSchema = new mongoose.Schema({
   // user info:
@@ -12,7 +13,7 @@ const UserSchema = new mongoose.Schema({
   total_parties: Number,
   parties: [
     {
-      party_id: mongoose.Schema.Types.ObjectId,
+      party_id: Schema.Types.ObjectId,
       status: Number,
     },
   ],

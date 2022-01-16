@@ -46,7 +46,8 @@ btn-primary {
   border-color: black;
 }
 
-.btn,btn-primary: hover {
+.btn,
+btn-primary:hover {
   background-color: var(--primary-xdark);
 }
 
