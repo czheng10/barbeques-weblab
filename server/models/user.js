@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const UserSchema = new mongoose.Schema({
   name: String,
@@ -8,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   total_parties: Number,
   parties: [
     {
-      party_id: Number,
+      party_id: Schema.Types.ObjectId,
       status: Number,
     },
   ],
