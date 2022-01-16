@@ -65,13 +65,13 @@ const Profile = (props) => {
             </div>
           </div>
           <div className="row">
-            <div className="profile-achievements col align-self-start">
+            <div className="profile-achievements col justify-content-center">
               <h3 className="profile-titles">Achievements</h3>
-              <p className="profile-achievementsContainer profile-Text">Punctual Peach</p>
+              <p className="profile-achievementsContainer profile-Text">Coming Soon</p>
             </div>
-            <div className="profile-parties col align-self-end">
+            <div className="profile-parties col justify-content-center">
               <h3 className="profile-titles">Parties</h3>
-              <p className="profile-partiesContainer profile-Text">No Parties Yet</p>
+              <p className="profile-partiesContainer profile-Text">Coming Soon</p>
             </div>
           </div>
         </div>
