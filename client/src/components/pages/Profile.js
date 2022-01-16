@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
 import { get } from "../../utilities.js";
 import "../../utilities.css";
 import "./Profile.css";
 import PopupCard from "../modules/popup.js";
+import MakeParty from "../modules/MakeParty.js";
 
 const Profile = (props) => {
   const pfp = require("../../images/logo2.jpg");
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [partyShow, setPartyShow] = useState(false);
   const [allergies, setAllergy] = useState([]);
   const toggleModal = (toggle) => {
     setModalShow(toggle);
-  };
+  }
+  const toggleParty = (toggle) => {
+    setPartyShow(toggle);
+  }
   useEffect(() => {
     get("/api/user", { userid: props.targetUserId }).then((userObj) => setUser(userObj));
   }, []);
@@ -74,6 +80,8 @@ const Profile = (props) => {
               <p className="profile-partiesContainer profile-Text">Coming Soon</p>
             </div>
           </div>
+          <Button onClick = {() => toggleParty(true)}> Add Party </Button>
+          <MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
         </div>
       </div>
     </>

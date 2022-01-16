@@ -29,7 +29,7 @@ function getOrCreateUser(user) {
       allergies: [],
       email: user.email,
       total_parties: 0,
-      parties: {},
+      parties: [],
       achievements: [],
       pictures: [],
     });
