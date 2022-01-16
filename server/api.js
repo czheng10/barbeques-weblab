@@ -96,12 +96,14 @@ router.post("/newparty", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/addparty", auth.ensureLoggedIn, (req, res) => {
-  User.findById(req.body.userid).then((results) => {
-  const newParty = {party_id: req.body.partyId, status: 1};
-  results.parties.push(newParty); 
-  results.total_parties = results.total_parties + 1;
-  results.save().then((person) => res.send(person));
-  });
+  Party.findById(req.body.partyid).then((party) => 
+    User.findById(req.body.userid).then((results) => {
+      const newParty = {party_id: party._id, status: 1};
+      results.parties.push(newParty); 
+      results.total_parties = results.total_parties + 1;
+      results.save().then((person) => res.send(person));
+      })
+  );
 });
 
 router.get("/active-parties", async (req, res) => {
