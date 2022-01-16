@@ -13,11 +13,7 @@ const UserSchema = new mongoose.Schema({
   total_parties: Number,
   parties: [
     {
-<<<<<<< HEAD
       party_id: Schema.Types.ObjectId,
-=======
-      party_id: mongoose.Schema.Types.ObjectId,
->>>>>>> 4f99b882dc93ca26ea768293453dda102073a615
       status: Number,
     },
   ],
