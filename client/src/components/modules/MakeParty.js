@@ -6,9 +6,17 @@ import FormGroup from "react-bootstrap/FormGroup";
 import { get, post } from "../../../src/utilities";
 
 const MakeParty = (props) => {
+    let partyName = "";
     const handleReopen = () => {
         props.onHide();
 
+    }
+    const addParty = () => {
+        post(`/api/party`, {userid: props.userId, new_allergies: allergies.filter(word => word.length > 0)}).then(
+        props.onHide());
+    }
+    const handleChange = (event) => {
+        partyName = event.target.value;
     }
     return (
         <Modal
@@ -24,10 +32,10 @@ const MakeParty = (props) => {
             <Button type="button" className="close btn-light btn-outline-dark" data-dismiss="modal" onClick={() => handleReopen()}>&times;</Button>
         </Modal.Header>
         <Modal.Body>
-            <input type="text" placeholder="Party Name" />
+            <input type="text" placeholder="Party Name" onChange = {(event) => handleChange(event)} />
         </Modal.Body>
         <Modal.Footer>
-            <Button>Submit</Button>
+            <Button onClick={() => addParty()}>Submit</Button>
         </Modal.Footer>
         </Modal>);
 }

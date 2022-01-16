@@ -4,11 +4,11 @@
 * and can be used to add general styles; variable definitions
 * for colors; and styles to html, body, and other high level
 * DOMs.
-* 
+*
 * All utility classes start with a `u-` and all do
 * one basic CSS thing (for example, making the font-weight
 * 600 for bolding) or are super generic.
-* 
+*
 * This is 𝙉𝙊𝙏 the place to define classes for components or
 * do rigorous styling. You shoud not need to change this file
 * much after initial creation.
@@ -16,6 +16,7 @@
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
 @import url("https://fonts.googleapis.com/css?family=Dosis&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
 
 :root {
   --primary: #f7607d;
@@ -30,6 +31,8 @@
   --s: 8px;
   --m: 16px;
   --l: 24px;
+
+  --logo-font: "Nanum Pen Script", cursive;
 }
 
 body {
@@ -37,6 +40,7 @@ body {
   padding: 0;
   font-family: "Dosis", sans-serif;
   font-weight: 300;
+  background-color: var(--cream);
 }
 
 form {

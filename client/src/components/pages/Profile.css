@@ -6,22 +6,19 @@
   height: 250px;
   margin: 20px;
   border-color: var(--primary-dark);
-  display: block;
 }
 
 .profile-username {
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 40px;
+  font-weight: bolder;
   margin: 5px 20px 5px 20px;
   color: var(--primary-xdark);
-  display: block;
 }
 
 .profile-email {
   font-size: 15px;
   margin: 5px 20px 5px 20px;
   color: var(--darkgrey);
-  display: block;
 }
 
 .profile-intro {
@@ -32,8 +29,43 @@
   color: var(--black);
 }
 
-.profile-introText {
-  background-color: white;
+.profile-Text {
+  color: black;
   padding: 10px;
   border-radius: 10px;
+  font-size: 16px;
+}
+
+.profile-allergies {
+}
+
+.profile-allergiesList {
+  background-color: var(--primary-light);
+  border-radius: 10px;
+  margin: 10px;
+  padding: 15px;
+}
+
+.profile-titles {
+  font-family: var(--logo-font);
+  font-size: 30px;
+  color: var(--primary-dark);
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.profile-allergiesContainer {
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 15px;
+}
+
+.profile-allergiesEditButton {
+  background-color: var(--primary-dark);
+  border-radius: 10px;
+}
+
+.profile-allergiesEditButton:hover {
+  background-color: var(--primary-xdark);
 }
