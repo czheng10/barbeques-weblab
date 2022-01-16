@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import SearchCarousel from "../modules/SearchCarousel";
-import { Carousel } from "react-bootstrap";
 
 import { get } from "../../utilities.js";
 
@@ -24,6 +23,7 @@ const SearchResult = (props) => {
       <h1 className="u-textCenter">
         {props.searchPhrase ? `Search Results for: ${props.searchPhrase}` : `All Search Results`}
       </h1>
+      <button onClick={handleParty}>Make Party</button>
       <SearchCarousel results={searchResults} userId={props.userId} />
     </>
   );

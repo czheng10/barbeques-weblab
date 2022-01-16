@@ -20,6 +20,14 @@ const SearchCarousel = (props) => {
     setActiveParties(parties);
   }, []);
 
+  const handleInvite = (userId, partyId) => {
+    //TODO: send invite to userId to join partyId;
+  };
+
+  const handleAsk = (userId, partyId) => {
+    //TODO: ask host userId to join partyId;
+  };
+
   if (!activeParties) {
     return <div>Loading...</div>;
   }
@@ -38,19 +46,25 @@ const SearchCarousel = (props) => {
                 <Dropdown.Menu>
                   <Dropdown.Header>Select one of their Parties</Dropdown.Header>
                   {activeParties[user.id] ? (
-                    activeParties[user.id].map((party) => <Dropdown.Item>party.name</Dropdown.Item>)
+                    activeParties[user.id].map((party) => (
+                      <Dropdown.Item onClick={() => handleAsk(user.id, party.id)}>
+                        party.name
+                      </Dropdown.Item>
+                    ))
                   ) : (
                     <Dropdown.Header>No available parties.</Dropdown.Header>
                   )}
                 </Dropdown.Menu>
               </Dropdown>
               <Dropdown>
-                <Dropdown.Toggle variant="light">My Party</Dropdown.Toggle>
+                <Dropdown.Toggle variant="light">Invite to Party</Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Header>Select one of your parties</Dropdown.Header>
                   {activeParties[props.userId] ? (
                     activeParties[props.userId].map((party) => (
-                      <Dropdown.Item>party.name</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleInvite(user.id, party.id)}>
+                        party.name
+                      </Dropdown.Item>
                     ))
                   ) : (
                     <Dropdown.Header>No available parties.</Dropdown.Header>
