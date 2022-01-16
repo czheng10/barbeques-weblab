@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./NavBar.css";
+import "../../utilities.css";
 import { Link, navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { Navbar, Nav, NavDropdown, Form } from "react-bootstrap";
@@ -17,10 +18,10 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
   };
 
   return (
-    <Navbar className="Navbar" variant="dark" expand="sm">
+    <Navbar className="Navbar navbar-fixed-top " variant="dark" expand="sm">
       <div>
         <img src={logo.default} className="d-inline-block Navbar-logo" alt="" />
-        <Link to="/" className="navbar-brand mx-3 Navbar-link">
+        <Link to={user ? `/profile/${userId}` : "/"} className="navbar-brand mx-3 Navbar-link">
           Barbeque
         </Link>
       </div>
@@ -49,7 +50,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
         </Nav.Item>
         {userId ? (
           <Nav.Item>
-            <NavDropdown title={user.name} id="basic-nav-dropdown">
+            <NavDropdown className="navbar-user-dropdown" title={user.name} id="basic-nav-dropdown">
               <NavDropdown.Item href={`/profile/${userId}`}>My Profile</NavDropdown.Item>
               <NavDropdown.Item>
                 <GoogleLogout

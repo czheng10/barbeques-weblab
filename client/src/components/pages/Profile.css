@@ -17,29 +17,28 @@
 
 .profile-email {
   font-size: 15px;
-  margin: 5px 20px 5px 20px;
+  margin: 5px 20px 15px 20px;
   color: var(--darkgrey);
 }
 
 .profile-intro {
   background-color: var(--primary-light);
-  margin: 10px;
+  margin: auto;
   padding: 15px;
   border-radius: 10px;
-  color: var(--black);
+  max-width: 260px;
 }
 
 .profile-Text {
   color: black;
   padding: 10px;
   border-radius: 10px;
-  font-size: 16px;
 }
 
 .profile-allergiesList {
   background-color: var(--primary-light);
   border-radius: 10px;
-  margin: 10px;
+  margin-right: 40px;
   padding: 15px;
 }
 
@@ -49,6 +48,7 @@
   color: var(--primary-dark);
   margin-top: 10px;
   margin-left: 20px;
+  margin-bottom: 0px;
 }
 
 .profile-allergiesContainer {
@@ -65,4 +65,26 @@
 
 .profile-allergiesEditButton:hover {
   background-color: var(--primary-xdark);
+}
+
+.col-4 {
+  margin-top: 10px;
+}
+
+.col-6 {
+  margin-left: 60px;
+}
+
+.profile-achievementsContainer {
+  border-radius: 10px;
+  background-color: var(--orange);
+  margin: 10px;
+  padding: 15px;
+}
+
+.profile-partiesContainer {
+  border-radius: 10px;
+  background-color: var(--green);
+  margin: 10px;
+  padding: 15px;
 }

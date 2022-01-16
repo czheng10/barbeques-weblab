@@ -25,7 +25,7 @@
   --primary-light: #f5dcdc;
   --cream: #fff7ec;
   --orange: #fcdfd3;
-  -green: #e5e4d6;
+  --green: #e5e4d6;
 
   --xs: 4px;
   --s: 8px;
@@ -41,6 +41,7 @@ body {
   font-family: "Dosis", sans-serif;
   font-weight: 300;
   background-color: var(--cream);
+  overflow-x: hidden;
 }
 
 form {
@@ -58,6 +59,10 @@ form {
 
 .u-flex-justifyCenter {
   justify-content: center;
+}
+
+.u-flex-spaceAround {
+  justify-content: space-around;
 }
 
 .u-flex-alignCenter {

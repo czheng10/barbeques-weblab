@@ -21,15 +21,15 @@ const Profile = (props) => {
   useEffect(() => {
     get("/api/user", { userid: props.targetUserId }).then((userObj) => setUser(userObj));
   }, []);
- useEffect(() =>{
-    get(`/api/allergy`, {userid: props.targetUserId}).then((allergy) => setAllergy(allergy));
+  useEffect(() => {
+    get(`/api/allergy`, { userid: props.targetUserId }).then((allergy) => setAllergy(allergy));
   }, [modalShow]);
-  const renderAllergy = () =>{
-    if(allergies == []){
+  const renderAllergy = () => {
+    if (allergies == []) {
       return "N/A";
     }
     return allergies.join(", ");
-  }
+  };
   if (!props.userId) {
     return <div>Please log in first.</div>;
   }
@@ -37,39 +37,54 @@ const Profile = (props) => {
     return <div>Loading</div>;
   }
   return (
-  <>
-    <div>
-      <div className="u-flexColumn u-flex-alignCenter">
-        <img className="profile-pfp" src={pfp.default} alt="Profile picture" />
-        <div className="profile-username">{user.name}</div>
-        <div className="profile-email">{user.email}</div>
+    <>
+      <div className="profile-all u-flex u-flex-spaceAround">
+        <div className="col-4 u-textCenter">
+          <img className="profile-pfp" src={pfp.default} alt="Profile picture" />
+          <div className="profile-username">{user.name}</div>
+          <div className="profile-email">{user.email}</div>
           <div className="profile-intro u-flexColumn">
-            <div className="profile-bio">
-              <p className="profile-introText">
-                Hi I'm {user.name}! Contact me at {user.email}.
-              </p>
-              <form>
-                <input type="text" placeholder="Personalize your bio" />
-                <button type="submit"> Add </button>
-              </form>
+            <p className="profile-Text">
+              Hi I'm {user.name}! Contact me at {user.email}.
+            </p>
+            <form>
+              <input type="text" placeholder="Personalize your bio" />
+              <button type="submit"> Add </button>
+            </form>
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="profile-allergies row">
+            <h3 className="profile-titles">Allergies</h3>
+            <div className="profile-allergiesList u-flexColumn">
+              <p className="profile-allergiesContainer profile-Text">{renderAllergy()}</p>
+              <button className="profile-allergiesEditButton" onClick={() => toggleModal(true)}>
+                {" "}
+                Edit{" "}
+              </button>
+              <PopupCard
+                show={modalShow}
+                userId={props.userId}
+                data={allergies}
+                onHide={() => toggleModal(false)}
+              />
             </div>
           </div>
-      </div>
-    <div className="u-inlineBlock">
-      <div className="profile-allergies">
-        <h3 className="profile-titles">Allergies</h3>
-        <div className="profile-allergiesList profile-Text">
-          <p className="profile-allergiesContainer">{renderAllergy()}</p>
-          <button className="profile-allergiesEditButton" onClick={() => toggleModal(true)}> Edit </button>
-          <PopupCard show = {modalShow} userId = {props.userId} data = {allergies} onHide = {() => toggleModal(false)} />
-          <Button onClick={() => toggleModal(true)}> Edit Allergies</Button>
+          <div className="row">
+            <div className="profile-achievements col justify-content-center">
+              <h3 className="profile-titles">Achievements</h3>
+              <p className="profile-achievementsContainer profile-Text">Coming Soon</p>
+            </div>
+            <div className="profile-parties col justify-content-center">
+              <h3 className="profile-titles">Parties</h3>
+              <p className="profile-partiesContainer profile-Text">Coming Soon</p>
+            </div>
+          </div>
+          <Button onClick = {() => toggleParty(true)}> Add Party </Button>
+          <MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
         </div>
       </div>
-    </div>
-    <Button onClick = {() => toggleParty(true)}> Add Party </Button>
-    <MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
-  </div>
-</>
+    </>
   );
 };
 
