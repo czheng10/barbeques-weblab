@@ -63,12 +63,11 @@ const Profile = (props) => {
           <button className="profile-allergiesEditButton" onClick={() => toggleModal(true)}> Edit </button>
           <PopupCard show = {modalShow} userId = {props.userId} data = {allergies} onHide = {() => toggleModal(false)} />
           <Button onClick={() => toggleModal(true)}> Edit Allergies</Button>
-          <PopupCard show = {modalShow} userId = {props.userId} data = {allergies} onHide = {() => toggleModal(false)} />
         </div>
       </div>
     </div>
     <Button onClick = {() => toggleParty(true)}> Add Party </Button>
-          <MakeParty show = {partyShow} userId = {props.userId} data = {allergies} onHide = {() => toggleParty(false)}/>
+    <MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
   </div>
 </>
   );

@@ -1,20 +1,27 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
+  // user info:
   name: String,
   googleid: String,
+  bio: String,
+  pictures: [String],
   allergies: [String],
   email: String,
+  // party related:
   total_parties: Number,
   parties: [
     {
-      party_id: Number,
+      party_id: mongoose.Schema.Types.ObjectId,
       status: Number,
     },
   ],
+  notifs: [
+    {
+      party_id: mongoose.Schema.Types.ObjectId,
+    },
+  ],
   achievements: [Number],
-  bio: String,
-  pictures: [String],
 });
 
 // compile model from schema

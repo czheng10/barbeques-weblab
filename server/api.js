@@ -6,7 +6,7 @@
 | This file defines the routes for your server.
 |
 */
-
+const mongoose = require("mongoose");
 const express = require("express");
 
 // import models so we can interact with the database
@@ -22,6 +22,7 @@ const router = express.Router();
 
 //initialize socket
 const socketManager = require("./server-socket");
+const user = require("./models/user");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -83,6 +84,25 @@ router.get("/allergy", auth.ensureLoggedIn, (req, res) => {
     res.send(results.allergies)});
 });
 
+router.post("/newparty", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.body.userid).then((results) => {
+    const newParty = new Party({
+      name: req.body.name,
+      host: results._id,
+      members: [results._id],
+    });
+    newParty.save().then((party) => res.send(JSON.stringify(party._id)));
+  });
+});
+
+router.post("/addparty", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.body.userid).then((results) => {
+  const newParty = {party_id: req.body.partyId, status: 1};
+  results.parties.push(newParty); 
+  results.total_parties = results.total_parties + 1;
+  results.save().then((person) => res.send(person));
+  });
+});
 
 router.get("/active-parties", async (req, res) => {
   const user = await User.findById(req.query.userId);

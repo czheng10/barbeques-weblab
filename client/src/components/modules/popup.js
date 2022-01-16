@@ -6,8 +6,7 @@ import FormGroup from "react-bootstrap/FormGroup";
 import { get, post } from "../../../src/utilities";
 
 const PopupCard = (props) => {
-    props.data.push("");
-    let allergies = props.data;
+    let allergies = props.data.concat("");
     const [value, setState] = useState(true);
     const useForceUpdate = () => {
         return () => setState(!value);

@@ -12,10 +12,12 @@ const MakeParty = (props) => {
 
     }
     const addParty = () => {
-        post(`/api/party`, {userid: props.userId, new_allergies: allergies.filter(word => word.length > 0)}).then(
-        props.onHide());
+        const partyId = post(`/api/newparty`, {userid: props.userId, name: partyName}).then(
+        post(`/api/addparty`, {userid: props.userId, name: partyId});
+        props.onHide();
     }
     const handleChange = (event) => {
+        console.log(partyName);
         partyName = event.target.value;
     }
     return (
