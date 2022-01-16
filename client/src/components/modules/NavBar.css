@@ -37,6 +37,7 @@
 
 .Navbar-link.Navbar-login {
   opacity: 1;
+  margin-right: 5px;
 }
 
 .btn,
@@ -47,4 +48,8 @@ btn-primary {
 
 .btn,btn-primary: hover {
   background-color: var(--primary-xdark);
+}
+
+.navbar-user-dropdown {
+  margin-right: 25px;
 }
