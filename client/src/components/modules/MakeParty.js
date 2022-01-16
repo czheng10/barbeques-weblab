@@ -12,8 +12,9 @@ const MakeParty = (props) => {
 
     }
     const addParty = () => {
-        const partyId = post(`/api/newparty`, {userid: props.userId, name: partyName}).then(
-        post(`/api/addparty`, {userid: props.userId, name: partyId});
+        post(`/api/newparty`, {userid: props.userId, name: partyName}).then(
+            (partyId) => post(`/api/addparty`, {userid: props.userId, partyid: partyId})
+        );
         props.onHide();
     }
     const handleChange = (event) => {
