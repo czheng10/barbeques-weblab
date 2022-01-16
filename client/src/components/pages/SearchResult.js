@@ -11,9 +11,9 @@ const SearchResult = (props) => {
 
   useEffect(() => {
     get("/api/search", { phrase: props.searchPhrase ? props.searchPhrase : "" }).then((results) => {
-      setSearchResults(results.filter((id) => id !== props.userId));
+      setSearchResults(results.filter((user) => user._id !== props.userId));
     });
-  }, [props.searchPhrase]);
+  }, [props]);
 
   if (!props.userId) {
     return <div>Please log in to use the search feature</div>;

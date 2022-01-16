@@ -19,7 +19,8 @@ const UserSchema = new mongoose.Schema({
   ],
   notifs: [
     {
-      party_id: mongoose.Schema.Types.ObjectId,
+      party_id: Schema.Types.ObjectId,
+      from: Schema.Types.ObjectId,
     },
   ],
   achievements: [Number],

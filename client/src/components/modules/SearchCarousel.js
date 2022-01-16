@@ -1,34 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Dropdown } from "react-bootstrap";
 
-import { get } from "../../utilities.js";
+import { get, post } from "../../utilities.js";
 import "./SearchCarousel.css";
 
 const background = require("../../images/black-background.jpg");
 
 const SearchCarousel = (props) => {
-  const [activeParties, setActiveParties] = useState(null);
+  const [activeParties, setActiveParties] = useState({});
 
   useEffect(() => {
     const userIds = props.results.map((user) => user._id).concat([props.userId]);
     const parties = {};
     userIds.map((id) => {
       get("/api/active-parties", { userId: id }).then((result) => {
-        parties[id] = result;
+        setActiveParties((prevState) => ({ ...prevState, [id]: result }));
       });
     });
-    setActiveParties(parties);
-  }, []);
+  }, [props]);
 
   const handleInvite = (userId, partyId) => {
-    //TODO: send invite to userId to join partyId;
+    post("/api/invite", {
+      from: props.userId,
+      to: userId,
+      partyId: partyId,
+    });
   };
 
-  const handleAsk = (userId, partyId) => {
-    //TODO: ask host userId to join partyId;
-  };
-
-  if (!activeParties) {
+  if (!Object.keys(activeParties)) {
     return <div>Loading...</div>;
   }
   return (
@@ -45,10 +44,10 @@ const SearchCarousel = (props) => {
                 <Dropdown.Toggle variant="light">Ask to Join Party</Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Header>Select one of their Parties</Dropdown.Header>
-                  {activeParties[user.id] ? (
-                    activeParties[user.id].map((party) => (
-                      <Dropdown.Item onClick={() => handleAsk(user.id, party.id)}>
-                        party.name
+                  {activeParties[user._id] ? (
+                    activeParties[user._id].map((party, j) => (
+                      <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
+                        {party.name}
                       </Dropdown.Item>
                     ))
                   ) : (
@@ -61,9 +60,9 @@ const SearchCarousel = (props) => {
                 <Dropdown.Menu>
                   <Dropdown.Header>Select one of your parties</Dropdown.Header>
                   {activeParties[props.userId] ? (
-                    activeParties[props.userId].map((party) => (
-                      <Dropdown.Item onClick={() => handleInvite(user.id, party.id)}>
-                        party.name
+                    activeParties[props.userId].map((party, j) => (
+                      <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
+                        {party.name}
                       </Dropdown.Item>
                     ))
                   ) : (
