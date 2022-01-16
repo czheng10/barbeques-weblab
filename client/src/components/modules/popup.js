@@ -39,12 +39,12 @@ const PopupCard = (props) => {
             <Modal.Title id="contained-modal-title-vcenter">
             Allergies
             </Modal.Title>
-            <button type="button" className="close" data-dismiss="modal" onClick={() => handleReopen()}>&times;</button>
+            <Button type="button" className="close btn-light btn-outline-dark" data-dismiss="modal" onClick={() => handleReopen()}>&times;</Button>
         </Modal.Header>
         <Modal.Body>
             <h4>Add your Allergies! </h4>
-            <button className = "add" onClick = {props.show ? useForceUpdate(): undefined}> + </button>
-            {allergies.map((item, index) => <FormGroup>
+            <Button className = "add btn-light btn-outline-danger" onClick = {props.show ? useForceUpdate(): undefined}> + </Button>
+            {allergies.map((item, index) => <FormGroup key = {item}>
          <FormControl type="text" placeholder={item ? "": "Add Allergy"} defaultValue= {item} onChange = {(event) => handleChange(index, event)}/>
      </FormGroup>)}
         </Modal.Body>
