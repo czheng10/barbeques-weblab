@@ -28,9 +28,8 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
       <Nav>
         <Nav.Item>
           <Form className="d-flex">
-            <input
+            <Form.Control
               type="text"
-              name="text"
               value={searchPhrase}
               onChange={(event) => {
                 setSearchPhrase(event.target.value);
