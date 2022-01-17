@@ -43,7 +43,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
           </Form>
         </Nav.Item>
         <Nav.Item className="mx-3">
-          <Link to="/" className="nav-link Navbar-link">
+          <Link to="/notifications" className="nav-link Navbar-link">
             Notifications
           </Link>
         </Nav.Item>

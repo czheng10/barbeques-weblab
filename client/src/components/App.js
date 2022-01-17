@@ -5,6 +5,7 @@ import NavBar from "./modules/NavBar.js";
 import Profile from "./pages/Profile.js";
 import Home from "./pages/Home.js";
 import SearchResult from "./pages/SearchResult.js";
+import Notifications from "./pages/Notifications.js";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -57,6 +58,7 @@ const App = () => {
         <Home path="/" />
         <SearchResult path="/search/:searchPhrase" userId={userId} />
         <SearchResult path="/search/" userId={userId} />
+        <Notifications path="/notifications" userId={userId} />
         <NotFound default />
       </Router>
     </>
