@@ -16,10 +16,8 @@ const BioPopupCard = (props) => {
   };
 
   if (!props.show) {
-    get(`/api/bio`, { userid: props.userId }).then((edits) => {
-      if (edits.length > 0) {
-        bio = edits;
-      }
+    get(`/api/user`, { userid: props.userId }).then((user) => {
+      bio = user.bio;
     });
   }
   const updateBio = () => {

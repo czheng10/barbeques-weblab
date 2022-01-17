@@ -34,7 +34,7 @@ const Profile = (props) => {
   }, [modalShow]);
 
   useEffect(() => {
-    get(`/api/user`, { userid: props.targetUserId }).then((new_bio) => setBio(new_bio));
+    get(`/api/user`, { userid: props.targetUserId }).then((user) => setBio(user.bio));
   }, [bioModalShow]);
 
   const renderAllergy = () => {
