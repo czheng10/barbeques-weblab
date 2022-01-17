@@ -52,6 +52,12 @@ router.get("/user", (req, res) => {
   });
 });
 
+router.get("/party", (req, res) => {
+  Party.findById(req.query.partyId).then((party) => {
+    res.send(party);
+  });
+});
+
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   const phrase = req.query.phrase;
   const findNamePromise = User.find({ name: { $regex: phrase, $options: "i" } });

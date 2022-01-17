@@ -3,7 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
-import { get, post } from "../../../src/utilities";
+import { get, post } from "../../utilities";
+import "./PopupCard.css";
 
 const PopupCard = (props) => {
   let allergies = props.data.concat("");
@@ -29,17 +30,15 @@ const PopupCard = (props) => {
     });
   }
   return (
-    <Modal show={props.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-      <Modal.Header>
+    <Modal
+      show={props.show}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      onHide={handleReopen}
+    >
+      <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Allergies</Modal.Title>
-        <Button
-          type="button"
-          className="close btn-light btn-outline-dark"
-          data-dismiss="modal"
-          onClick={() => handleReopen()}
-        >
-          &times;
-        </Button>
       </Modal.Header>
       <Modal.Body>
         <h4>Add your Allergies! </h4>

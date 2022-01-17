@@ -5,11 +5,10 @@ import "./Home.css";
 
 const Home = () => {
   return (
-    <>
-      <div>
-        <h1>Please Log in First</h1>
-      </div>
-    </>
+    <div className="u-textCenter">
+      <h1>Welcome to Barbeque</h1>
+      <p>Please log in to use our site.</p>
+    </div>
   );
 };
 

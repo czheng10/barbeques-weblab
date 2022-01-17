@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { get } from "../../utilities.js";
 import "../../utilities.css";
 import "./Profile.css";
-import PopupCard from "../modules/popup.js";
+import PopupCard from "../modules/PopupCard.js";
 import MakeParty from "../modules/MakeParty.js";
 import BioPopupCard from "../modules/BioPopup.js";
 
@@ -34,7 +34,7 @@ const Profile = (props) => {
   }, [modalShow]);
 
   useEffect(() => {
-    get(`/api/user`, { userid: props.targetUserId }).then((new_bio) => setBio(new_bio.bio));
+    get(`/api/user`, { userid: props.targetUserId }).then((new_bio) => setBio(new_bio));
   }, [bioModalShow]);
 
   const renderAllergy = () => {
