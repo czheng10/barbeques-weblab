@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { get } from "../../utilities.js";
 import "../../utilities.css";
 import "./Profile.css";
-import PopupCard from "../modules/popup.js";
+import PopupCard from "../modules/PopupCard.js";
 import MakeParty from "../modules/MakeParty.js";
 
 const Profile = (props) => {
@@ -14,10 +14,10 @@ const Profile = (props) => {
   const [allergies, setAllergy] = useState([]);
   const toggleModal = (toggle) => {
     setModalShow(toggle);
-  }
+  };
   const toggleParty = (toggle) => {
     setPartyShow(toggle);
-  }
+  };
   useEffect(() => {
     get("/api/user", { userid: props.targetUserId }).then((userObj) => setUser(userObj));
   }, []);
@@ -38,8 +38,8 @@ const Profile = (props) => {
   }
   return (
     <>
-      <div className="profile-all u-flex u-flex-spaceAround">
-        <div className="col-4 u-textCenter">
+      <div className="row profile-all u-flex u-flex-spaceAround">
+        <div className="col-4 u-textCenter col-12-xs">
           <img className="profile-pfp" src={pfp.default} alt="Profile picture" />
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
@@ -48,8 +48,10 @@ const Profile = (props) => {
               Hi I'm {user.name}! Contact me at {user.email}.
             </p>
             <form>
-              <input type="text" placeholder="Personalize your bio" />
-              <button type="submit"> Add </button>
+              <input className="form-control" type="text" placeholder="Personalize your bio" />
+              <button className="btn btn-primary" type="submit">
+                Add
+              </button>
             </form>
           </div>
         </div>
@@ -58,9 +60,11 @@ const Profile = (props) => {
             <h3 className="profile-titles">Allergies</h3>
             <div className="profile-allergiesList u-flexColumn">
               <p className="profile-allergiesContainer profile-Text">{renderAllergy()}</p>
-              <button className="profile-allergiesEditButton" onClick={() => toggleModal(true)}>
-                {" "}
-                Edit{" "}
+              <button
+                className="btn btn-primary profile-allergiesEditButton"
+                onClick={() => toggleModal(true)}
+              >
+                Edit
               </button>
               <PopupCard
                 show={modalShow}
@@ -80,8 +84,8 @@ const Profile = (props) => {
               <p className="profile-partiesContainer profile-Text">Coming Soon</p>
             </div>
           </div>
-          <Button onClick = {() => toggleParty(true)}> Add Party </Button>
-          <MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
+          <Button onClick={() => toggleParty(true)}> Add Party </Button>
+          <MakeParty show={partyShow} userId={props.userId} onHide={() => toggleParty(false)} />
         </div>
       </div>
     </>
