@@ -102,8 +102,11 @@ form {
 .btn {
   background-color: var(--primary-dark);
   border-color: black;
+  color: white;
 }
 
 .btn:hover {
   background-color: var(--primary-xdark);
+  border-color: black;
+  color: white;
 }

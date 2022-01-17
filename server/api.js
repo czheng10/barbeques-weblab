@@ -70,6 +70,13 @@ router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   });
 });
 
+router.post("/updatedbio", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.body.userid).then((results) => {
+    results.bio = req.body.newBio;
+    results.save().then((b) => res.send(b));
+  });
+});
+
 router.post("/newallergy", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     results.allergies = req.body.new_allergies;
@@ -126,6 +133,12 @@ router.post("/invite", auth.ensureLoggedIn, (req, res) => {
       from: mongoose.Types.ObjectId(req.body.from),
     });
     user.save();
+  });
+});
+
+router.get("/active-notifs", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.query.userId).then((user) => {
+    res.send(user.notifs);
   });
 });
 
