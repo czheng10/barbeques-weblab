@@ -98,3 +98,12 @@ form {
 .u-link:hover {
   color: white;
 }
+
+.btn {
+  background-color: var(--primary-dark);
+  border-color: black;
+}
+
+.btn:hover {
+  background-color: var(--primary-xdark);
+}
