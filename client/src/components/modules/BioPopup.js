@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import { get, post } from "../../../src/utilities";
+import "./BioPopup.css";
 
 const BioPopupCard = (props) => {
   let bio = props.data;
