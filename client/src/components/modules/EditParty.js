@@ -10,6 +10,7 @@ const EditParty = (props) => {
   const [newParty, setNewName] = useState("new");
   const [oldParty, setOldName] = useState("old");
   const [start, setStart] = useState(false);
+
   const getParties = () => { 
     get(`/api/parties`, { userid: props.userId}).then((results) => 
             {
@@ -18,12 +19,15 @@ const EditParty = (props) => {
                 if (!start){
                   setStart(true);
                 }
-                console.log(allParties);
             }
         );
   }
   if (! start){
     getParties();
+  }
+  if (props.toggle){
+    getParties();
+    props.changer();
   }
   const handleChange = (event) => {
     setNewName(event.target.value);
@@ -34,10 +38,8 @@ const EditParty = (props) => {
   const changeParty = () => {
     let idx = 0;
     for(let i = 0; i < allParties.length; i++){
-      console.log(oldParty,allParties[i], i);
       if(oldParty === allParties[i]){
         idx = i;
-        console.log("chaged idx");
       }
     }
     post(`/api/changeparty`, {userid: props.userId, oldId:ids[idx], newName: newParty}).then( (results) =>
@@ -46,14 +48,14 @@ const EditParty = (props) => {
       }
     );
   }
-  //console.log(index, newParty, oldParty);
+
   return (
         <>
           {allParties.length === 0 ? <h4>No Parties So Far</h4> :
           <> 
           <Form.Select aria-label="Default select example" onChange = {(event) => selectedParty(event)}>
           {allParties.map((item, index) => (
-            <option key = {ids[index]} value = {item}> {item}</option>
+            <option key = {index} value = {item}> {item}</option>
           ))}
           </Form.Select>
           <Modal
@@ -75,6 +77,7 @@ const EditParty = (props) => {
                 <Button onClick={() => changeParty()}>Submit</Button>
             </Modal.Footer>
             </Modal>
+            <Button onClick = {props.func}> Change Party Name</Button>
             </>}
         </>
 

@@ -8,9 +8,13 @@ import EditParty from "../modules/EditParty.js";
 
 const MakeParty = (props) => {
     let partyName = "";
+    const [change, setChange] = useState(true);
     const [modalShow, setModalShow] = useState(false);
     const toggleModal = (toggle) => {
         setModalShow(toggle);
+    }
+    const toggleChange = (toggle) => {
+        setChange(toggle);
     }
     const handleReopen = () => {
         props.onHide();
@@ -18,15 +22,13 @@ const MakeParty = (props) => {
     }
     const addParty = () => {
         post(`/api/newparty`, {userid: props.userId, name: partyName}).then(
-            (partyId) => post(`/api/addparty`, {userid: props.userId, partyid: partyId})
+            (partyId) => post(`/api/addparty`, {userid: props.userId, partyid: partyId}).then( () => setChange(true))
         );
         props.onHide();
     }
     const handleChange = (event) => {
-        //console.log(partyName);
         partyName = event.target.value;
     }
-    console.log("makeparty");
     return (
         <>
         <Modal
@@ -49,7 +51,7 @@ const MakeParty = (props) => {
         </Modal.Footer>
         </Modal>
         <h1> My Parties: </h1>
-        <EditParty userId = {props.userId} show = {modalShow} onHide  = {() => toggleModal(false)}/> <Button onClick = {() => toggleModal(true)}> Change Party Name</Button> <h4>No Parties So Far</h4>
+        <EditParty userId = {props.userId} show = {modalShow} toggle = {change} changer = {() => toggleChange(false)} onHide  = {() => toggleModal(false)} func = {() => toggleModal(true)}/> 
   
         </>  
     ); 
