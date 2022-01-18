@@ -22,7 +22,7 @@ const MakeParty = (props) => {
     }
     const addParty = () => {
         post(`/api/newparty`, {userid: props.userId, name: partyName}).then(
-            (partyId) => post(`/api/addparty`, {userid: props.userId, partyid: partyId}).then( () => setChange(true))
+            (partyId) => post(`/api/addparty`, {userid: props.userId, partyid: partyId}).then( toggleChange(true))
         );
         props.onHide();
     }

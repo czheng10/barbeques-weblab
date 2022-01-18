@@ -19,6 +19,7 @@ const EditParty = (props) => {
                 if (!start){
                   setStart(true);
                 }
+                props.changer();
             }
         );
   }
@@ -27,7 +28,6 @@ const EditParty = (props) => {
   }
   if (props.toggle){
     getParties();
-    props.changer();
   }
   const handleChange = (event) => {
     setNewName(event.target.value);

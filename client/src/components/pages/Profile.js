@@ -15,7 +15,7 @@ const Profile = (props) => {
   const [allergies, setAllergy] = useState([]);
   const [bio, setBio] = useState("Welcome to my page!");
   const [bioModalShow, setBioModalShow] = useState(false);
-
+  let pfp = require("../../images/logo2.jpg");
   const toggleModal = (toggle) => {
     setModalShow(toggle);
   };
@@ -106,11 +106,6 @@ const Profile = (props) => {
               <p className="profile-partiesContainer profile-Text">Coming Soon</p>
             </div>
           </div>
-          <Button className="btn" onClick={() => toggleParty(true)}>
-            {" "}
-            Add Party{" "}
-          </Button>
-          <MakeParty show={partyShow} userId={props.userId} onHide={() => toggleParty(false)} />
         </div>
       </div>
     </>
