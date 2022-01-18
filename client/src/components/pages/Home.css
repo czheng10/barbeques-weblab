@@ -44,5 +44,5 @@
   background-image: url("../../images/homePageBackground.png");
   background-position: 0px 0px;
   background-repeat: repeat-x;
-  animation: animatedBackground 20s linear infinite;
+  animation: animatedBackground 30s linear infinite;
 }
