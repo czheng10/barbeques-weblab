@@ -22,7 +22,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
       <div>
         <img src={logo.default} className="d-inline-block Navbar-logo" alt="" />
         <Link to={user ? `/profile/${userId}` : "/"} className="navbar-brand mx-3 Navbar-link">
-          Barbeque
+          Barbeques
         </Link>
       </div>
       <Nav>
