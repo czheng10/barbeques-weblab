@@ -103,7 +103,10 @@ const Profile = (props) => {
               <p className="profile-partiesContainer profile-Text">Coming Soon</p>
             </div>
           </div>
-          <Button onClick={() => toggleParty(true)}> Add Party </Button>
+          <Button className="btn" onClick={() => toggleParty(true)}>
+            {" "}
+            Add Party{" "}
+          </Button>
           <MakeParty show={partyShow} userId={props.userId} onHide={() => toggleParty(false)} />
         </div>
       </div>

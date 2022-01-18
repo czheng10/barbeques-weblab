@@ -106,7 +106,7 @@ form {
 }
 
 .btn:hover {
-  background-color: var(--primary-xdark);
+  background-color: var(--primary-xdark) !important;
   border-color: black;
   color: white;
 }

@@ -58,15 +58,6 @@
   padding: 15px;
 }
 
-.profile-allergiesEditButton {
-  background-color: var(--primary-dark);
-  border-radius: 10px;
-}
-
-.profile-allergiesEditButton:hover {
-  background-color: var(--primary-xdark);
-}
-
 .col-4 {
   margin-top: 10px;
 }

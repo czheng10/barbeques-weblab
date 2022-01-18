@@ -5,9 +5,11 @@ import "./Home.css";
 
 const Home = () => {
   return (
-    <div className="u-textCenter">
-      <h1>Welcome to Barbeques</h1>
-      <p>Please log in to use our site.</p>
+    <div className="home-container" id="animate-area">
+      <h1 className=" home-welcome">
+        Welcome to <span className="home-brand">Barbeques</span>
+      </h1>
+      <h4>Please log in to use our site.</h4>
     </div>
   );
 };
