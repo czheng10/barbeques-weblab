@@ -40,17 +40,6 @@
   margin-right: 5px;
 }
 
-.btn,
-btn-primary {
-  background-color: var(--primary-dark);
-  border-color: black;
-}
-
-.btn,
-btn-primary:hover {
-  background-color: var(--primary-xdark);
-}
-
 .navbar-user-dropdown {
   margin-right: 25px;
 }

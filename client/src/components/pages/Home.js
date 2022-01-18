@@ -5,11 +5,12 @@ import "./Home.css";
 
 const Home = () => {
   return (
-    <>
-      <div>
-        <h1>Please Log in First</h1>
-      </div>
-    </>
+    <div className="home-container" id="animate-area">
+      <h1 className=" home-welcome">
+        Welcome to <span className="home-brand">Barbeques</span>
+      </h1>
+      <h4>Please log in to use our site.</h4>
+    </div>
   );
 };
 

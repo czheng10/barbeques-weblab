@@ -1,0 +1,9 @@
+.profile-pfp {
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 10px;
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+  border-color: var(--primary-dark);
+}

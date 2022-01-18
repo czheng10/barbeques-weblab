@@ -6,7 +6,7 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { Navbar, Nav, NavDropdown, Form } from "react-bootstrap";
 
 const logo = require("../../images/BarbequeLogo.png");
-const GOOGLE_CLIENT_ID = "246300047403-nuejgdlajaq1mpbkamh3orikdb3ievor.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "142092394402-g9v7u0k9fd7dktllb4ij0303ihkbq7j3.apps.googleusercontent.com";
 
 const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -22,15 +22,14 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
       <div>
         <img src={logo.default} className="d-inline-block Navbar-logo" alt="" />
         <Link to={user ? `/profile/${userId}` : "/"} className="navbar-brand mx-3 Navbar-link">
-          Barbeque
+          Barbeques
         </Link>
       </div>
       <Nav>
         <Nav.Item>
           <Form className="d-flex">
-            <input
+            <Form.Control
               type="text"
-              name="text"
               value={searchPhrase}
               onChange={(event) => {
                 setSearchPhrase(event.target.value);
@@ -44,7 +43,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
           </Form>
         </Nav.Item>
         <Nav.Item className="mx-3">
-          <Link to="/" className="nav-link Navbar-link">
+          <Link to="/notifications" className="nav-link Navbar-link">
             Notifications
           </Link>
         </Nav.Item>
