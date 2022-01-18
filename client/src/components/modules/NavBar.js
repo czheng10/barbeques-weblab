@@ -6,7 +6,7 @@ import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { Navbar, Nav, NavDropdown, Form } from "react-bootstrap";
 
 const logo = require("../../images/BarbequeLogo.png");
-const GOOGLE_CLIENT_ID = "246300047403-nuejgdlajaq1mpbkamh3orikdb3ievor.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "142092394402-g9v7u0k9fd7dktllb4ij0303ihkbq7j3.apps.googleusercontent.com";
 
 const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
   const [searchPhrase, setSearchPhrase] = useState("");
