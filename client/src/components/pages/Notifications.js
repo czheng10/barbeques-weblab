@@ -25,6 +25,19 @@ const Notifications = ({ userId }) => {
     }
   }, [userId]);
 
+  const handleNotifAction = (notif, action) => {
+    post("/api/update-notif", {
+      notifId: notif._id,
+      notifFrom: notif.from,
+      notifTo: userId,
+      notifParty: notif.party_id,
+      toHost: userId === notifMetadata[notif.party_id].host,
+      action: action,
+    }).then((updatedNotifs) => {
+      setActiveNotifs(updatedNotifs);
+    });
+  };
+
   if (!userId) {
     return <div>Please login to use the site</div>;
   }
@@ -47,6 +60,14 @@ const Notifications = ({ userId }) => {
                 {notifMetadata[notif.party_id]["name"]}
               </>
             )}
+            <div className="mt-3">
+              <button className="btn mx-3" onClick={() => handleNotifAction(notif, "accept")}>
+                Accept
+              </button>
+              <button className="btn mx-3" onClick={() => handleNotifAction(notif, "decline")}>
+                Decline
+              </button>
+            </div>
           </Card>
         ))
       ) : (
