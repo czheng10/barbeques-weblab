@@ -52,6 +52,30 @@ router.get("/user", (req, res) => {
   });
 });
 
+router.get("/parties", auth.ensureLoggedIn, (req, res) => {
+  ids = [];
+  allParty = [];
+  User.findById(req.query.userid).then((user) => {
+    ids = user.parties.map((party) => party.party_id);
+    allParty = ids.map((id) => Party.findById(id));
+    Promise.all(allParty).then((allResult) => res.send(allResult));
+  });
+});
+
+router.get("/partyNames", auth.ensureLoggedIn, (req, res) => {
+  Party.findById(req.query.partyid).then((party) => {
+    res.send(party);
+  });
+});
+
+router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
+  Party.findById(req.body.oldId).then((party) => {
+    party.name = req.body.newName;
+    console.log(party.name);
+    party.save().then((person) => res.send(person));
+  })
+});
+
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   const phrase = req.query.phrase;
   const findNamePromise = User.find({ name: { $regex: phrase, $options: "i" } });
@@ -70,6 +94,13 @@ router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   });
 });
 
+router.post(`/api/newPfp`, auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.body.userid).then((results) => {
+    results.pfp = req.body.newPfp;
+    console.log(results.pfp);
+    results.save().then((person) => res.send(person));
+  });
+});
 router.post("/newallergy", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     results.allergies = req.body.new_allergies;

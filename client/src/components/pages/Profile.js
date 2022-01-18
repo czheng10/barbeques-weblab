@@ -4,10 +4,10 @@ import { get } from "../../utilities.js";
 import "../../utilities.css";
 import "./Profile.css";
 import PopupCard from "../modules/popup.js";
+//import Pfp from "../modules/Pfp.js";
 import MakeParty from "../modules/MakeParty.js";
 
 const Profile = (props) => {
-  const pfp = require("../../images/logo2.jpg");
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [partyShow, setPartyShow] = useState(false);
@@ -40,9 +40,9 @@ const Profile = (props) => {
     <>
       <div className="profile-all u-flex u-flex-spaceAround">
         <div className="col-4 u-textCenter">
-          <img className="profile-pfp" src={pfp.default} alt="Profile picture" />
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
+      
           <div className="profile-intro u-flexColumn">
             <p className="profile-Text">
               Hi I'm {user.name}! Contact me at {user.email}.
@@ -77,15 +77,17 @@ const Profile = (props) => {
             </div>
             <div className="profile-parties col justify-content-center">
               <h3 className="profile-titles">Parties</h3>
+              <Button onClick = {() => toggleParty(true)}> Add Party </Button>
+              <MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
               <p className="profile-partiesContainer profile-Text">Coming Soon</p>
             </div>
           </div>
-          <Button onClick = {() => toggleParty(true)}> Add Party </Button>
-          <MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
         </div>
       </div>
     </>
   );
+  // <Button onClick = {() => toggleParty(true)}> Add Party </Button>
+  //<MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
 };
 
 export default Profile;

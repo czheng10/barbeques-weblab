@@ -4,9 +4,14 @@ import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
 import { get, post } from "../../../src/utilities";
+import EditParty from "../modules/EditParty.js";
 
 const MakeParty = (props) => {
     let partyName = "";
+    const [modalShow, setModalShow] = useState(false);
+    const toggleModal = (toggle) => {
+        setModalShow(toggle);
+    }
     const handleReopen = () => {
         props.onHide();
 
@@ -18,10 +23,12 @@ const MakeParty = (props) => {
         props.onHide();
     }
     const handleChange = (event) => {
-        console.log(partyName);
+        //console.log(partyName);
         partyName = event.target.value;
     }
+    console.log("makeparty");
     return (
+        <>
         <Modal
         show = {props.show}
         size="lg"
@@ -40,7 +47,12 @@ const MakeParty = (props) => {
         <Modal.Footer>
             <Button onClick={() => addParty()}>Submit</Button>
         </Modal.Footer>
-        </Modal>);
-}
+        </Modal>
+        <h1> My Parties: </h1>
+        <EditParty userId = {props.userId} show = {modalShow} onHide  = {() => toggleModal(false)}/> <Button onClick = {() => toggleModal(true)}> Change Party Name</Button> <h4>No Parties So Far</h4>
+  
+        </>  
+    ); 
+};
 
 export default MakeParty;

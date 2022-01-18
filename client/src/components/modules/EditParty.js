@@ -5,36 +5,55 @@ import Button from "react-bootstrap/Button";
 import { get, post } from "../../../src/utilities";
 
 const EditParty = (props) => {
-  const [allParties, setParties] = useState(props.data);
-  const [changing, setChange] = useState(false);
-  let newParty = "ns";
-  let oldParty = "";
-  let index = 0;
+  const [ids, setIds] = useState([]);
+  const [allParties, setParties] = useState([]);
+  const [newParty, setNewName] = useState("new");
+  const [oldParty, setOldName] = useState("old");
+  const [start, setStart] = useState(false);
+  const getParties = () => { 
+    get(`/api/parties`, { userid: props.userId}).then((results) => 
+            {
+                setParties(results.map((item) => item.name));
+                setIds(results.map((item) => item._id));
+                if (!start){
+                  setStart(true);
+                }
+                console.log(allParties);
+            }
+        );
+  }
+  if (! start){
+    getParties();
+  }
   const handleChange = (event) => {
-    console.log("setting",changing);
-    newParty = event.target.value;
-    for(let i = 0; i < allParties.length; i++){
-      if(oldParty === newParty){
-        index = i;
-      }
-    }
-    console.log(newParty);
+    setNewName(event.target.value);
   }
   const selectedParty = (event) => {
-    oldParty = event.target.value;
+    setOldName(event.target.value);
   }
   const changeParty = () => {
-    console.log("changing", props.dataIds[index], newParty);
-    post(`/api/changeparty`, {userid: props.userId, oldId:props.dataIds[index], newName: newParty}).then( (results) =>
+    let idx = 0;
+    for(let i = 0; i < allParties.length; i++){
+      console.log(oldParty,allParties[i], i);
+      if(oldParty === allParties[i]){
+        idx = i;
+        console.log("chaged idx");
+      }
+    }
+    post(`/api/changeparty`, {userid: props.userId, oldId:ids[idx], newName: newParty}).then( (results) =>
       {props.onHide();
+        setStart(false);
       }
     );
   }
+  //console.log(index, newParty, oldParty);
   return (
         <>
+          {allParties.length === 0 ? <h4>No Parties So Far</h4> :
+          <> 
           <Form.Select aria-label="Default select example" onChange = {(event) => selectedParty(event)}>
           {allParties.map((item, index) => (
-            <option key = {index} value = {item}> {item}</option>
+            <option key = {ids[index]} value = {item}> {item}</option>
           ))}
           </Form.Select>
           <Modal
@@ -56,6 +75,7 @@ const EditParty = (props) => {
                 <Button onClick={() => changeParty()}>Submit</Button>
             </Modal.Footer>
             </Modal>
+            </>}
         </>
 
   );
