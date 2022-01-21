@@ -65,6 +65,9 @@ const EditParty = (props) => {
               </option>
             ))}
           </Form.Select>
+          <div>
+            {allParties.map}
+          </div>
           <Modal
             show={props.show}
             size="lg"
@@ -73,14 +76,14 @@ const EditParty = (props) => {
           >
             <Modal.Header>
               <Modal.Title id="contained-modal-title-vcenter">New Party Name</Modal.Title>
-              <Button
+              <button
                 type="button"
-                className="close btn-light btn-outline-dark"
+                className="close btn btn-light btn-outline-dark"
                 data-dismiss="modal"
                 onClick={props.onHide}
               >
                 &times;
-              </Button>
+              </button>
             </Modal.Header>
             <Modal.Body>
               <input
@@ -90,10 +93,15 @@ const EditParty = (props) => {
               />
             </Modal.Body>
             <Modal.Footer>
-              <Button onClick={() => changeParty()}>Submit</Button>
+              <button className="btn" onClick={() => changeParty()}>
+                Submit
+              </button>
             </Modal.Footer>
           </Modal>
-          <Button onClick={props.func}> Change Party Name</Button>
+          <button className="btn" onClick={props.func}>
+            {" "}
+            Change Party Name
+          </button>
         </>
       )}
     </>
