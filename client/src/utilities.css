@@ -100,7 +100,7 @@ form {
 }
 
 .btn {
-  background-color: var(--primary-dark);
+  background-color: var(--primary-dark) !important;
   border-color: black;
   color: white;
 }
@@ -109,4 +109,10 @@ form {
   background-color: var(--primary-xdark) !important;
   border-color: black;
   color: white;
+}
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none !important;
 }

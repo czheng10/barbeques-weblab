@@ -78,3 +78,15 @@
   margin: 10px;
   padding: 15px;
 }
+
+.profile-addPartiesButton {
+  background-color: var(--primary-dark);
+  border-color: black;
+  color: white;
+}
+
+.profile-addPartiesButton:hover {
+  background-color: var(--primary-xdark) !important;
+  border-color: black;
+  color: white;
+}
