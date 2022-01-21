@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-
 import "../../utilities.css";
 import "./Home.css";
+import galleryphoto from "../../images/home-gallery.png";
+import searchphoto from "../../images/home-search.png";
+import partyphoto from "../../images/home-party.png";
 
 const Home = () => {
   return (
@@ -9,7 +11,32 @@ const Home = () => {
       <h1 className=" home-welcome">
         Welcome to <span className="home-brand">Barbeques</span>
       </h1>
-      <h4>Please log in to use our site.</h4>
+      <h5>Please log in to use our site.</h5>
+      <h4> A One-stop Shop for Food and Friendship </h4>
+      <div className="row home-galleryIntro">
+        <img className="col-6 home-introImage" src={galleryphoto} />
+        <div className="col-1"></div>
+        <div className="col-5 home-Text">
+          <h3>Show Off Your Cooking Skills</h3>
+          <p>A space to share your beautiful dishes for all to see.</p>
+        </div>
+      </div>
+      <div className="row home-partiesIntro">
+        <div className="col-5 home-Text">
+          <h3>Host and Join Parties with Besties</h3>
+          <p>Plan a dinner with friends, old and new, or join one of theirs!</p>
+        </div>
+        <div className="col-1"></div>
+        <img className="col-6 home-introImage" src={partyphoto} />
+      </div>
+      <div className="row home-searchIntro">
+        <img className="col-6 home-introImage" src={searchphoto} />
+        <div className="col-1"></div>
+        <div className="col-5 home-Text">
+          <h3>Meet New People with the Same Taste</h3>
+          <p>Find friends who crave, and avoid, the same foods as you.</p>
+        </div>
+      </div>
     </div>
   );
 };

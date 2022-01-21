@@ -12,6 +12,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   z-index: -1;
+  overflow-y: auto;
 }
 
 .home-welcome {
@@ -45,4 +46,18 @@
   background-position: 0px 0px;
   background-repeat: repeat-x;
   animation: animatedBackground 30s linear infinite;
+}
+
+.row {
+  text-align: center;
+  align-items: center;
+}
+
+.home-galleryIntro {
+  position: relative;
+  padding-top: 400px;
+}
+
+.home-introImage {
+  object-fit: cover;
 }

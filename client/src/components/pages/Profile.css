@@ -7,6 +7,7 @@
   margin: 20px;
   border-color: var(--primary-dark);
 }
+
 .profile-username {
   font-size: 40px;
   font-weight: bolder;
@@ -62,9 +63,6 @@
 
 .col-4 {
   margin-top: 10px;
-}
-
-.col-6 {
 }
 
 .profile-achievementsContainer {
