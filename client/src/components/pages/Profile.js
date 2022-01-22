@@ -102,7 +102,10 @@ const Profile = (props) => {
             <div className="profile-parties col justify-content-center">
               <h3 className="profile-titles">Parties</h3>
               <div className="profile-partiesContainer profile-Text">
-                <Button className="btn profile-addPartiesButton" onClick={() => toggleParty(true)}>
+                <Button
+                  className="btn profile-addPartiesButton mb-3"
+                  onClick={() => toggleParty(true)}
+                >
                   {" "}
                   Add Party{" "}
                 </Button>

@@ -65,28 +65,20 @@ const EditParty = (props) => {
               </option>
             ))}
           </Form.Select>
-          <div>
-            {allParties.map}
-          </div>
+          <div>{allParties.map}</div>
           <Modal
             show={props.show}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            onHide={props.onHide}
           >
-            <Modal.Header>
+            <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">New Party Name</Modal.Title>
-              <button
-                type="button"
-                className="close btn btn-light btn-outline-dark"
-                data-dismiss="modal"
-                onClick={props.onHide}
-              >
-                &times;
-              </button>
             </Modal.Header>
             <Modal.Body>
               <input
+                className="form-control"
                 type="text"
                 placeholder="New Party Name"
                 onChange={(event) => handleChange(event)}
@@ -98,7 +90,7 @@ const EditParty = (props) => {
               </button>
             </Modal.Footer>
           </Modal>
-          <button className="btn" onClick={props.func}>
+          <button className="btn mt-3" onClick={props.func}>
             {" "}
             Change Party Name
           </button>

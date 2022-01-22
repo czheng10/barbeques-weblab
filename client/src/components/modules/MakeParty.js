@@ -30,20 +30,23 @@ const MakeParty = (props) => {
   };
   return (
     <>
-      <Modal show={props.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-        <Modal.Header>
+      <Modal
+        show={props.show}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        onHide={handleReopen}
+      >
+        <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">Add New Party</Modal.Title>
-          <Button
-            type="button"
-            className="close btn-light btn-outline-dark"
-            data-dismiss="modal"
-            onClick={() => handleReopen()}
-          >
-            &times;
-          </Button>
         </Modal.Header>
         <Modal.Body>
-          <input type="text" placeholder="Party Name" onChange={(event) => handleChange(event)} />
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Party Name"
+            onChange={(event) => handleChange(event)}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => addParty()}>Submit</Button>
