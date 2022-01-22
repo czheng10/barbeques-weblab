@@ -7,6 +7,7 @@
   margin: 20px;
   border-color: var(--primary-dark);
 }
+
 .profile-username {
   font-size: 40px;
   font-weight: bolder;
@@ -37,7 +38,6 @@
 .profile-allergiesList {
   background-color: var(--primary-light);
   border-radius: 10px;
-  margin-right: 40px;
   padding: 15px;
 }
 
@@ -50,6 +50,10 @@
   margin-bottom: 0px;
 }
 
+.profile-allergies {
+  margin: 10px;
+}
+
 .profile-allergiesContainer {
   background-color: white;
   border-radius: 10px;
@@ -59,10 +63,6 @@
 
 .col-4 {
   margin-top: 10px;
-}
-
-.col-6 {
-  margin-left: 60px;
 }
 
 .profile-achievementsContainer {
@@ -77,4 +77,9 @@
   background-color: var(--green);
   margin: 10px;
   padding: 15px;
+}
+
+.profile-addPartiesButton {
+  display: block;
+  width: 100%;
 }

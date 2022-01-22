@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Dropdown } from "react-bootstrap";
+import TEST_PFP from "../../images/logo2.jpg";
 
 import { get, post } from "../../utilities.js";
 import "./SearchCarousel.css";
 
-const background = require("../../images/black-background.jpg");
+const background = require("../../images/search-background.jpg");
 
 const SearchCarousel = (props) => {
   const [activeParties, setActiveParties] = useState({});
@@ -31,47 +32,59 @@ const SearchCarousel = (props) => {
     return <div>Loading...</div>;
   }
   return (
-    <Carousel className="u-flex-alignCenter" indicators={false} interval={null}>
+    <Carousel variant="dark" className="u-flex-alignCenter" indicators={false} interval={null}>
       {props.results.map((user, i) => (
         <Carousel.Item key={i}>
-          <img className="d-block mx-auto w-100" src={background.default} alt="background" />
-          <Carousel.Caption className="u-flex-justifyCenter">
-            <h2>{user.name}</h2>
-            <br />
-            <p>{user.bio}</p>
-            <span className="d-flex Carousel-buttons">
-              <Dropdown>
-                <Dropdown.Toggle variant="light">Ask to Join Party</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Header>Select one of their Parties</Dropdown.Header>
-                  {activeParties[user._id] ? (
-                    activeParties[user._id].map((party, j) => (
-                      <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
-                        {party.name}
-                      </Dropdown.Item>
-                    ))
-                  ) : (
-                    <Dropdown.Header>No available parties.</Dropdown.Header>
-                  )}
-                </Dropdown.Menu>
-              </Dropdown>
-              <Dropdown>
-                <Dropdown.Toggle variant="light">Invite to Party</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Header>Select one of your parties</Dropdown.Header>
-                  {activeParties[props.userId] ? (
-                    activeParties[props.userId].map((party, j) => (
-                      <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
-                        {party.name}
-                      </Dropdown.Item>
-                    ))
-                  ) : (
-                    <Dropdown.Header>No available parties.</Dropdown.Header>
-                  )}
-                </Dropdown.Menu>
-              </Dropdown>
-            </span>
+          <img
+            className="d-block mx-auto profile-background"
+            src={background.default}
+            alt="background"
+          />
+          <Carousel.Caption className="profile-card p-0">
+            <div className="profile-card-top py-3">
+              <img className="profile-card-pfp" src={TEST_PFP} />
+              <h2 className="pt-3">{user.name}</h2>
+            </div>
+            <div className="profile-card-bottom py-3">
+              <p>{user.bio}</p>
+              <strong>Dietary Restrictions</strong>
+              {user.allergies ? <p>Allergies: {user.allergies.join(", ")}</p> : <p>N/A</p>}
+              <span className="d-flex u-flex-justifyCenter button-dropdown">
+                <Dropdown>
+                  <Dropdown.Toggle variant="light">Invite</Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Header>Select one of your parties</Dropdown.Header>
+                    {activeParties[props.userId] ? (
+                      activeParties[props.userId].map((party, j) => (
+                        <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
+                          {party.name}
+                        </Dropdown.Item>
+                      ))
+                    ) : (
+                      <Dropdown.Header>No available parties.</Dropdown.Header>
+                    )}
+                  </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown>
+                  <Dropdown.Toggle variant="light">Ask to Join</Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Header>Select one of their Parties</Dropdown.Header>
+                    {activeParties[user._id] ? (
+                      activeParties[user._id].map((party, j) => (
+                        <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
+                          {party.name}
+                        </Dropdown.Item>
+                      ))
+                    ) : (
+                      <Dropdown.Header>No available parties.</Dropdown.Header>
+                    )}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </span>
+            </div>
           </Carousel.Caption>
+          {/* <Carousel.Caption className="u-flex-justifyCenter">
+          </Carousel.Caption> */}
         </Carousel.Item>
       ))}
     </Carousel>

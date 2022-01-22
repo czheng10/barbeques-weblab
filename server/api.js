@@ -52,6 +52,12 @@ router.get("/user", (req, res) => {
   });
 });
 
+router.get("/party", (req, res) => {
+  Party.findById(req.query.partyId).then((party) => {
+    res.send(party);
+  });
+});
+
 router.get("/parties", auth.ensureLoggedIn, (req, res) => {
   ids = [];
   allParty = [];
@@ -73,7 +79,7 @@ router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
     party.name = req.body.newName;
     console.log(party.name);
     party.save().then((person) => res.send(person));
-  })
+  });
 });
 
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {

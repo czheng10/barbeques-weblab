@@ -62,7 +62,7 @@ const Profile = (props) => {
           <Pfp userId = {props.userId} pfp = {user.pfp}/>
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
-      
+
           <div className="profile-intro u-flexColumn">
             <p className="profile-Text">{renderBio()}</p>
             <button className="btn profile-bioEditButton" onClick={() => bioToggleModal(true)}>
@@ -102,9 +102,20 @@ const Profile = (props) => {
             </div>
             <div className="profile-parties col justify-content-center">
               <h3 className="profile-titles">Parties</h3>
-              <Button onClick = {() => toggleParty(true)}> Add Party </Button>
-              <MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
-              <p className="profile-partiesContainer profile-Text">Coming Soon</p>
+              <div className="profile-partiesContainer profile-Text">
+                <Button
+                  className="btn profile-addPartiesButton mb-3"
+                  onClick={() => toggleParty(true)}
+                >
+                  {" "}
+                  Add Party{" "}
+                </Button>
+                <MakeParty
+                  show={partyShow}
+                  userId={props.userId}
+                  onHide={() => toggleParty(false)}
+                />
+              </div>
             </div>
           </div>
         </div>
