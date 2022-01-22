@@ -3,8 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import FormGroup from "react-bootstrap/FormGroup";
-import { get, post } from "../../utilities";
-import "./PopupCard.css";
+import { get, post } from "../../../src/utilities";
 
 const PopupCard = ({ show, userId, data, updateAllergies, onHide }) => {
   const [allergies, setAllergies] = useState(data.length ? data : [""]);
@@ -84,7 +83,7 @@ const PopupCard = ({ show, userId, data, updateAllergies, onHide }) => {
         <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
-  );
-};
+    );
+}
 
 export default PopupCard;

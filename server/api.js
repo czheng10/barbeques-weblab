@@ -100,7 +100,7 @@ router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   });
 });
 
-router.post(`/api/newPfp`, auth.ensureLoggedIn, (req, res) => {
+router.post(`/newPfp`, auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     results.pfp = req.body.newPfp;
     console.log(results.pfp);

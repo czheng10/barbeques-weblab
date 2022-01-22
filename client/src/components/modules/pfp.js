@@ -7,38 +7,52 @@ import { get, post } from "../../../src/utilities";
 import "./pfp.css";
 
 const Pfp = (props) => {
-    const [pfp, setPfp] = useState("../../images/logo2.jpg");
-    let newPath = "../../images/logo2.jpg";
-    const useForceUpdate = () => {
-        return () => setPfp(newPath);
-    };
+    const [pfp, setPfp] = useState(props.pfp);
+    const [modalShow, setShow] = useState(false);
+    let tempPath = "";
+    const toggleModal = (toggle) => {
+        setShow(toggle);
+    }
     const changePfp = () => {
-        post(`/api/newPfp`, {userid: props.userId, newPfp: pfpPath}).then(
+        if (tempPath.includes("/d/")){
+            const id = tempPath.split("/d/");
+            tempPath = "https://drive.google.com/uc?id=" + id[1].split("/")[0];
+            console.log(tempPath);
+        }
+        post(`/api/newPfp`, {userid: props.userId, newPfp: tempPath}).then(
             (results) => {
-                useForceUpdate();
+                toggleModal(false);
+                setPfp(tempPath);
             }
-            );
+        );
     }
     const handleChange = (event) => {
-        console.log("yes");
-        newPath = event.target.value;
-        console.log(newPath);
-      };   
+        tempPath=event.target.value;
+    };   
   return (
       <>
-        <img className="profile-pfp" src={require(pfp).default} alt="Profile picture"/>
+        <img crossOrigin = {null} className="profile-pfp" src = {pfp} alt="Profile picture"/>
         <div>
-            <label>Change profile picture:</label>
-        </div>
-        <div>
-            <input
-            type="file"
-            className=""
-            accept="image/png, image/jpeg"
-            onChange = {(event) => handleChange(event)}
-            onClick = {(event) => event.target.value = null}
-            />
-            <Button onClick={() => changePfp()}>Upload</Button>
+            <Button onClick={() => toggleModal(true)}>Upload</Button>
+            <Modal
+            show = {modalShow}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header>
+                <Modal.Title id="contained-modal-title-vcenter">
+                Change Profile Picture
+                </Modal.Title>
+                <Button type="button" className="close btn-light btn-outline-dark" data-dismiss="modal" onClick={() => toggleModal(false)}>&times;</Button>
+            </Modal.Header>
+            <Modal.Body>
+                <input type="text" placeholder="Image Link" onChange = {(event) => handleChange(event)} />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={() => changePfp()}>Submit</Button>
+            </Modal.Footer>
+            </Modal>
         </div>
       </>
   );

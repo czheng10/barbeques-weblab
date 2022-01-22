@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { get } from "../../utilities.js";
 import "../../utilities.css";
 import "./Profile.css";
-//import Pfp from "../modules/Pfp.js";
+import Pfp from "../modules/pfp.js";
 import PopupCard from "../modules/PopupCard.js";
 import MakeParty from "../modules/MakeParty.js";
 import BioPopupCard from "../modules/BioPopup.js";
@@ -39,7 +39,7 @@ const Profile = ({ userId, targetUserId }) => {
     <>
       <div className="row profile-all u-flex u-flex-spaceAround">
         <div className="col-4 u-textCenter col-12-xs">
-          <img className="profile-pfp" src={pfp.default} alt="Profile picture" />
+          <Pfp userId = {props.userId} pfp = {user.pfp}/>
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
 
