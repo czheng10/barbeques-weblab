@@ -1,5 +1,5 @@
-.Carousel-buttons {
-  justify-content: space-around;
+.button-dropdown .btn {
+  margin: 0 6vmin;
 }
 
 .carousel-caption {
@@ -12,4 +12,35 @@
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
+}
+
+.profile-background {
+  min-height: 75vh;
+  min-width: 95vw;
+  border-radius: 20px;
+}
+
+.profile-card {
+  background-color: white;
+  border-radius: 3vh;
+  border-style: solid;
+  border-width: 2px;
+  max-height: inherit;
+  max-width: inherit;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.profile-card-pfp {
+  width: 20vmin;
+  height: 20vmin;
+  border-radius: 50%;
+  border-color: var(--primary-dark);
+  border-width: 3px;
+  border-style: solid;
+}
+
+.profile-card-top {
+  background-color: #e4f4ff;
+  border-radius: 3vh;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 4px 18px 0 rgba(0, 0, 0, 0.15);
 }
