@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { get } from "../../utilities.js";
 import "../../utilities.css";
 import "./Profile.css";
-//import Pfp from "../modules/Pfp.js";
+import Pfp from "../modules/pfp.js";
 import PopupCard from "../modules/PopupCard.js";
 import MakeParty from "../modules/MakeParty.js";
 import BioPopupCard from "../modules/BioPopup.js";
@@ -15,7 +15,8 @@ const Profile = (props) => {
   const [allergies, setAllergy] = useState([]);
   const [bio, setBio] = useState("Welcome to my page!");
   const [bioModalShow, setBioModalShow] = useState(false);
-  let pfp = require("../../images/logo2.jpg");
+  //let pfp = require("../../images/logo2.jpg");
+  //<img className="profile-pfp" src={pfp.default} alt="Profile picture" />;
   const toggleModal = (toggle) => {
     setModalShow(toggle);
   };
@@ -58,7 +59,7 @@ const Profile = (props) => {
     <>
       <div className="row profile-all u-flex u-flex-spaceAround">
         <div className="col-4 u-textCenter col-12-xs">
-          <img className="profile-pfp" src={pfp.default} alt="Profile picture" />
+          <Pfp userId = {props.userId} pfp = {user.pfp}/>
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
       
@@ -110,8 +111,6 @@ const Profile = (props) => {
       </div>
     </>
   );
-  // <Button onClick = {() => toggleParty(true)}> Add Party </Button>
-  //<MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
 };
 
 export default Profile;
