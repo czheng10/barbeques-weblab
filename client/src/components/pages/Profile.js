@@ -21,7 +21,6 @@ const Profile = ({ userId, targetUserId }) => {
   };
 
   const setUserAllergy = (allergy) => {
-    console.log(allergy);
     setUser((prevState) => ({ ...prevState, allergies: allergy }));
   };
 
@@ -39,7 +38,7 @@ const Profile = ({ userId, targetUserId }) => {
     <>
       <div className="row profile-all u-flex u-flex-spaceAround">
         <div className="col-4 u-textCenter col-12-xs">
-          <Pfp userId = {props.userId} pfp = {user.pfp}/>
+          <Pfp userId={userId} pfp={user.pfp} />
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
 
