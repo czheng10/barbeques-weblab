@@ -8,47 +8,28 @@ import PopupCard from "../modules/PopupCard.js";
 import MakeParty from "../modules/MakeParty.js";
 import BioPopupCard from "../modules/BioPopup.js";
 
-const Profile = (props) => {
+const Profile = ({ userId, targetUserId }) => {
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [partyShow, setPartyShow] = useState(false);
-  const [allergies, setAllergy] = useState([]);
-  const [bio, setBio] = useState("Welcome to my page!");
   const [bioModalShow, setBioModalShow] = useState(false);
-  let pfp = require("../../images/logo2.jpg");
-  const toggleModal = (toggle) => {
-    setModalShow(toggle);
+
+  const pfp = require("../../images/logo2.jpg");
+
+  const setUserBio = (bio) => {
+    setUser((prevState) => ({ ...prevState, bio: bio }));
   };
-  const bioToggleModal = (toggle) => {
-    setBioModalShow(toggle);
+
+  const setUserAllergy = (allergy) => {
+    console.log(allergy);
+    setUser((prevState) => ({ ...prevState, allergies: allergy }));
   };
-  const toggleParty = (toggle) => {
-    setPartyShow(toggle);
-  };
+
   useEffect(() => {
-    get("/api/user", { userid: props.targetUserId }).then((userObj) => setUser(userObj));
+    get("/api/user", { userid: targetUserId }).then((userObj) => setUser(userObj));
   }, []);
 
-  useEffect(() => {
-    get(`/api/allergy`, { userid: props.targetUserId }).then((allergy) => setAllergy(allergy));
-  }, [modalShow]);
-
-  useEffect(() => {
-    get(`/api/user`, { userid: props.targetUserId }).then((user) => setBio(user.bio));
-  }, [bioModalShow]);
-
-  const renderAllergy = () => {
-    if (allergies == []) {
-      return "N/A";
-    }
-    return allergies.join(", ");
-  };
-
-  const renderBio = () => {
-    return bio;
-  };
-
-  if (!props.userId) {
+  if (!userId) {
     return <div>Please log in first.</div>;
   }
   if (!user) {
@@ -63,17 +44,17 @@ const Profile = (props) => {
           <div className="profile-email">{user.email}</div>
 
           <div className="profile-intro u-flexColumn">
-            <p className="profile-Text">{renderBio()}</p>
-            <button className="btn profile-bioEditButton" onClick={() => bioToggleModal(true)}>
+            <p className="profile-Text">{user.bio}</p>
+            <button className="btn profile-bioEditButton" onClick={() => setBioModalShow(true)}>
               {" "}
               Edit{" "}
             </button>
             <BioPopupCard
               show={bioModalShow}
-              userId={props.userId}
-              userBio={props.userBio}
-              data={bio}
-              onHide={() => bioToggleModal(false)}
+              userId={userId}
+              data={user.bio}
+              updateBio={setUserBio}
+              onHide={() => setBioModalShow(false)}
             />
           </div>
         </div>
@@ -81,16 +62,22 @@ const Profile = (props) => {
           <div className="profile-allergies row">
             <h3 className="profile-titles">Allergies</h3>
             <div className="profile-allergiesList u-flexColumn">
-              <p className="profile-allergiesContainer profile-Text">{renderAllergy()}</p>
-              <button className="btn profile-allergiesEditButton" onClick={() => toggleModal(true)}>
+              <p className="profile-allergiesContainer profile-Text">
+                {user.allergies.length ? user.allergies.join(", ") : "N/A"}
+              </p>
+              <button
+                className="btn profile-allergiesEditButton"
+                onClick={() => setModalShow(true)}
+              >
                 {" "}
                 Edit{" "}
               </button>
               <PopupCard
                 show={modalShow}
-                userId={props.userId}
-                data={allergies}
-                onHide={() => toggleModal(false)}
+                userId={userId}
+                data={user.allergies}
+                updateAllergies={setUserAllergy}
+                onHide={() => setModalShow(false)}
               />
             </div>
           </div>
@@ -104,15 +91,15 @@ const Profile = (props) => {
               <div className="profile-partiesContainer profile-Text">
                 <Button
                   className="btn profile-addPartiesButton mb-3"
-                  onClick={() => toggleParty(true)}
+                  onClick={() => setPartyShow(true)}
                 >
                   {" "}
                   Add Party{" "}
                 </Button>
                 <MakeParty
                   show={partyShow}
-                  userId={props.userId}
-                  onHide={() => toggleParty(false)}
+                  userId={targetUserId}
+                  onHide={() => setPartyShow(false)}
                 />
               </div>
             </div>
@@ -121,8 +108,6 @@ const Profile = (props) => {
       </div>
     </>
   );
-  // <Button onClick = {() => toggleParty(true)}> Add Party </Button>
-  //<MakeParty show = {partyShow} userId = {props.userId} onHide = {() => toggleParty(false)}/>
 };
 
 export default Profile;

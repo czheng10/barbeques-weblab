@@ -6,46 +6,38 @@ import FormGroup from "react-bootstrap/FormGroup";
 import { get, post } from "../../../src/utilities";
 import "./BioPopup.css";
 
-const BioPopupCard = (props) => {
-  let bio = props.data;
+const BioPopupCard = ({ show, userId, data, updateBio, onHide }) => {
+  const [bio, setBio] = useState(data);
 
-  const handleReopen = () => {
-    props.onHide();
-  };
-  const editBio = (event) => {
-    bio = event.target.value;
-  };
-
-  if (!props.show) {
-    get(`/api/user`, { userid: props.userId }).then((user) => {
-      bio = user.bio;
+  const submitBio = (event) => {
+    event.preventDefault();
+    post(`/api/updatedbio`, { userid: userId, newBio: bio }).then((result) => {
+      updateBio(result);
+      setBio(result);
+      onHide();
     });
-  }
-  const updateBio = () => {
-    post(`/api/updatedbio`, { userid: props.userId, newBio: bio }).then(props.onHide());
   };
+
   return (
-    <Modal show={props.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-      <Modal.Header>
+    <Modal
+      show={show}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      onHide={onHide}
+    >
+      <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Bio</Modal.Title>
-        <Button
-          type="button"
-          className="close btn-light btn-outline-dark"
-          data-dismiss="modal"
-          onClick={() => handleReopen()}
-        >
-          &times;
-        </Button>
       </Modal.Header>
       <Modal.Body>
         <h5>Personalize your bio! </h5>
         <FormGroup>
-          <FormControl type="text" defaultValue={bio} onChange={(event) => editBio(event)} />
+          <FormControl type="text" value={bio} onChange={(event) => setBio(event.target.value)} />
         </FormGroup>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={() => updateBio()}>Submit</Button>
-        <Button onClick={() => handleReopen()}>Close</Button>
+        <Button onClick={submitBio}>Submit</Button>
+        <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
