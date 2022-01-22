@@ -65,7 +65,7 @@ const Profile = ({ userId, targetUserId }) => {
                 {user.allergies.length ? user.allergies.join(", ") : "N/A"}
               </p>
               <button
-                className="btn profile-allergiesEditButton"
+                className="btn profile-allergiesEditButton mt-2"
                 onClick={() => setModalShow(true)}
               >
                 {" "}
