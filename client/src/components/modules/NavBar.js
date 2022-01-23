@@ -26,47 +26,53 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
         </Link>
       </div>
       <Nav>
-        <Nav.Item>
-          <Form className="d-flex">
-            <Form.Control
-              type="text"
-              value={searchPhrase}
-              onChange={(event) => {
-                setSearchPhrase(event.target.value);
-              }}
-              placeholder="search users..."
-              className="bg-white p-2 w-3/4 outline-none Navbar-search"
-            />
-            <button onClick={handleSubmit} type="submit" className="btn btn-primary">
-              Search
-            </button>
-          </Form>
-        </Nav.Item>
-        <Nav.Item className="mx-3">
-          <Link to="/gallery" className="nav-link Navbar-link">
-            Gallery
-          </Link>
-        </Nav.Item>
-        <Nav.Item className="mx-3">
-          <Link to="/notifications" className="nav-link Navbar-link">
-            Notifications
-          </Link>
-        </Nav.Item>
         {userId ? (
-          <Nav.Item>
-            <NavDropdown className="navbar-user-dropdown" title={user.name} id="basic-nav-dropdown">
-              <NavDropdown.Item href={`/profile/${userId}`}>My Profile</NavDropdown.Item>
-              <NavDropdown.Item>
-                <GoogleLogout
-                  clientId={GOOGLE_CLIENT_ID}
-                  buttonText="Logout"
-                  onLogoutSuccess={handleLogout}
-                  onFailure={(err) => console.log(err)}
-                  className="Navbar-link Navbar-login"
+          <>
+            <Nav.Item>
+              <Form className="d-flex">
+                <Form.Control
+                  type="text"
+                  value={searchPhrase}
+                  onChange={(event) => {
+                    setSearchPhrase(event.target.value);
+                  }}
+                  placeholder="search users..."
+                  className="bg-white p-2 w-3/4 outline-none Navbar-search"
                 />
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav.Item>
+                <button onClick={handleSubmit} type="submit" className="btn btn-primary">
+                  Search
+                </button>
+              </Form>
+            </Nav.Item>
+            <Nav.Item className="mx-3">
+              <Link to="/gallery" className="nav-link Navbar-link">
+                Gallery
+              </Link>
+            </Nav.Item>
+            <Nav.Item className="mx-3">
+              <Link to="/notifications" className="nav-link Navbar-link">
+                Notifications
+              </Link>
+            </Nav.Item>
+            <Nav.Item>
+              <NavDropdown
+                className="navbar-user-dropdown"
+                title={user.name}
+                id="basic-nav-dropdown"
+              >
+                <NavDropdown.Item href={`/profile/${userId}`}>My Profile</NavDropdown.Item>
+                <NavDropdown.Item>
+                  <GoogleLogout
+                    clientId={GOOGLE_CLIENT_ID}
+                    buttonText="Logout"
+                    onLogoutSuccess={handleLogout}
+                    onFailure={(err) => console.log(err)}
+                    className="Navbar-link Navbar-login"
+                  />
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav.Item>
+          </>
         ) : (
           <Nav.Item>
             <GoogleLogin

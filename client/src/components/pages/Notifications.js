@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Notifications.css";
 import { get, post } from "../../utilities.js";
+import { navigate } from "@reach/router";
 import { Card } from "react-bootstrap";
 
 const Notifications = ({ userId }) => {
@@ -39,7 +40,7 @@ const Notifications = ({ userId }) => {
   };
 
   if (!userId) {
-    return <div>Please login to use the site</div>;
+    navigate("/");
   }
 
   if (loading) {
