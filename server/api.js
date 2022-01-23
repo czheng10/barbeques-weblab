@@ -110,14 +110,14 @@ router.post(`/newPfp`, auth.ensureLoggedIn, (req, res) => {
 router.post("/updatedbio", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     results.bio = req.body.newBio;
-    results.save().then((b) => res.send(b));
+    results.save().then((b) => res.send(JSON.stringify(b.bio)));
   });
 });
 
-router.post("/newallergy", auth.ensureLoggedIn, (req, res) => {
-  User.findById(req.body.userid).then((results) => {
-    results.allergies = req.body.new_allergies;
-    results.save().then((person) => res.send(person));
+router.post("/updateAllergies", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.body.userId).then((user) => {
+    user.allergies = Array.from(new Set(req.body.allergies.filter((allergy) => allergy !== "")));
+    user.save().then((newUser) => res.send(newUser.allergies));
   });
 });
 
