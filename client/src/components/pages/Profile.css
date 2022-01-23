@@ -71,6 +71,10 @@
   padding: 5px;
 }
 
+.partyCard a {
+  text-decoration: none;
+}
+
 .partyGroup {
   max-height: 100px;
   overflow: scroll;

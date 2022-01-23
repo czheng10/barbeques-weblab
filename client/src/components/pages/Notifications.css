@@ -1,0 +1,15 @@
+.notification-div {
+  max-height: 80vh;
+  overflow: scroll;
+  background-color: #333333;
+  border-radius: 20px;
+}
+
+.notification-card {
+  background-color: #f5dcdc;
+  border-radius: 5px;
+}
+
+.notification-card .card-body {
+  border-radius: 3px;
+}

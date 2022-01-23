@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import { get } from "../../utilities.js";
+import { Link } from "@reach/router";
 import "../../utilities.css";
 import "./Profile.css";
 import Pfp from "../modules/pfp.js";
@@ -140,7 +141,7 @@ const Profile = ({ userId, targetUserId }) => {
                       {group.parties.length ? (
                         group.parties.map((party, j) => (
                           <Card body className="my-2 partyCard" key={j}>
-                            {party.name}
+                            <Link to={`/party/${party._id}`}>{party.name}</Link>
                           </Card>
                         ))
                       ) : (
