@@ -51,6 +51,7 @@
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
   text-align: center;
+  box-shadow: 2px 2px 5px var(--primary-xdark);
 }
 
 .navbar-nllogo {
@@ -59,7 +60,7 @@
   padding: 1px;
   border-radius: 30%;
   border-width: 5px;
-  margin: 0px 5px 0px 12px;
+  margin: 0px 5px 0px 20px;
   object-fit: cover;
   background-color: white;
   box-shadow: 2px 2px 5px var(--primary-xdark);
@@ -67,21 +68,28 @@
 
 .navbar-nlbrand {
   align-items: center;
-  font-family: var(--logo-font);
-  font-weight: bolder;
-  font-size: 80px;
-  text-shadow: 2px 2px 5px white;
+  font-weight: thin;
+  font-size: 50px;
+  text-shadow: 2px 2px 5px var(--primary-light);
 }
+
 .navbar-nlbrand:hover {
   color: white;
   text-shadow: 2px 2px 5px black;
+  font-family: var(--logo-font);
+  font-size: 65px;
 }
 
 .navbar-nlintroText {
   font-weight: thin;
-  font-size: 60px;
+  font-size: 50px;
 }
 
 .navbar-nlgoogle {
   margin: auto;
+}
+
+.navbar-nlloginstatement {
+  font-size: 20px;
+  margin-bottom: 15px;
 }

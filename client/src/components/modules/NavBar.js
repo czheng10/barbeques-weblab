@@ -89,6 +89,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
             <h2 className="navbar-nlintroText">
               Welcome to <span className="navbar-nlbrand">Barbeques</span>
             </h2>
+            <h4 className="navbar-nlloginstatement">Please log in to get started</h4>
             <Nav>
               <div className="navbar-nlgoogle">
                 <Nav.Item>
