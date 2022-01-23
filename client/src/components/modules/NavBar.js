@@ -78,8 +78,8 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
           </Nav>
         </Navbar>
       ) : (
-        <Navbar className="Navbar navbar-fixed-top navbar-nl" variant="dark" expand="sm">
-          <div>
+        <Navbar className="navbar-static-top navbar-nl" variant="dark" expand="sm">
+          <div className="navbar-nlcontainer">
             <img
               className="navbar-nlimage"
               src={logo.default}

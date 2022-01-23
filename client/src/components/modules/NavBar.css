@@ -45,8 +45,9 @@
 }
 
 .navbar-nl {
+  background-color: var(--primary);
   align-items: center;
-  height: 400px;
+  height: auto;
   justify-content: center !important;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
@@ -92,4 +93,15 @@
 .navbar-nlloginstatement {
   font-size: 20px;
   margin-bottom: 15px;
+}
+
+.navbar-nlcontainer {
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+
+.navbar-static-top {
+  top: 0px;
+  position: fixed;
+  width: 100%;
 }
