@@ -15,7 +15,7 @@ const Profile = ({ userId, targetUserId }) => {
   const [bioModalShow, setBioModalShow] = useState(false);
   const [parties, setParties] = useState([]);
   const [partyStatus, setPartyStatus] = useState({});
-  const showButtons = userId === targetUserId ? "visible" : "hidden";
+  const [showButtons, setShowButtons] = useState("hidden");
 
   const pfp = require("../../images/logo2.jpg");
 
@@ -26,6 +26,10 @@ const Profile = ({ userId, targetUserId }) => {
   const setUserAllergy = (allergy) => {
     setUser((prevState) => ({ ...prevState, allergies: allergy }));
   };
+
+  useEffect(() => {
+    setShowButtons(userId === targetUserId ? "" : "hidden");
+  }, [userId, targetUserId]);
 
   useEffect(() => {
     get("/api/user", { userid: targetUserId }).then((userObj) => {
