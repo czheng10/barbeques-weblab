@@ -17,6 +17,8 @@ const Gallery = (props) => {
     <>
     <button onClick={() => toggleModal(true)}>Upload</button>
     <Picture show = {modalShow} userId = {props.userId} add = {() => addPictures()} onHide = {() => toggleModal(false)}/> 
+    {pictures.length === 0 ? 
+    <h1>No Pictures in Gallery</h1> :
     <Carousel>
         {pictures.map((item, index) => 
         <Carousel.Item key = {index}>
@@ -27,7 +29,7 @@ const Gallery = (props) => {
         />
         </Carousel.Item>
         )}
-    </Carousel>
+    </Carousel>}
     </>
   );
 };

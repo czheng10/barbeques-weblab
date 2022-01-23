@@ -13,9 +13,7 @@ const Profile = ({ userId, targetUserId }) => {
   const [modalShow, setModalShow] = useState(false);
   const [partyShow, setPartyShow] = useState(false);
   const [bioModalShow, setBioModalShow] = useState(false);
-
-  const pfp = require("../../images/logo2.jpg");
-
+  const showButtons = ((userId === targetUserId)? "visible": "hidden");
   const setUserBio = (bio) => {
     setUser((prevState) => ({ ...prevState, bio: bio }));
   };
@@ -38,13 +36,13 @@ const Profile = ({ userId, targetUserId }) => {
     <>
       <div className="row profile-all u-flex u-flex-spaceAround">
         <div className="col-4 u-textCenter col-12-xs">
-          <Pfp userId={userId} pfp={user.pfp} />
+          <Pfp userId={userId} pfp={user.pfp} showButton = {showButtons}/>
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
 
           <div className="profile-intro u-flexColumn">
             <p className="profile-Text">{user.bio}</p>
-            <button className="btn profile-bioEditButton" onClick={() => setBioModalShow(true)}>
+            <button hidden = {showButtons} className="btn profile-bioEditButton" onClick={() => setBioModalShow(true)}>
               {" "}
               Edit{" "}
             </button>
@@ -65,6 +63,7 @@ const Profile = ({ userId, targetUserId }) => {
                 {user.allergies.length ? user.allergies.join(", ") : "N/A"}
               </p>
               <button
+                hidden = {showButtons}
                 className="btn profile-allergiesEditButton mt-2"
                 onClick={() => setModalShow(true)}
               >
@@ -89,6 +88,7 @@ const Profile = ({ userId, targetUserId }) => {
               <h3 className="profile-titles">Parties</h3>
               <div className="profile-partiesContainer profile-Text">
                 <Button
+                  hidden = {showButtons}
                   className="btn profile-addPartiesButton mb-3"
                   onClick={() => setPartyShow(true)}
                 >
@@ -97,6 +97,7 @@ const Profile = ({ userId, targetUserId }) => {
                 </Button>
                 <MakeParty
                   show={partyShow}
+                  showButton = {showButtons}
                   userId={targetUserId}
                   onHide={() => setPartyShow(false)}
                 />

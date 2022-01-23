@@ -54,6 +54,7 @@ const MakeParty = (props) => {
       </Modal>
       <h3>My Parties: </h3>
       <EditParty
+        showButton = {props.showButton}
         userId={props.userId}
         show={modalShow}
         toggle={change}

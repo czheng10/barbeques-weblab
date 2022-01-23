@@ -136,8 +136,7 @@ router.get("/pictures", auth.ensureLoggedIn, (req, res) => {
 router.post(`/addPics`, auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     console.log("wow");
-    results.pictures = results.pictures.concat(req.body.newPic);;
-    console.log(results.pictures);
+    results.pictures = results.pictures.concat(req.body.newPic);
     results.save().then((person) => res.send(person));
   });
 });

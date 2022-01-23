@@ -1,0 +1,87 @@
+.profile-pfp {
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 10px;
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+  border-color: var(--primary-dark);
+}
+
+.profile-username {
+  font-size: 40px;
+  font-weight: bolder;
+  margin: 5px 20px 5px 20px;
+  color: var(--primary-xdark);
+}
+
+.profile-email {
+  font-size: 15px;
+  margin: 5px 20px 15px 20px;
+  color: var(--darkgrey);
+}
+
+.profile-intro {
+  background-color: var(--primary-light);
+  margin: auto;
+  padding: 15px;
+  border-radius: 10px;
+  max-width: 260px;
+}
+
+.profile-Text {
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.profile-allergiesList {
+  background-color: var(--primary-light);
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.profile-titles {
+  font-family: var(--logo-font);
+  font-size: 30px;
+  color: var(--primary-dark);
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-bottom: 0px;
+  text-align: left;
+  padding: 0;
+}
+
+.profile-allergies {
+  margin: 10px;
+}
+
+.profile-allergiesContainer {
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 15px;
+}
+
+.col-4 {
+  margin-top: 10px;
+}
+
+.profile-achievementsContainer {
+  border-radius: 10px;
+  background-color: var(--orange);
+  margin: 10px;
+  padding: 15px;
+}
+
+.profile-partiesContainer {
+  border-radius: 10px;
+  background-color: var(--green);
+  margin: 10px;
+  padding: 15px;
+}
+
+.profile-addPartiesButton {
+  display: block;
+  width: 100%;
+}
