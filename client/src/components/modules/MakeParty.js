@@ -1,33 +1,22 @@
 import React, { useState, useEffect, Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import FormControl from "react-bootstrap/FormControl";
-import FormGroup from "react-bootstrap/FormGroup";
 import { get, post } from "../../../src/utilities";
-import EditParty from "../modules/EditParty.js";
 
 const MakeParty = (props) => {
-  let partyName = "";
-  const [change, setChange] = useState(true);
-  const [modalShow, setModalShow] = useState(false);
-  const toggleModal = (toggle) => {
-    setModalShow(toggle);
-  };
-  const toggleChange = (toggle) => {
-    setChange(toggle);
-  };
-  const handleReopen = () => {
-    props.onHide();
-  };
-  const addParty = () => {
+  const [partyName, setPartyName] = useState("");
+
+  const addParty = (event) => {
+    event.preventDefault();
     post(`/api/newparty`, { userid: props.userId, name: partyName }).then((partyId) =>
-      post(`/api/addparty`, { userid: props.userId, partyid: partyId }).then(toggleChange(true))
+      post(`/api/addparty`, { userid: props.userId, partyid: partyId }).then((user) => {
+        props.updateUser(user);
+        setPartyName("");
+      })
     );
     props.onHide();
   };
-  const handleChange = (event) => {
-    partyName = event.target.value;
-  };
+
   return (
     <>
       <Modal
@@ -35,7 +24,7 @@ const MakeParty = (props) => {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        onHide={handleReopen}
+        onHide={props.onHide}
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">Add New Party</Modal.Title>
@@ -45,22 +34,13 @@ const MakeParty = (props) => {
             className="form-control"
             type="text"
             placeholder="Party Name"
-            onChange={(event) => handleChange(event)}
+            onChange={(event) => setPartyName(event.target.value)}
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => addParty()}>Submit</Button>
+          <Button onClick={addParty}>Submit</Button>
         </Modal.Footer>
       </Modal>
-      <h3>My Parties: </h3>
-      <EditParty
-        userId={props.userId}
-        show={modalShow}
-        toggle={change}
-        changer={() => toggleChange(false)}
-        onHide={() => toggleModal(false)}
-        func={() => toggleModal(true)}
-      />
     </>
   );
 };

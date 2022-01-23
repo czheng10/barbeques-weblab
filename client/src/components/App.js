@@ -40,8 +40,8 @@ const App = () => {
       get(`/api/user`, { userid: user._id }).then((userObj) => {
         setUser(userObj);
         setUserId(user._id);
+        navigate(`/profile/${user._id}`);
       });
-      navigate(`/profile/${user._id}`);
     });
   };
 
@@ -60,7 +60,7 @@ const App = () => {
         <SearchResult path="/search/:searchPhrase" userId={userId} />
         <SearchResult path="/search/" userId={userId} />
         <Notifications path="/notifications" userId={userId} />
-        <Gallery path = "/gallery" userId={userId} user = {user}/>
+        <Gallery path="/gallery" userId={userId} user={user} />
         <NotFound default />
       </Router>
     </>

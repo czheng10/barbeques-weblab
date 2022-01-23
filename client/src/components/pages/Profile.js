@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
+import { Button, Card } from "react-bootstrap";
 import { get } from "../../utilities.js";
 import "../../utilities.css";
 import "./Profile.css";
@@ -13,6 +13,8 @@ const Profile = ({ userId, targetUserId }) => {
   const [modalShow, setModalShow] = useState(false);
   const [partyShow, setPartyShow] = useState(false);
   const [bioModalShow, setBioModalShow] = useState(false);
+  const [parties, setParties] = useState([]);
+  const [partyStatus, setPartyStatus] = useState({});
 
   const pfp = require("../../images/logo2.jpg");
 
@@ -25,8 +27,26 @@ const Profile = ({ userId, targetUserId }) => {
   };
 
   useEffect(() => {
-    get("/api/user", { userid: targetUserId }).then((userObj) => setUser(userObj));
+    get("/api/user", { userid: targetUserId }).then((userObj) => {
+      setUser(userObj);
+      const statuses = {};
+      for (const party of userObj.parties) {
+        statuses[party.party_id] = party.status;
+      }
+      setPartyStatus(statuses);
+    });
   }, []);
+
+  useEffect(() => {
+    get("/api/parties", { userid: targetUserId }).then((party_list) => {
+      const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
+      const pastParties = party_list.filter((party) => partyStatus[party._id] === 0);
+      setParties([
+        { status: "Upcoming", parties: upcomingParties },
+        { status: "Past", parties: pastParties },
+      ]);
+    });
+  }, [user, partyStatus]);
 
   if (!userId) {
     return <div>Please log in first.</div>;
@@ -99,7 +119,24 @@ const Profile = ({ userId, targetUserId }) => {
                   show={partyShow}
                   userId={targetUserId}
                   onHide={() => setPartyShow(false)}
+                  updateUser={setUser}
                 />
+                {parties.map((group, i) => (
+                  <div key={i}>
+                    <h6 className="text-start">{group.status}</h6>
+                    <div className="p-1 partyGroup">
+                      {group.parties.length ? (
+                        group.parties.map((party, j) => (
+                          <Card body className="my-2 partyCard" key={j}>
+                            {party.name}
+                          </Card>
+                        ))
+                      ) : (
+                        <p>N/A</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
