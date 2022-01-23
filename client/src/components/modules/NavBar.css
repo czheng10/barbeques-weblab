@@ -43,3 +43,45 @@
 .navbar-user-dropdown {
   margin-right: 25px;
 }
+
+.navbar-nl {
+  align-items: center;
+  height: 400px;
+  justify-content: center !important;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  text-align: center;
+}
+
+.navbar-nllogo {
+  height: 200px;
+  width: 200px;
+  padding: 1px;
+  border-radius: 30%;
+  border-width: 5px;
+  margin: 0px 5px 0px 12px;
+  object-fit: cover;
+  background-color: white;
+  box-shadow: 2px 2px 5px var(--primary-xdark);
+}
+
+.navbar-nlbrand {
+  align-items: center;
+  font-family: var(--logo-font);
+  font-weight: bolder;
+  font-size: 80px;
+  text-shadow: 2px 2px 5px white;
+}
+.navbar-nlbrand:hover {
+  color: white;
+  text-shadow: 2px 2px 5px black;
+}
+
+.navbar-nlintroText {
+  font-weight: thin;
+  font-size: 60px;
+}
+
+.navbar-nlgoogle {
+  margin: auto;
+}
