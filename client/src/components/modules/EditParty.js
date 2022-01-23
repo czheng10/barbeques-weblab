@@ -90,7 +90,7 @@ const EditParty = (props) => {
               </button>
             </Modal.Footer>
           </Modal>
-          <button className="btn mt-3" onClick={props.func}>
+          <button hidden = {props.showButton} className="btn mt-3" onClick={props.func}>
             {" "}
             Change Party Name
           </button>

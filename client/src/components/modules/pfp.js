@@ -33,7 +33,7 @@ const Pfp = (props) => {
       <>
         <img crossOrigin = {null} className="profile-pfp" src = {pfp} alt="Profile picture"/>
         <div>
-            <Button onClick={() => toggleModal(true)}>Upload</Button>
+            <Button hidden = {props.showButton} onClick={() => toggleModal(true)}>Upload</Button>
             <Modal
             show = {modalShow}
             size="lg"
