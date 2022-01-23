@@ -1,0 +1,12 @@
+.img {
+  border-style: solid;
+  border-width: 10px;
+  width: 150px;
+  height: 150px;
+  margin: 20px;
+  border-color: var(--primary-dark);
+}
+.Carousel.Item {
+  width: 150px;
+  height: 150px;
+}

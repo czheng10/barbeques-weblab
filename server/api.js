@@ -127,6 +127,21 @@ router.get("/allergy", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+router.get("/pictures", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.query.userid).then((results) => {
+    res.send(results.pictures);
+  });
+});
+
+router.post(`/addPics`, auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.body.userid).then((results) => {
+    console.log("wow");
+    results.pictures = results.pictures.concat(req.body.newPic);;
+    console.log(results.pictures);
+    results.save().then((person) => res.send(person));
+  });
+});
+
 router.post("/newparty", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     const newParty = new Party({

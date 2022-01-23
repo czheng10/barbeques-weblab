@@ -26,7 +26,7 @@ function getOrCreateUser(user) {
       name: user.name,
       googleid: user.sub,
       bio: "",
-      pfp: "../../images/logo2.jpg",
+      pfp: "https://drive.google.com/uc?id=1vgaZ0DpRkYT8CojTv_n10WQbfXmMhXCH",
       allergies: [],
       email: user.email,
       total_parties: 0,
