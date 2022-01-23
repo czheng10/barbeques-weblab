@@ -21,7 +21,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
     <Navbar className="Navbar navbar-fixed-top " variant="dark" expand="sm">
       <div>
         <img src={logo.default} className="d-inline-block Navbar-logo" alt="" />
-        <Link to={user ? `/profile/${userId}` : "/"} className="navbar-brand mx-3 Navbar-link">
+        <Link to={userId ? `/profile/${userId}` : "/"} className="navbar-brand mx-3 Navbar-link">
           Barbeques
         </Link>
       </div>
