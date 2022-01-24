@@ -187,6 +187,7 @@ form {
   background-color: var(--primary-dark) !important;
   border-color: black;
   color: white;
+  box-shadow: 1px 1px 0.5px black;
 }
 
 .btn:hover {

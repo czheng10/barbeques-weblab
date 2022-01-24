@@ -23,6 +23,7 @@
 
 .profile-intro {
   background-color: var(--primary-light);
+  box-shadow: 1px 1px 2px var(--primary-xdark);
   margin: auto;
   padding: 15px;
   border-radius: 10px;
@@ -37,6 +38,7 @@
 
 .profile-allergiesList {
   background-color: var(--primary-light);
+  box-shadow: 1px 1px 2px var(--primary-xdark);
   border-radius: 10px;
   padding: 15px;
 }
@@ -58,6 +60,8 @@
 
 .profile-allergiesContainer {
   background-color: white;
+  border-style: inset;
+  border-color: var(--primary-light);
   border-radius: 10px;
   margin: 10px;
   padding: 15px;
@@ -69,22 +73,37 @@
 
 .partyCard .card-body {
   padding: 5px;
+  color: black;
+  background-color: var(--cream);
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 1px 1px 2px #36382e;
 }
 
 .partyCard a {
+  color: black !important;
   text-decoration: none;
 }
 
-.partyGroup {
+.partyCard a:hover {
+  color: var(--primary-xdark) !important;
+}
+.profile-partyGroup {
   max-height: 100px;
   overflow: scroll;
   border-radius: 3px;
-  background-color: grey;
+  background-color: #cfceb4;
+  border-radius: 10px;
+  border-style: inset;
+  border-color: #d7d6c1;
+  margin-bottom: 5px;
+  scrollbar-color: black;
 }
 
 .profile-achievementsContainer {
   border-radius: 10px;
   background-color: var(--orange);
+  box-shadow: 1px 1px 2px #bf430d;
   margin: 10px;
   padding: 15px;
 }
@@ -95,6 +114,7 @@
   margin: 10px;
   padding: 15px;
   max-height: 450px;
+  box-shadow: 1px 1px 2px #36382e;
 }
 
 .profile-addPartiesButton {

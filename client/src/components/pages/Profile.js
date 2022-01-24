@@ -60,8 +60,8 @@ const Profile = ({ userId, targetUserId }) => {
   return (
     <>
       <div className="row profile-all u-flex u-flex-spaceAround">
-        <div className="col-4 u-textCenter col-12-xs">
-          <Pfp userId={userId} pfp={user.pfp} showButton={showButtons} />
+        <div className="col-4 u-textCenter">
+          <Pfp className="profile-image" userId={userId} pfp={user.pfp} showButton={showButtons} />
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
 
@@ -134,7 +134,7 @@ const Profile = ({ userId, targetUserId }) => {
                 {parties.map((group, i) => (
                   <div key={i}>
                     <h6 className="text-start">{group.status}</h6>
-                    <div className="p-1 partyGroup">
+                    <div className="p-1 profile-partyGroup">
                       {group.parties.length ? (
                         group.parties.map((party, j) => (
                           <Card body className="my-2 partyCard" key={j}>
