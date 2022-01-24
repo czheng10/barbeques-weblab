@@ -76,7 +76,6 @@ router.get("/partyNames", auth.ensureLoggedIn, (req, res) => {
 router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
   Party.findById(req.body.oldId).then((party) => {
     party.name = req.body.newName;
-    console.log(party.name);
     party.save().then((person) => res.send(person));
   });
 });
@@ -102,7 +101,6 @@ router.get("/search", auth.ensureLoggedIn, async (req, res) => {
 router.post(`/newPfp`, auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     results.pfp = req.body.newPfp;
-    console.log(results.pfp);
     results.save().then((person) => res.send(person));
   });
 });
@@ -222,6 +220,8 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
             );
           });
         });
+      } else {
+        res.send(updated.notifs);
       }
     });
   });
