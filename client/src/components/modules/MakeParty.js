@@ -10,6 +10,7 @@ const MakeParty = (props) => {
     event.preventDefault();
     post(`/api/newparty`, { userid: props.userId, name: partyName }).then((partyId) =>
       post(`/api/addparty`, { userid: props.userId, partyid: partyId }).then((user) => {
+        console.log(user);
         props.updateUser(user);
         setPartyName("");
       })

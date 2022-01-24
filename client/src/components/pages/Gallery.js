@@ -1,8 +1,9 @@
-import React, { useState, useEffect, Component } from "react";
-import Carousel from "react-bootstrap/Carousel";
+import React, { useState, useEffect } from "react";
+import { Carousel } from "react-bootstrap";
 import Picture from "../modules/Picture.js";
 import { get, post } from "../../utilities";
 import RemovePic from "../modules/RemovePic.js";
+import "./Gallery.css";
 
 const Gallery = (props) => {
   const [user, setUser] = useState(null);
@@ -57,15 +58,22 @@ const Gallery = (props) => {
       ) : (
         <Carousel>
           {pictures.map((item, index) => (
-            <Carousel.Item key={index}>
-              <img className="d-block" src={item.src} alt="First slide" />
-              <Carousel.Caption>
-                <h3>
-                  Picture {index + 1}: {item.title}
-                </h3>
+            <Carousel.Item>
+              <div className="gallery-card p-3 u-textCenter" key={index}>
+                <img className="gallery-img" src={item.src} />
+                <h3>{item.title}</h3>
                 <p>{item.caption}</p>
-              </Carousel.Caption>
+              </div>
             </Carousel.Item>
+            // <Carousel.Item key={index}>
+            //   <img className="d-block" src={item.src} alt="First slide" />
+            //   <Carousel.Caption>
+            //     <h3>
+            //       Picture {index + 1}: {item.title}
+            //     </h3>
+            //     <p>{item.caption}</p>
+            //   </Carousel.Caption>
+            // </Carousel.Item>
           ))}
         </Carousel>
       )}
