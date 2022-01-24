@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
+import { Button, Card } from "react-bootstrap";
 import { get } from "../../utilities.js";
+import { Link } from "@reach/router";
 import "../../utilities.css";
 import "./Profile.css";
 import Pfp from "../modules/pfp.js";
@@ -13,8 +14,9 @@ const Profile = ({ userId, targetUserId }) => {
   const [modalShow, setModalShow] = useState(false);
   const [partyShow, setPartyShow] = useState(false);
   const [bioModalShow, setBioModalShow] = useState(false);
-  const showButtons = ((userId === targetUserId)? "": "hidden");
-  console.log(showButtons);
+  const [parties, setParties] = useState([]);
+  const [partyStatus, setPartyStatus] = useState({});
+  const [showButtons, setShowButtons] = useState("hidden");
   const setUserBio = (bio) => {
     setUser((prevState) => ({ ...prevState, bio: bio }));
   };
@@ -24,8 +26,30 @@ const Profile = ({ userId, targetUserId }) => {
   };
 
   useEffect(() => {
-    get("/api/user", { userid: targetUserId }).then((userObj) => setUser(userObj));
+    setShowButtons(userId === targetUserId ? "" : "hidden");
+  }, [userId, targetUserId]);
+
+  useEffect(() => {
+    get("/api/user", { userid: targetUserId }).then((userObj) => {
+      setUser(userObj);
+      const statuses = {};
+      for (const party of userObj.parties) {
+        statuses[party.party_id] = party.status;
+      }
+      setPartyStatus(statuses);
+    });
   }, []);
+
+  useEffect(() => {
+    get("/api/parties", { userid: targetUserId }).then((party_list) => {
+      const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
+      const pastParties = party_list.filter((party) => partyStatus[party._id] === 0);
+      setParties([
+        { status: "Upcoming", parties: upcomingParties },
+        { status: "Past", parties: pastParties },
+      ]);
+    });
+  }, [user, partyStatus]);
 
   if (!userId) {
     return <div>Please log in first.</div>;
@@ -37,13 +61,17 @@ const Profile = ({ userId, targetUserId }) => {
     <>
       <div className="row profile-all u-flex u-flex-spaceAround">
         <div className="col-4 u-textCenter col-12-xs">
-          <Pfp userId={userId} pfp={user.pfp} showButton = {showButtons}/>
+          <Pfp userId={userId} pfp={user.pfp} showButton={showButtons} />
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
 
           <div className="profile-intro u-flexColumn">
             <p className="profile-Text">{user.bio}</p>
-            <button hidden = {showButtons} className="btn profile-bioEditButton" onClick={() => setBioModalShow(true)}>
+            <button
+              hidden={showButtons}
+              className="btn profile-bioEditButton"
+              onClick={() => setBioModalShow(true)}
+            >
               {" "}
               Edit{" "}
             </button>
@@ -64,7 +92,7 @@ const Profile = ({ userId, targetUserId }) => {
                 {user.allergies.length ? user.allergies.join(", ") : "N/A"}
               </p>
               <button
-                hidden = {showButtons}
+                hidden={showButtons}
                 className="btn profile-allergiesEditButton mt-2"
                 onClick={() => setModalShow(true)}
               >
@@ -89,7 +117,7 @@ const Profile = ({ userId, targetUserId }) => {
               <h3 className="profile-titles">Parties</h3>
               <div className="profile-partiesContainer profile-Text">
                 <Button
-                  hidden = {showButtons}
+                  hidden={showButtons}
                   className="btn profile-addPartiesButton mb-3"
                   onClick={() => setPartyShow(true)}
                 >
@@ -98,10 +126,27 @@ const Profile = ({ userId, targetUserId }) => {
                 </Button>
                 <MakeParty
                   show={partyShow}
-                  showButton = {showButtons}
+                  showButton={showButtons}
                   userId={targetUserId}
                   onHide={() => setPartyShow(false)}
+                  updateUser={setUser}
                 />
+                {parties.map((group, i) => (
+                  <div key={i}>
+                    <h6 className="text-start">{group.status}</h6>
+                    <div className="p-1 partyGroup">
+                      {group.parties.length ? (
+                        group.parties.map((party, j) => (
+                          <Card body className="my-2 partyCard" key={j}>
+                            <Link to={`/party/${party._id}`}>{party.name}</Link>
+                          </Card>
+                        ))
+                      ) : (
+                        <p>N/A</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

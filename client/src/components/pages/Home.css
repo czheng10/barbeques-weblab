@@ -3,16 +3,9 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: -1;
-  overflow-y: auto;
+  padding-top: 410px;
+  min-height: 100%;
+  z-index: -2 !important;
 }
 
 .home-welcome {
@@ -53,11 +46,23 @@
   align-items: center;
 }
 
-.home-galleryIntro {
-  position: relative;
-  padding-top: 400px;
-}
-
 .home-introImage {
   object-fit: cover;
+}
+
+h3 {
+  font-family: var(--logo-font);
+  font-size: 40px;
+  color: var(--primary-xdark);
+}
+
+.home-oneliner {
+  font-size: 30px;
+  color: var(--cream);
+  text-shadow: 1px 1px 5px black, 2px 2px 5px var(--primary-xdark), 3px 3px 4px black;
+  margin-top: 5px;
+}
+
+p {
+  font-size: 20px;
 }

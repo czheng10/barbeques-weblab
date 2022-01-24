@@ -67,6 +67,21 @@
   margin-top: 10px;
 }
 
+.partyCard .card-body {
+  padding: 5px;
+}
+
+.partyCard a {
+  text-decoration: none;
+}
+
+.partyGroup {
+  max-height: 100px;
+  overflow: scroll;
+  border-radius: 3px;
+  background-color: grey;
+}
+
 .profile-achievementsContainer {
   border-radius: 10px;
   background-color: var(--orange);
@@ -79,6 +94,7 @@
   background-color: var(--green);
   margin: 10px;
   padding: 15px;
+  max-height: 450px;
 }
 
 .profile-addPartiesButton {

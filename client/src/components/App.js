@@ -8,6 +8,7 @@ import SearchResult from "./pages/SearchResult.js";
 import Notifications from "./pages/Notifications.js";
 import Gallery from "./pages/Gallery.js";
 import ViewProfile from "./pages/ViewOther.js";
+import Party from "./pages/Party.js";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -41,8 +42,8 @@ const App = () => {
       get(`/api/user`, { userid: user._id }).then((userObj) => {
         setUser(userObj);
         setUserId(user._id);
+        navigate(`/profile/${user._id}`);
       });
-      navigate(`/profile/${user._id}`);
     });
   };
 
@@ -61,8 +62,9 @@ const App = () => {
         <SearchResult path="/search/:searchPhrase" userId={userId} />
         <SearchResult path="/search/" userId={userId} />
         <Notifications path="/notifications" userId={userId} />
-        <Gallery path = "/gallery" userId={userId} user = {user}/>
-        <ViewProfile path = "/viewprofile/:otherUserId" userId = {userId}/>
+        <Gallery path="/gallery" userId={userId} user={user} />
+        <ViewProfile path="/viewprofile/:otherUserId" userId={userId} />
+        <Party path="/party/:partyId" userId={userId} />
         <NotFound default />
       </Router>
     </>

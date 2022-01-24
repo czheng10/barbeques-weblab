@@ -40,7 +40,7 @@ const Notifications = ({ userId }) => {
   };
 
   if (!userId) {
-    navigate("/");
+    return <div>Please log in first.</div>;
   }
 
   if (loading) {
@@ -49,31 +49,35 @@ const Notifications = ({ userId }) => {
   return (
     <div className="u-textCenter">
       <h1>Notifications</h1>
-      {activeNotifs ? (
-        activeNotifs.map((notif, i) => (
-          <Card key={i} body>
-            {notifMetadata[notif.from] && notifMetadata[notif.party_id] && (
-              <>
-                {notifMetadata[notif.from]["name"]}
-                {notifMetadata[notif.party_id]["host"] === userId
-                  ? " wants to join your party "
-                  : " invites you to join their party "}
-                {notifMetadata[notif.party_id]["name"]}
-              </>
-            )}
-            <div className="mt-3">
-              <button className="btn mx-3" onClick={() => handleNotifAction(notif, "accept")}>
-                Accept
-              </button>
-              <button className="btn mx-3" onClick={() => handleNotifAction(notif, "decline")}>
-                Decline
-              </button>
+      <div className="notification-div m-3 p-5">
+        {activeNotifs ? (
+          activeNotifs.map((notif, i) => (
+            <div className="notification-card m-3 p-3" key={i}>
+              <Card body>
+                {notifMetadata[notif.from] && notifMetadata[notif.party_id] && (
+                  <>
+                    {notifMetadata[notif.from]["name"]}
+                    {notifMetadata[notif.party_id]["host"] === userId
+                      ? " wants to join your party "
+                      : " invites you to join their party "}
+                    {notifMetadata[notif.party_id]["name"]}
+                  </>
+                )}
+                <div className="mt-3">
+                  <button className="btn mx-3" onClick={() => handleNotifAction(notif, "accept")}>
+                    Accept
+                  </button>
+                  <button className="btn mx-3" onClick={() => handleNotifAction(notif, "decline")}>
+                    Decline
+                  </button>
+                </div>
+              </Card>
             </div>
-          </Card>
-        ))
-      ) : (
-        <p>No notifications!</p>
-      )}
+          ))
+        ) : (
+          <p>No notifications!</p>
+        )}
+      </div>
     </div>
   );
 };

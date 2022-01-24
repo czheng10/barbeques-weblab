@@ -18,16 +18,19 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
   };
 
   return (
-    <Navbar className="Navbar navbar-fixed-top " variant="dark" expand="sm">
-      <div>
-        <img src={logo.default} className="d-inline-block Navbar-logo" alt="" />
-        <Link to={userId ? `/profile/${userId}` : "/"} className="navbar-brand mx-3 Navbar-link">
-          Barbeques
-        </Link>
-      </div>
-      <Nav>
-        {userId ? (
-          <>
+    <div>
+      {userId ? (
+        <Navbar className="Navbar navbar-fixed-top " variant="dark" expand="sm">
+          <div>
+            <img src={logo.default} className="d-inline-block Navbar-logo" alt="" />
+            <Link
+              to={userId ? `/profile/${userId}` : "/"}
+              className="navbar-brand mx-3 Navbar-link"
+            >
+              Barbeques
+            </Link>
+          </div>
+          <Nav>
             <Nav.Item>
               <Form className="d-flex">
                 <Form.Control
@@ -72,20 +75,38 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav.Item>
-          </>
-        ) : (
-          <Nav.Item>
-            <GoogleLogin
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Login"
-              onSuccess={handleLogin}
-              onFailure={(err) => console.log(err)}
-              className="Navbar-link Navbar-login"
+          </Nav>
+        </Navbar>
+      ) : (
+        <Navbar className="navbar-static-top navbar-nl" variant="dark" expand="sm">
+          <div className="navbar-nlcontainer">
+            <img
+              className="navbar-nlimage"
+              src={logo.default}
+              className="d-inline-block navbar-nllogo"
+              alt=""
             />
-          </Nav.Item>
-        )}
-      </Nav>
-    </Navbar>
+            <h2 className="navbar-nlintroText">
+              Welcome to <span className="navbar-nlbrand">Barbeques</span>
+            </h2>
+            <h4 className="navbar-nlloginstatement">Please log in to get started</h4>
+            <Nav>
+              <div className="navbar-nlgoogle">
+                <Nav.Item>
+                  <GoogleLogin
+                    clientId={GOOGLE_CLIENT_ID}
+                    buttonText="Login"
+                    onSuccess={handleLogin}
+                    onFailure={(err) => console.log(err)}
+                    className="Navbar-link Navbar-login"
+                  />
+                </Nav.Item>
+              </div>
+            </Nav>
+          </div>
+        </Navbar>
+      )}
+    </div>
   );
 };
 

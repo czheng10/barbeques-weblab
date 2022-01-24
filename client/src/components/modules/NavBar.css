@@ -43,3 +43,65 @@
 .navbar-user-dropdown {
   margin-right: 25px;
 }
+
+.navbar-nl {
+  background-color: var(--primary);
+  align-items: center;
+  height: auto;
+  justify-content: center !important;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  text-align: center;
+  box-shadow: 2px 2px 5px var(--primary-xdark);
+}
+
+.navbar-nllogo {
+  height: 200px;
+  width: 200px;
+  padding: 1px;
+  border-radius: 30%;
+  border-width: 5px;
+  margin: 0px 5px 0px 20px;
+  object-fit: cover;
+  background-color: white;
+  box-shadow: 2px 2px 5px var(--primary-xdark);
+}
+
+.navbar-nlbrand {
+  align-items: center;
+  font-weight: thin;
+  font-size: 50px;
+  text-shadow: 2px 2px 5px var(--primary-light);
+}
+
+.navbar-nlbrand:hover {
+  color: white;
+  text-shadow: 2px 2px 5px black;
+  font-family: var(--logo-font);
+  font-size: 65px;
+}
+
+.navbar-nlintroText {
+  font-weight: thin;
+  font-size: 50px;
+}
+
+.navbar-nlgoogle {
+  margin: auto;
+}
+
+.navbar-nlloginstatement {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.navbar-nlcontainer {
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+
+.navbar-static-top {
+  top: 0px;
+  position: fixed;
+  width: 100%;
+}
