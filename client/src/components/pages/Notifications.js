@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Invite from "../../images/notification-invite.png";
+import Request from "../../images/notification-request.png";
 import "./Notifications.css";
 import { get, post } from "../../utilities.js";
 import { navigate } from "@reach/router";
@@ -49,26 +51,37 @@ const Notifications = ({ userId }) => {
   }
   return (
     <div className="u-textCenter">
-      <h1>Notifications</h1>
+      <h1 className="notifs-heading">Notifications</h1>
       <div className="notification-div m-3 p-5">
-        {activeNotifs ? (
+        {activeNotifs.length ? (
           activeNotifs.map((notif, i) => (
             <div className="notification-card m-3 p-3" key={i}>
               <Card body>
                 {notifMetadata[notif.from] && notifMetadata[notif.party_id] && (
-                  <>
+                  <div className="notif-reqinvs">
+                    {notifMetadata[notif.party_id]["host"] === userId ? (
+                      <img className="notif-icon" src={Request} />
+                    ) : (
+                      <img className="notif-icon" src={Invite} />
+                    )}
                     {notifMetadata[notif.from]["name"]}
                     {notifMetadata[notif.party_id]["host"] === userId
                       ? " wants to join your party "
                       : " invites you to join their party "}
                     {notifMetadata[notif.party_id]["name"]}
-                  </>
+                  </div>
                 )}
                 <div className="mt-3">
-                  <button className="btn notifs-accept mx-3" onClick={() => handleNotifAction(notif, "accept")}>
+                  <button
+                    className="btn notifs-accept mx-3"
+                    onClick={() => handleNotifAction(notif, "accept")}
+                  >
                     Accept
                   </button>
-                  <button className="btn notifs-decline mx-3" onClick={() => handleNotifAction(notif, "decline")}>
+                  <button
+                    className="btn notifs-decline mx-3"
+                    onClick={() => handleNotifAction(notif, "decline")}
+                  >
                     Decline
                   </button>
                 </div>
@@ -76,7 +89,7 @@ const Notifications = ({ userId }) => {
             </div>
           ))
         ) : (
-          <p>No notifications!</p>
+          <p className="notifs-none">No notifications!</p>
         )}
       </div>
     </div>

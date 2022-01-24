@@ -23,3 +23,20 @@
   background-color: black !important;
   box-shadow: 1px 1px 0.5px var(--primary-dark);
 }
+
+.notifs-heading {
+  font-family: var(--logo-font);
+  color: var(--primary-dark);
+  font-size: 40px;
+}
+
+.notifs-none {
+  color: white;
+  font-size: 20px;
+}
+
+.notif-icon {
+  object-fit: cover;
+  width: 10%;
+  height: auto;
+}
