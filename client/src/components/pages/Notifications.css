@@ -13,3 +13,13 @@
 .notification-card .card-body {
   border-radius: 3px;
 }
+
+.notifs-accept {
+  border-radius: 30px;
+}
+
+.notifs-decline {
+  border-radius: 30px;
+  background-color: black !important;
+  box-shadow: 1px 1px 0.5px var(--primary-dark);
+}
