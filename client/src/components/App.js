@@ -62,7 +62,7 @@ const App = () => {
         <SearchResult path="/search/:searchPhrase" userId={userId} />
         <SearchResult path="/search/" userId={userId} />
         <Notifications path="/notifications" userId={userId} />
-        <Gallery path="/gallery" userId={userId} user={user} />
+        <Gallery path="/gallery" userId={userId} />
         <ViewProfile path="/viewprofile/:otherUserId" userId={userId} />
         <Party path="/party/:partyId" userId={userId} />
         <NotFound default />
