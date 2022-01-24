@@ -13,7 +13,8 @@ const Profile = ({ userId, targetUserId }) => {
   const [modalShow, setModalShow] = useState(false);
   const [partyShow, setPartyShow] = useState(false);
   const [bioModalShow, setBioModalShow] = useState(false);
-  const showButtons = ((userId === targetUserId)? "visible": "hidden");
+  const showButtons = ((userId === targetUserId)? "": "hidden");
+  console.log(showButtons);
   const setUserBio = (bio) => {
     setUser((prevState) => ({ ...prevState, bio: bio }));
   };

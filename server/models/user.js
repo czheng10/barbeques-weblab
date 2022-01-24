@@ -7,7 +7,12 @@ const UserSchema = new mongoose.Schema({
   googleid: String,
   pfp: String,
   bio: String,
-  pictures: [String],
+  pictures: [
+    {
+    src: String,
+    title: String,
+    caption: String,
+    },],
   allergies: [String],
   email: String,
   // party related:
