@@ -65,15 +65,6 @@ const Gallery = (props) => {
                 <p>{item.caption}</p>
               </div>
             </Carousel.Item>
-            // <Carousel.Item key={index}>
-            //   <img className="d-block" src={item.src} alt="First slide" />
-            //   <Carousel.Caption>
-            //     <h3>
-            //       Picture {index + 1}: {item.title}
-            //     </h3>
-            //     <p>{item.caption}</p>
-            //   </Carousel.Caption>
-            // </Carousel.Item>
           ))}
         </Carousel>
       )}

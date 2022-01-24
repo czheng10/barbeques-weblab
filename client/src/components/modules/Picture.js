@@ -20,7 +20,9 @@ const Picture = (props) => {
       picTitle: title,
       picCap: cap,
     }).then((results) => {
-      console.log(results);
+      setTempPath("");
+      setTitle("");
+      setCap("");
       props.add();
       props.onHide();
     });
