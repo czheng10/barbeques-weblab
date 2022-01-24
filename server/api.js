@@ -204,23 +204,25 @@ router.get("/active-notifs", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
-  if (req.body.action === "accept") {
-    User.findById(req.body.toHost ? req.body.notifFrom : req.body.notifTo).then((user) => {
-      user.total_parties += 1;
-      user.parties.push({ party_id: req.body.notifParty, status: 1 });
-      user.save();
-    });
-    Party.findById(req.body.notifParty).then((party) => {
-      const members = new Set(party.members);
-      members.add(req.body.toHost ? req.body.notifFrom : req.body.notifTo);
-      party.members = Array.from(members);
-      party.save();
-    });
-  }
   User.findById(req.body.notifTo).then((user) => {
     user.notifs = user.notifs.filter((notif) => notif._id.toString() !== req.body.notifId);
     user.save().then((updated) => {
-      res.send(updated.notifs);
+      if (req.body.action === "accept") {
+        Party.findById(req.body.notifParty).then((party) => {
+          const members = new Set(party.members);
+          members.add(req.body.toHost ? req.body.notifFrom : req.body.notifTo);
+          party.members = Array.from(members);
+          party.save().then(() => {
+            User.findById(req.body.toHost ? req.body.notifFrom : req.body.notifTo).then(
+              (new_user) => {
+                new_user.total_parties += 1;
+                new_user.parties.push({ party_id: req.body.notifParty, status: 1 });
+                new_user.save().then((result) => res.send(result.notifs));
+              }
+            );
+          });
+        });
+      }
     });
   });
 });
