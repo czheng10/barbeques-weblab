@@ -154,7 +154,7 @@ router.post("/newparty", auth.ensureLoggedIn, (req, res) => {
     const newParty = new Party({
       name: req.body.name,
       host: results._id,
-      members: [results._id],
+      members: [],
     });
     newParty.save().then((party) => res.send(JSON.stringify(party._id)));
   });
@@ -223,6 +223,16 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
       } else {
         res.send(updated.notifs);
       }
+    });
+  });
+});
+
+router.get("/partyMembers", auth.ensureLoggedIn, (req, res) => {
+  Party.findById(req.query.partyId).then((party) => {
+    User.findById(party.host).then((host) => {
+      User.find({ _id: { $in: party.members } }).then((members) => {
+        res.send({ host: host, members: members });
+      });
     });
   });
 });
