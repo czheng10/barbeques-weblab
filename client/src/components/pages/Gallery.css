@@ -6,7 +6,14 @@
   margin: 20px;
   border-color: var(--primary-dark);
 }
-.Carousel.Item {
-  width: 150px;
-  height: 150px;
+
+.gallery-card {
+  background-color: var(--green);
+}
+
+.gallery-img {
+  max-height: 60vh;
+  max-width: 80vw;
+  height: 60vh;
+  width: auto;
 }

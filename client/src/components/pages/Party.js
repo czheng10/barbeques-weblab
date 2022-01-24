@@ -1,4 +1,5 @@
 import React from "react";
+import "./Party.css";
 
 const Party = ({ userId, partyId }) => {
   return (

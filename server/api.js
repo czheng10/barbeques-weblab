@@ -137,7 +137,7 @@ router.post(`/addPics`, auth.ensureLoggedIn, (req, res) => {
     src: req.body.newPic,
     title: req.body.picTitle,
     caption: req.body.picCap,
-  }
+  };
   User.findById(req.body.userid).then((results) => {
     results.pictures = results.pictures.concat(picCard);
     results.save().then((person) => res.send(person));
@@ -146,7 +146,7 @@ router.post(`/addPics`, auth.ensureLoggedIn, (req, res) => {
 
 router.post(`/removePics`, auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
-    results.pictures.splice(req.body.index,1);
+    results.pictures.splice(req.body.index, 1);
     results.save().then((person) => res.send(person));
   });
 });
