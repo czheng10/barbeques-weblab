@@ -3,11 +3,14 @@
   overflow: scroll;
   background-color: #333333;
   border-radius: 20px;
+  border-style: solid;
+  border-width: 2px;
 }
 
 .notification-card {
   background-color: #f5dcdc;
   border-radius: 5px;
+  box-shadow: 3px 3px 5px var(--primary);
 }
 
 .notification-card .card-body {
@@ -22,4 +25,25 @@
   border-radius: 30px;
   background-color: black !important;
   box-shadow: 1px 1px 0.5px var(--primary-dark);
+}
+
+.notifs-heading {
+  font-family: var(--logo-font);
+  color: var(--primary-dark);
+  font-size: 40px;
+}
+
+.notifs-none {
+  color: white;
+  font-size: 20px;
+}
+
+.notif-icon {
+  object-fit: cover;
+  width: 10%;
+  height: auto;
+}
+
+.card-body {
+  box-shadow: 2px 2px 5px var(--primary-xdark);
 }

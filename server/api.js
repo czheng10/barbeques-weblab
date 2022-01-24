@@ -215,7 +215,7 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
               (new_user) => {
                 new_user.total_parties += 1;
                 new_user.parties.push({ party_id: req.body.notifParty, status: 1 });
-                new_user.save().then((result) => res.send(result.notifs));
+                new_user.save().then((result) => res.send(updated.notifs));
               }
             );
           });
