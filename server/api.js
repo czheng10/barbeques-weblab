@@ -76,7 +76,6 @@ router.get("/party", auth.ensureLoggedIn, (req, res) => {
 router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
   Party.findById(req.body.oldId).then((party) => {
     party.name = req.body.newName;
-    console.log(party.name);
     party.save().then((person) => res.send(person));
   });
 });
@@ -102,7 +101,6 @@ router.get("/search", auth.ensureLoggedIn, async (req, res) => {
 router.post(`/newPfp`, auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     results.pfp = req.body.newPfp;
-    console.log(results.pfp);
     results.save().then((person) => res.send(person));
   });
 });
@@ -137,7 +135,7 @@ router.post(`/addPics`, auth.ensureLoggedIn, (req, res) => {
     src: req.body.newPic,
     title: req.body.picTitle,
     caption: req.body.picCap,
-  }
+  };
   User.findById(req.body.userid).then((results) => {
     results.pictures = results.pictures.concat(picCard);
     results.save().then((person) => res.send(person));
@@ -146,7 +144,7 @@ router.post(`/addPics`, auth.ensureLoggedIn, (req, res) => {
 
 router.post(`/removePics`, auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
-    results.pictures.splice(req.body.index,1);
+    results.pictures.splice(req.body.index, 1);
     results.save().then((person) => res.send(person));
   });
 });
@@ -156,7 +154,7 @@ router.post("/newparty", auth.ensureLoggedIn, (req, res) => {
     const newParty = new Party({
       name: req.body.name,
       host: results._id,
-      members: [results._id],
+      members: [],
     });
     newParty.save().then((party) => res.send(JSON.stringify(party._id)));
   });
@@ -205,23 +203,37 @@ router.get("/active-notifs", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
-  if (req.body.action === "accept") {
-    User.findById(req.body.toHost ? req.body.notifFrom : req.body.notifTo).then((user) => {
-      user.total_parties += 1;
-      user.parties.push({ party_id: req.body.notifParty, feedback: 0 });
-      user.save();
-    });
-    Party.findById(req.body.notifParty).then((party) => {
-      const members = new Set(party.members);
-      members.add(req.body.toHost ? req.body.notifFrom : req.body.notifTo);
-      party.members = Array.from(members);
-      party.save();
-    });
-  }
   User.findById(req.body.notifTo).then((user) => {
     user.notifs = user.notifs.filter((notif) => notif._id.toString() !== req.body.notifId);
     user.save().then((updated) => {
-      res.send(updated.notifs);
+      if (req.body.action === "accept") {
+        Party.findById(req.body.notifParty).then((party) => {
+          const members = new Set(party.members);
+          members.add(req.body.toHost ? req.body.notifFrom : req.body.notifTo);
+          party.members = Array.from(members);
+          party.save().then(() => {
+            User.findById(req.body.toHost ? req.body.notifFrom : req.body.notifTo).then(
+              (new_user) => {
+                new_user.total_parties += 1;
+                new_user.parties.push({ party_id: req.body.notifParty, status: 1 });
+                new_user.save().then((result) => res.send(updated.notifs));
+              }
+            );
+          });
+        });
+      } else {
+        res.send(updated.notifs);
+      }
+    });
+  });
+});
+
+router.get("/partyMembers", auth.ensureLoggedIn, (req, res) => {
+  Party.findById(req.query.partyId).then((party) => {
+    User.findById(party.host).then((host) => {
+      User.find({ _id: { $in: party.members } }).then((members) => {
+        res.send({ host: host, members: members });
+      });
     });
   });
 });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect, Component} from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Picture from "../modules/Picture.js"
 import { get, post } from "../../utilities";

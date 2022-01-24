@@ -44,3 +44,8 @@
   border-radius: 3vh;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 4px 18px 0 rgba(0, 0, 0, 0.15);
 }
+
+.search-dropdown .dropdown-menu {
+  max-height: 400px;
+  overflow: scroll;
+}

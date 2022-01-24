@@ -15,7 +15,7 @@ const Profile = ({ userId, targetUserId }) => {
   const [partyShow, setPartyShow] = useState(false);
   const [bioModalShow, setBioModalShow] = useState(false);
   const [parties, setParties] = useState([]);
-  const [partyStatus, setPartyStatus] = useState({});
+  const [partyStatus, setPartyStatus] = useState(null);
   const [showButtons, setShowButtons] = useState("hidden");
   const setUserBio = (bio) => {
     setUser((prevState) => ({ ...prevState, bio: bio }));
@@ -32,24 +32,31 @@ const Profile = ({ userId, targetUserId }) => {
   useEffect(() => {
     get("/api/user", { userid: targetUserId }).then((userObj) => {
       setUser(userObj);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (user) {
       const statuses = {};
       for (const party of userObj.parties) {
         statuses[party.party_id] = party.feedback;
       }
       setPartyStatus(statuses);
-    });
-  }, []);
+    }
+  }, [user]);
 
   useEffect(() => {
-    get("/api/parties", { userid: targetUserId }).then((party_list) => {
-      const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
-      const pastParties = party_list.filter((party) => partyStatus[party._id] === 0);
-      setParties([
-        { status: "Upcoming", parties: upcomingParties },
-        { status: "Past", parties: pastParties },
-      ]);
-    });
-  }, [user, partyStatus]);
+    if (partyStatus) {
+      get("/api/parties", { userid: targetUserId }).then((party_list) => {
+        const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
+        const pastParties = party_list.filter((party) => partyStatus[party._id] === 0);
+        setParties([
+          { status: "Upcoming", parties: upcomingParties },
+          { status: "Past", parties: pastParties },
+        ]);
+      });
+    }
+  }, [partyStatus]);
 
   if (!userId) {
     return <div>Please log in first.</div>;
@@ -61,8 +68,8 @@ const Profile = ({ userId, targetUserId }) => {
   return (
     <>
       <div className="row profile-all u-flex u-flex-spaceAround">
-        <div className="col-4 u-textCenter col-12-xs">
-          <Pfp userId={userId} pfp={user.pfp} showButton={showButtons} />
+        <div className="col-4 u-textCenter">
+          <Pfp className="profile-image" userId={userId} pfp={user.pfp} showButton={showButtons} />
           <div className="profile-username">{user.name}</div>
           <div className="profile-email">{user.email}</div>
 
@@ -134,8 +141,8 @@ const Profile = ({ userId, targetUserId }) => {
                 />
                 {parties.map((group, i) => (
                   <div key={i}>
-                    <h6 className="text-start">{group.status}</h6>
-                    <div className="p-1 partyGroup">
+                    <h6 className="text-start profile-partyHeaders">{group.status}</h6>
+                    <div className="p-1 profile-partyGroup">
                       {group.parties.length ? (
                         group.parties.map((party, j) => (
                           <Card body className="my-2 partyCard" key={j}>
