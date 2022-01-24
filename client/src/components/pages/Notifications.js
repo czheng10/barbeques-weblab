@@ -35,7 +35,6 @@ const Notifications = ({ userId }) => {
       toHost: userId === notifMetadata[notif.party_id].host,
       action: action,
     }).then((updatedNotifs) => {
-      console.log(updatedNotifs);
       setActiveNotifs(updatedNotifs);
     });
   };
@@ -65,10 +64,16 @@ const Notifications = ({ userId }) => {
                   </>
                 )}
                 <div className="mt-3">
-                  <button className="btn notifs-accept mx-3" onClick={() => handleNotifAction(notif, "accept")}>
+                  <button
+                    className="btn notifs-accept mx-3"
+                    onClick={() => handleNotifAction(notif, "accept")}
+                  >
                     Accept
                   </button>
-                  <button className="btn notifs-decline mx-3" onClick={() => handleNotifAction(notif, "decline")}>
+                  <button
+                    className="btn notifs-decline mx-3"
+                    onClick={() => handleNotifAction(notif, "decline")}
+                  >
                     Decline
                   </button>
                 </div>
