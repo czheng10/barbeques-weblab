@@ -15,7 +15,7 @@ const Profile = ({ userId, targetUserId }) => {
   const [partyShow, setPartyShow] = useState(false);
   const [bioModalShow, setBioModalShow] = useState(false);
   const [parties, setParties] = useState([]);
-  const [partyStatus, setPartyStatus] = useState({});
+  const [partyStatus, setPartyStatus] = useState(null);
   const [showButtons, setShowButtons] = useState("hidden");
   const setUserBio = (bio) => {
     setUser((prevState) => ({ ...prevState, bio: bio }));
@@ -32,24 +32,31 @@ const Profile = ({ userId, targetUserId }) => {
   useEffect(() => {
     get("/api/user", { userid: targetUserId }).then((userObj) => {
       setUser(userObj);
-      const statuses = {};
-      for (const party of userObj.parties) {
-        statuses[party.party_id] = party.status;
-      }
-      setPartyStatus(statuses);
     });
   }, []);
 
   useEffect(() => {
-    get("/api/parties", { userid: targetUserId }).then((party_list) => {
-      const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
-      const pastParties = party_list.filter((party) => partyStatus[party._id] === 0);
-      setParties([
-        { status: "Upcoming", parties: upcomingParties },
-        { status: "Past", parties: pastParties },
-      ]);
-    });
-  }, [user, partyStatus]);
+    if (user) {
+      const statuses = {};
+      for (const party of user.parties) {
+        statuses[party.party_id] = party.status;
+      }
+      setPartyStatus(statuses);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (partyStatus) {
+      get("/api/parties", { userid: targetUserId }).then((party_list) => {
+        const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
+        const pastParties = party_list.filter((party) => partyStatus[party._id] === 0);
+        setParties([
+          { status: "Upcoming", parties: upcomingParties },
+          { status: "Past", parties: pastParties },
+        ]);
+      });
+    }
+  }, [partyStatus]);
 
   if (!userId) {
     return <div>Please log in first.</div>;

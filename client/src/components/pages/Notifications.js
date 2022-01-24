@@ -37,7 +37,6 @@ const Notifications = ({ userId }) => {
       toHost: userId === notifMetadata[notif.party_id].host,
       action: action,
     }).then((updatedNotifs) => {
-      console.log(updatedNotifs);
       setActiveNotifs(updatedNotifs);
     });
   };
