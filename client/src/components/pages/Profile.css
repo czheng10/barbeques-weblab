@@ -121,3 +121,8 @@
   display: block;
   width: 100%;
 }
+
+.profile-partyHeaders {
+  font-weight: 500;
+  font-size: 18px;
+}

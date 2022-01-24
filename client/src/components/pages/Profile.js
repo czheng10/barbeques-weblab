@@ -133,7 +133,7 @@ const Profile = ({ userId, targetUserId }) => {
                 />
                 {parties.map((group, i) => (
                   <div key={i}>
-                    <h6 className="text-start">{group.status}</h6>
+                    <h6 className="text-start profile-partyHeaders">{group.status}</h6>
                     <div className="p-1 profile-partyGroup">
                       {group.parties.length ? (
                         group.parties.map((party, j) => (
