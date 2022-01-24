@@ -4,12 +4,10 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
 const Picture = (props) => {
-    console.log("wee");
     let tempPath = "";
     let title = "";
     let cap = "";
     const addPics = () => {
-        console.log(tempPath);
         if (tempPath.includes("/d/")){
             const id = tempPath.split("/d/");
             tempPath = "https://drive.google.com/uc?id=" + id[1].split("/")[0];

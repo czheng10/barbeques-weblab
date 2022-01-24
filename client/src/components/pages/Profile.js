@@ -34,7 +34,7 @@ const Profile = ({ userId, targetUserId }) => {
       setUser(userObj);
       const statuses = {};
       for (const party of userObj.parties) {
-        statuses[party.party_id] = party.status;
+        statuses[party.party_id] = party.feedback;
       }
       setPartyStatus(statuses);
     });
@@ -57,6 +57,7 @@ const Profile = ({ userId, targetUserId }) => {
   if (!user) {
     return <div>Loading</div>;
   }
+  console.log(parties);
   return (
     <>
       <div className="row profile-all u-flex u-flex-spaceAround">

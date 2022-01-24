@@ -51,8 +51,8 @@ router.get("/user", (req, res) => {
   });
 });
 
-router.get("/party", (req, res) => {
-  Party.findById(req.query.partyId).then((party) => {
+router.get("/partyinfo", (req, res) => {
+  Party.findById(req.query.partyid).then((party) => {
     res.send(party);
   });
 });
@@ -67,7 +67,7 @@ router.get("/parties", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-router.get("/partyNames", auth.ensureLoggedIn, (req, res) => {
+router.get("/party", auth.ensureLoggedIn, (req, res) => {
   Party.findById(req.query.partyid).then((party) => {
     res.send(party);
   });
@@ -165,7 +165,7 @@ router.post("/newparty", auth.ensureLoggedIn, (req, res) => {
 router.post("/addparty", auth.ensureLoggedIn, (req, res) => {
   Party.findById(req.body.partyid).then((party) =>
     User.findById(req.body.userid).then((results) => {
-      const newParty = { party_id: party._id, status: 1 };
+      const newParty = { party_id: party._id, feedback: 0 };
       results.parties.push(newParty);
       results.total_parties = results.total_parties + 1;
       results.save().then((person) => res.send(person));
@@ -173,10 +173,11 @@ router.post("/addparty", auth.ensureLoggedIn, (req, res) => {
   );
 });
 
+//need to fix because database changed
 router.get("/active-parties", auth.ensureLoggedIn, async (req, res) => {
   const user = await User.findById(req.query.userId);
   const partyIds = user.parties
-    .filter((party) => party.status === 1)
+    .filter((party) => party.feedback === 0)
     .map((party) => party.party_id);
   Party.find({ _id: { $in: partyIds } }).then((results) => {
     if (results) {
@@ -207,7 +208,7 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
   if (req.body.action === "accept") {
     User.findById(req.body.toHost ? req.body.notifFrom : req.body.notifTo).then((user) => {
       user.total_parties += 1;
-      user.parties.push({ party_id: req.body.notifParty, status: 1 });
+      user.parties.push({ party_id: req.body.notifParty, feedback: 0 });
       user.save();
     });
     Party.findById(req.body.notifParty).then((party) => {
