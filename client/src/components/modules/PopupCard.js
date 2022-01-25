@@ -47,10 +47,10 @@ const PopupCard = ({ show, userId, data, updateAllergies, onHide }) => {
       onHide={onHide}
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Allergies</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Dietary Restrictions</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>Add your Allergies! </h4>
+        <h4>Add your Dietary Restrictions and Allergies! </h4>
         {allergies.map((allergy, i) => (
           <div className="row mb-2" key={i}>
             <div className="col-7">
@@ -83,7 +83,7 @@ const PopupCard = ({ show, userId, data, updateAllergies, onHide }) => {
         <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
-    );
-}
+  );
+};
 
 export default PopupCard;

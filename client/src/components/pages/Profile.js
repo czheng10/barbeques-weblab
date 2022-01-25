@@ -51,7 +51,7 @@ const Profile = ({ userId, targetUserId }) => {
     if (partyStatus) {
       get("/api/parties", { userid: targetUserId }).then((party_list) => {
         const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
-        const pastParties = party_list.filter((party) => partyStatus[party._id] === 0 && party.members.length > 1);
+        const pastParties = party_list.filter((party) => partyStatus[party._id] === 0);
         setParties([
           { status: "Upcoming", parties: upcomingParties },
           { status: "Past", parties: pastParties },
@@ -95,7 +95,7 @@ const Profile = ({ userId, targetUserId }) => {
         </div>
         <div className="col-6">
           <div className="profile-allergies row">
-            <h3 className="profile-titles">Allergies</h3>
+            <h3 className="profile-titles">Dietary Restrictions</h3>
             <div className="profile-allergiesList u-flexColumn">
               <p className="profile-allergiesContainer profile-Text">
                 {user.allergies.length ? user.allergies.join(", ") : "N/A"}
@@ -145,19 +145,21 @@ const Profile = ({ userId, targetUserId }) => {
                     <h6 className="text-start profile-partyHeaders">{group.status}</h6>
                     <div className="p-1 profile-partyGroup">
                       {group.parties.length ? (
-                        group.parties.map((party, j) => ( group.status === "Past" ?
-                          <Card body className="my-2 partyCard" key={j}>
-                            <Link to={`/feedback/${party._id}`}
-                            state = {{show: showButtons}}>{party.name}
-                                  
-                            </Link>
-                          </Card> 
-                          :
-                          <Card body className="my-2 partyCard" key={j}>
-                            <Link to={`/party/${party._id}`}
-                            state = {{show: showButtons}}>{party.name}</Link>
-                          </Card> 
-                        ))
+                        group.parties.map((party, j) =>
+                          group.status === "Past" ? (
+                            <Card body className="my-2 partyCard" key={j}>
+                              <Link to={`/feedback/${party._id}`} state={{ show: showButtons }}>
+                                {party.name}
+                              </Link>
+                            </Card>
+                          ) : (
+                            <Card body className="my-2 partyCard" key={j}>
+                              <Link to={`/party/${party._id}`} state={{ show: showButtons }}>
+                                {party.name}
+                              </Link>
+                            </Card>
+                          )
+                        )
                       ) : (
                         <p>N/A</p>
                       )}
