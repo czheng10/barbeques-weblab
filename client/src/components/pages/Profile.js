@@ -39,8 +39,8 @@ const Profile = ({ userId, targetUserId }) => {
     if (user) {
       const statuses = {};
       get("/api/parties", { userid: user._id }).then((party) => {
-        for(let i = 0; i < party.length; i++){
-          statuses[party[i]._id] = party[i].status;
+        for (const item of party) {
+          statuses[item._id] = item.status;
         }
       });
       setPartyStatus(statuses);
@@ -145,15 +145,17 @@ const Profile = ({ userId, targetUserId }) => {
                     <h6 className="text-start profile-partyHeaders">{group.status}</h6>
                     <div className="p-1 profile-partyGroup">
                       {group.parties.length ? (
-                        group.parties.map((party, j) => ( group.status === "Past" ?
-                          <Card body className="my-2 partyCard" key={j}>
-                            <Link to={`/party/${party._id}`}>{party.name}</Link>
-                          </Card> 
-                          :
-                          <Card body className="my-2 partyCard" key={j}>
-                            <h5>{party.name}</h5>
-                          </Card> 
-                        ))
+                        group.parties.map((party, j) =>
+                          group.status === "Past" ? (
+                            <Card body className="my-2 partyCard" key={j}>
+                              <Link to={`/party/${party._id}`}>{party.name}</Link>
+                            </Card>
+                          ) : (
+                            <Card body className="my-2 partyCard" key={j}>
+                              <h5>{party.name}</h5>
+                            </Card>
+                          )
+                        )
                       ) : (
                         <p>N/A</p>
                       )}

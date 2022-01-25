@@ -10,9 +10,13 @@ const SearchResult = (props) => {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    get("/api/search", { phrase: props.searchPhrase ? props.searchPhrase : "" }).then((results) => {
-      setSearchResults(results.filter((user) => user._id !== props.userId));
-    });
+    if (props.userId) {
+      get("/api/search", { phrase: props.searchPhrase ? props.searchPhrase : "" }).then(
+        (results) => {
+          setSearchResults(results.filter((user) => user._id !== props.userId));
+        }
+      );
+    }
   }, [props]);
 
   if (!props.userId) {
