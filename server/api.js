@@ -248,7 +248,12 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
               User.findById(newMember).then((new_user) => {
                 new_user.total_parties += 1;
                 new_user.parties.push({ party_id: req.body.notifParty, status: 1 });
-                new_user.save().then((result) => res.send(updated.notifs));
+                new_user.save().then((result) => {
+                  socketManager
+                    .getSocketFromUserID(req.body.toHost ? req.body.notifTo : req.body.notifFrom)
+                    .emit("acceptedNotif", { member: newMember, party: req.body.notifParty });
+                  res.send(updated.notifs);
+                });
               });
             });
           }

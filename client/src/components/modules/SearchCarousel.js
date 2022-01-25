@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Dropdown } from "react-bootstrap";
 import TEST_PFP from "../../images/logo2.jpg";
-import { Link, navigate } from "@reach/router";
+import { Link } from "@reach/router";
 import { get, post } from "../../utilities.js";
+import { socket } from "../../client-socket.js";
 import "./SearchCarousel.css";
 
 const background = require("../../images/bbq-party.jpg");
@@ -25,6 +26,17 @@ const SearchCarousel = (props) => {
         });
     }
   }, [props]);
+
+  const updateParties = ({ member, party }) => {
+    setMyParties((prevState) => ({
+      ...prevState,
+      [member]: prevState[member].filter((items) => items._id !== party),
+    }));
+  };
+
+  useEffect(() => {
+    socket.on("acceptedNotif", updateParties);
+  }, []);
 
   const handleInvite = (userId, partyId) => {
     post("/api/invite", {
