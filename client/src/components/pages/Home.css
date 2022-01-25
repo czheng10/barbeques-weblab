@@ -3,7 +3,6 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-top: 410px;
   min-height: 100%;
   z-index: -2 !important;
 }
@@ -60,7 +59,7 @@ h3 {
   font-size: 30px;
   color: var(--cream);
   text-shadow: 1px 1px 5px black, 2px 2px 5px var(--primary-xdark), 3px 3px 4px black;
-  margin-top: 5px;
+  margin-top: 25px;
 }
 
 p {

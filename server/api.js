@@ -67,11 +67,16 @@ router.get("/parties", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-router.get("/party", auth.ensureLoggedIn, (req, res) => {
-  Party.findById(req.query.partyid).then((party) => {
-    res.send(party);
+router.get("/users", auth.ensureLoggedIn, (req, res) => {
+  ids = [];
+  allUsers = [];
+  Party.findById(req.query.partyid).then((parties) => {
+    ids = parties.members;
+    allUsers = ids.filter((id) => JSON.stringify(id) !== JSON.stringify(req.query.userid)).map((id) => User.findById(id));
+    Promise.all(allUsers).then((allResult) => res.send(allResult));
   });
 });
+
 
 router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
   Party.findById(req.body.oldId).then((party) => {
@@ -155,6 +160,7 @@ router.post("/newparty", auth.ensureLoggedIn, (req, res) => {
       name: req.body.name,
       host: results._id,
       members: [],
+      status: 1,
     });
     newParty.save().then((party) => res.send(JSON.stringify(party._id)));
   });
