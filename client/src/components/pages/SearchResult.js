@@ -10,9 +10,13 @@ const SearchResult = (props) => {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    get("/api/search", { phrase: props.searchPhrase ? props.searchPhrase : "" }).then((results) => {
-      setSearchResults(results.filter((user) => user._id !== props.userId));
-    });
+    if (props.userId) {
+      get("/api/search", { phrase: props.searchPhrase ? props.searchPhrase : "" }).then(
+        (results) => {
+          setSearchResults(results.filter((user) => user._id !== props.userId));
+        }
+      );
+    }
   }, [props]);
 
   if (!props.userId) {
@@ -20,7 +24,7 @@ const SearchResult = (props) => {
   }
   return (
     <>
-      <h1 className="u-textCenter my-3">
+      <h1 className="u-textCenter search-header my-3">
         {props.searchPhrase ? `Search Results for: ${props.searchPhrase}` : `All Search Results`}
       </h1>
       <SearchCarousel results={searchResults} userId={props.userId} />

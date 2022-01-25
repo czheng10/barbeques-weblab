@@ -22,7 +22,6 @@ const router = express.Router();
 
 //initialize socket
 const socketManager = require("./server-socket");
-const user = require("./models/user");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -58,12 +57,10 @@ router.get("/partyinfo", (req, res) => {
 });
 
 router.get("/parties", auth.ensureLoggedIn, (req, res) => {
-  ids = [];
-  allParty = [];
   User.findById(req.query.userid).then((user) => {
-    ids = user.parties.map((party) => party.party_id);
-    allParty = ids.map((id) => Party.findById(id));
-    Promise.all(allParty).then((allResult) => res.send(allResult));
+    Party.find({ _id: { $in: user.parties.map((party) => party.party_id) } }).then((result) =>
+      result ? res.send(result) : res.send([])
+    );
   });
 });
 
@@ -72,7 +69,9 @@ router.get("/users", auth.ensureLoggedIn, (req, res) => {
   allUsers = [];
   Party.findById(req.query.partyid).then((parties) => {
     ids = parties.members;
-    allUsers = ids.filter((id) => JSON.stringify(id) !== JSON.stringify(req.query.userid)).map((id) => User.findById(id));
+    allUsers = ids
+      .filter((id) => JSON.stringify(id) !== JSON.stringify(req.query.userid))
+      .map((id) => User.findById(id));
     Promise.all(allUsers).then((allResult) => res.send(allResult));
   });
 });
@@ -117,6 +116,7 @@ router.post(`/newPfp`, auth.ensureLoggedIn, (req, res) => {
     results.save().then((person) => res.send(person));
   });
 });
+
 router.post("/updatedbio", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     results.bio = req.body.newBio;
@@ -185,28 +185,67 @@ router.post("/addparty", auth.ensureLoggedIn, (req, res) => {
   );
 });
 
-//need to fix because database changed
 router.get("/active-parties", auth.ensureLoggedIn, async (req, res) => {
-  const user = await User.findById(req.query.userId);
+  const user = await User.findById(req.query.targetUserId);
   const partyIds = user.parties
     .filter((party) => party.feedback === 0)
     .map((party) => party.party_id);
-  Party.find({ _id: { $in: partyIds } }).then((results) => {
+  Party.find({
+    _id: { $in: partyIds },
+    host: mongoose.Types.ObjectId(req.query.targetUserId),
+    members: { $ne: mongoose.Types.ObjectId(req.query.userId) },
+    status: 1,
+  }).then((results) => {
     if (results) {
+<<<<<<< HEAD
       res.send(results.filter((result) => result.host.toString() === req.query.userId && result.status === 1));
+=======
+      res.send(results);
+>>>>>>> facfd24fff55e3ed4d70391c44bd8167a85b415f
     } else {
       res.send([]);
     }
   });
 });
 
+router.get("/myParties", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.query.userId).then((user) => {
+    const partyIds = user.parties
+      .filter((party) => party.feedback === 0)
+      .map((party) => party.party_id);
+    Party.find({
+      _id: { $in: partyIds },
+      status: 1,
+      host: mongoose.Types.ObjectId(req.query.userId),
+      members: { $ne: mongoose.Types.ObjectId(req.query.targetUserId) },
+    }).then((results) => {
+      if (results) {
+        res.send(results);
+      } else {
+        res.send([]);
+      }
+    });
+  });
+});
+
 router.post("/invite", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.to).then((user) => {
-    user.notifs.push({
-      party_id: mongoose.Types.ObjectId(req.body.partyId),
-      from: mongoose.Types.ObjectId(req.body.from),
-    });
-    user.save();
+    if (
+      !user.notifs.filter(
+        (notif) =>
+          notif.party_id.toString() === req.body.partyId && notif.from.toString() === req.body.from
+      ).length
+    ) {
+      user.notifs.push({
+        party_id: mongoose.Types.ObjectId(req.body.partyId),
+        from: mongoose.Types.ObjectId(req.body.from),
+      });
+      user.save().then((result) => {
+        if (socketManager.getSocketFromUserID(req.body.to)) {
+          socketManager.getSocketFromUserID(req.body.to).emit("newNotif", result.notifs);
+        }
+      });
+    }
   });
 });
 
@@ -222,18 +261,34 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
     user.save().then((updated) => {
       if (req.body.action === "accept") {
         Party.findById(req.body.notifParty).then((party) => {
-          const members = new Set(party.members);
-          members.add(req.body.toHost ? req.body.notifFrom : req.body.notifTo);
-          party.members = Array.from(members);
-          party.save().then(() => {
-            User.findById(req.body.toHost ? req.body.notifFrom : req.body.notifTo).then(
-              (new_user) => {
+          const host = mongoose.Types.ObjectId(
+            req.body.toHost ? req.body.notifTo : req.body.notifFrom
+          );
+          const newMember = mongoose.Types.ObjectId(
+            req.body.toHost ? req.body.notifFrom : req.body.notifTo
+          );
+          if (!party.members.includes(newMember)) {
+            party.members = party.members.concat(newMember);
+            party.save().then(() => {
+              User.findById(newMember).then((new_user) => {
                 new_user.total_parties += 1;
                 new_user.parties.push({ party_id: req.body.notifParty, status: 1 });
-                new_user.save().then((result) => res.send(updated.notifs));
-              }
-            );
-          });
+                new_user.save().then((result) => {
+                  if (socketManager.getSocketFromUserID(host)) {
+                    socketManager
+                      .getSocketFromUserID(host)
+                      .emit("acceptedNotif", { member: newMember, party: req.body.notifParty });
+                  }
+                  if (socketManager.getSocketFromUserID(newMember)) {
+                    socketManager
+                      .getSocketFromUserID(newMember)
+                      .emit("joinedParty", { host: host, party: req.body.notifParty });
+                  }
+                  res.send(updated.notifs);
+                });
+              });
+            });
+          }
         });
       } else {
         res.send(updated.notifs);

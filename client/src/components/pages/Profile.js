@@ -39,8 +39,8 @@ const Profile = ({ userId, targetUserId }) => {
     if (user) {
       const statuses = {};
       get("/api/parties", { userid: user._id }).then((party) => {
-        for(let i = 0; i < party.length; i++){
-          statuses[party[i]._id] = party[i].status;
+        for (const item of party) {
+          statuses[item._id] = item.status;
         }
       });
       setPartyStatus(statuses);

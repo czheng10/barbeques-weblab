@@ -1,24 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Dropdown } from "react-bootstrap";
 import TEST_PFP from "../../images/logo2.jpg";
-import { Link, navigate } from "@reach/router";
+import { Link } from "@reach/router";
 import { get, post } from "../../utilities.js";
+import { socket } from "../../client-socket.js";
 import "./SearchCarousel.css";
 
-const background = require("../../images/search-background.jpg");
+const background = require("../../images/bbq-party.jpg");
 
 const SearchCarousel = (props) => {
   const [activeParties, setActiveParties] = useState({});
+  const [myParties, setMyParties] = useState({});
 
   useEffect(() => {
-    const userIds = props.results.map((user) => user._id).concat([props.userId]);
-    const parties = {};
-    userIds.map((id) => {
-      get("/api/active-parties", { userId: id }).then((result) => {
-        setActiveParties((prevState) => ({ ...prevState, [id]: result }));
-      });
-    });
+    if (props.userId) {
+      props.results
+        .map((user) => user._id)
+        .map((id) => {
+          get("/api/active-parties", { targetUserId: id, userId: props.userId }).then((result) => {
+            setActiveParties((prevState) => ({ ...prevState, [id]: result }));
+          });
+          get("/api/myParties", { targetUserId: id, userId: props.userId }).then((result) => {
+            setMyParties((prevState) => ({ ...prevState, [id]: result }));
+          });
+        });
+    }
   }, [props]);
+
+  const updateMyParties = ({ member, party }) => {
+    setMyParties((prevState) => ({
+      ...prevState,
+      [member]: prevState[member].filter((items) => items._id !== party),
+    }));
+  };
+
+  const updateActiveParties = ({ host, party }) => {
+    setActiveParties((prevState) => ({
+      ...prevState,
+      [host]: prevState[host].filter((items) => items._id !== party),
+    }));
+  };
+
+  useEffect(() => {
+    socket.on("acceptedNotif", updateMyParties);
+    socket.on("joinedParty", updateActiveParties);
+  }, []);
 
   const handleInvite = (userId, partyId) => {
     post("/api/invite", {
@@ -56,8 +82,8 @@ const SearchCarousel = (props) => {
                   <Dropdown.Toggle variant="light">Invite</Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Header>Select one of your parties</Dropdown.Header>
-                    {activeParties[props.userId] ? (
-                      activeParties[props.userId].map((party, j) => (
+                    {myParties[user._id] && myParties[user._id].length ? (
+                      myParties[user._id].map((party, j) => (
                         <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
                           {party.name}
                         </Dropdown.Item>
@@ -71,7 +97,7 @@ const SearchCarousel = (props) => {
                   <Dropdown.Toggle variant="light">Ask to Join</Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Header>Select one of their Parties</Dropdown.Header>
-                    {activeParties[user._id] ? (
+                    {activeParties[user._id] && activeParties[user._id].length ? (
                       activeParties[user._id].map((party, j) => (
                         <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
                           {party.name}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Invite from "../../images/notification-invite.png";
 import Request from "../../images/notification-request.png";
+import { socket } from "../../client-socket.js";
 import "./Notifications.css";
 import { get, post } from "../../utilities.js";
 import { navigate } from "@reach/router";
@@ -15,18 +16,25 @@ const Notifications = ({ userId }) => {
     if (userId) {
       get("/api/active-notifs", { userId: userId }).then((results) => {
         setActiveNotifs(results);
-        results.map((notif) => {
-          get("/api/user", { userid: notif.from }).then((user) => {
-            setNotifMetadata((prevState) => ({ ...prevState, [notif.from]: user }));
-          });
-          get("/api/partyinfo", { partyId: notif.party_id }).then((party) => {
-            setNotifMetadata((prevState) => ({ ...prevState, [notif.party_id]: party }));
-          });
-        });
-        setLoading(false);
       });
     }
   }, [userId]);
+
+  useEffect(() => {
+    activeNotifs.map((notif) => {
+      get("/api/user", { userid: notif.from }).then((user) => {
+        setNotifMetadata((prevState) => ({ ...prevState, [notif.from]: user }));
+      });
+      get("/api/partyinfo", { partyid: notif.party_id }).then((party) => {
+        setNotifMetadata((prevState) => ({ ...prevState, [notif.party_id]: party }));
+      });
+    });
+    setLoading(false);
+  }, [activeNotifs]);
+
+  useEffect(() => {
+    socket.on("newNotif", setActiveNotifs);
+  }, []);
 
   const handleNotifAction = (notif, action) => {
     post("/api/update-notif", {
