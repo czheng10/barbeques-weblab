@@ -1,0 +1,4 @@
+.categories {
+  column-count: 3 !important;
+  column-gap: 50px;
+}

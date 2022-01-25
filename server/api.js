@@ -58,7 +58,10 @@ router.get("/partyinfo", (req, res) => {
 
 router.get("/parties", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.query.userid).then((user) => {
-    Party.find({ _id: { $in: user.parties.map((party) => party.party_id) } }).then((result) =>
+    let reduce = user.parties.filter((party) => 
+    party.feedback === 0
+    );
+    Party.find({ _id: { $in: reduce.map((party) => party.party_id) } }).then((result) =>
       result ? res.send(result) : res.send([])
     );
   });
@@ -90,6 +93,28 @@ router.post("/close", auth.ensureLoggedIn, (req, res) => {
     party.status = 0;
     party.save().then((person) => res.send(person));
   });
+});
+
+router.post("/finish", auth.ensureLoggedIn, (req, res) => {
+  console.log(req.body.users, "users");
+  let allFeedback = req.body.users.map((userid) =>
+    User.findById(userid).then((user) => {
+      console.log(user.parties)
+      let index = 0;
+      for (let idx = 0; idx < user.parties.length; idx++) {
+        console.log(JSON.stringify(user.parties[idx].party_id) === JSON.stringify(req.body.partyid));
+        console.log(req.body.partyid);
+        if(JSON.stringify(user.parties[idx].party_id) === JSON.stringify(req.body.partyid)){
+          index = idx;
+          break;
+        }
+      }
+      const change = { party_id: req.body.partyid, feedback: 1 };
+      user.parties = user.parties.slice(0,index).concat([change]).concat(user.parties.slice(index+1, user.parties.length));
+      user.save(); 
+    })
+  );
+  Promise.all(allFeedback).then((allResults) => {res.send(allResults)});
 });
 
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {

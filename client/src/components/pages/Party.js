@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 import { get, post } from "../../utilities";
 import "./Party.css";
-import { Link, navigate } from "@reach/router";
+import { Link } from "@reach/router";
 
-const Party = ({ userId, partyId }) => {
+const Party = ({location, userId, partyId }) => {
   const [user, setUser] = useState(null);
   const [party, setParty] = useState("");
   const [members, setMembers] = useState([]);

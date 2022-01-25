@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
+import { Link } from "@reach/router";
 import "./Feedback.css";
 
 const Survey = ({ location, userId, partyId }) => {
@@ -19,6 +20,7 @@ const Survey = ({ location, userId, partyId }) => {
   const [user, setUser] = useState(null);
   const [party, setParty] = useState("");
   const [members, setMembers] = useState([]);
+  const [memberId, setId] = useState([]);
   useEffect(() => {
     if (userId) {
       get("/api/user", { userid: userId }).then((result) => {
@@ -36,8 +38,11 @@ const Survey = ({ location, userId, partyId }) => {
   useEffect(() => {
     get("/api/users", { partyid: partyId, userid: userId }).then((result) => {
       setMembers(result.map((users) => users.name));
+      const ids = result.map((users) => users._id).concat([userId]);
+      setId(ids);
     });
   }, []);
+
   
   if (!userId) {
     return <div>Please login first</div>;
@@ -47,6 +52,11 @@ const Survey = ({ location, userId, partyId }) => {
     return <div>Loading</div>;
   }
 
+  const finishFeedback = () => {
+    console.log(memberId);
+    post("/api/finish", {users: memberId, partyid: partyId}).then((result) => {console.log("done")}
+    );
+  }
   return (
     <>
       <h1 className="u-textCenter">Feedback for Party: {party}</h1>
@@ -57,16 +67,20 @@ const Survey = ({ location, userId, partyId }) => {
         <Card key = {index}>
         <Card.Header as="h5">{item}</Card.Header>
         <Card.Body>
-          <Card.Title>Check All applicable boxes</Card.Title>
+          <Card.Title>Check All Applicable Boxes</Card.Title>
+          <div className = "categories">
           {category.map((item, index) => 
-            <div>
+            <div key = {index}>
               <input type="checkbox"/>
-              <label> {item}</label>
-              <br/>
+              <label> {criteria[item]}</label>
             </div>
           )}
+          </div>
         </Card.Body>
       </Card>)}
+      <Link
+      to={userId ? `/profile/${userId}` : "/"}
+      ><button hidden = {location.state.show.showButtons} onClick={() => finishFeedback()}> Submit Feedback </button></Link>
     </>
   );
 };
