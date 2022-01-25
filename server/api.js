@@ -221,7 +221,9 @@ router.post("/invite", auth.ensureLoggedIn, (req, res) => {
         from: mongoose.Types.ObjectId(req.body.from),
       });
       user.save().then((result) => {
-        socketManager.getSocketFromUserID(req.body.to).emit("newNotif", result.notifs);
+        if (socketManager.getSocketFromUserID(req.body.to)) {
+          socketManager.getSocketFromUserID(req.body.to).emit("newNotif", result.notifs);
+        }
       });
     }
   });
@@ -239,6 +241,9 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
     user.save().then((updated) => {
       if (req.body.action === "accept") {
         Party.findById(req.body.notifParty).then((party) => {
+          const host = mongoose.Types.ObjectId(
+            req.body.toHost ? req.body.notifTo : req.body.notifFrom
+          );
           const newMember = mongoose.Types.ObjectId(
             req.body.toHost ? req.body.notifFrom : req.body.notifTo
           );
@@ -249,9 +254,16 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
                 new_user.total_parties += 1;
                 new_user.parties.push({ party_id: req.body.notifParty, status: 1 });
                 new_user.save().then((result) => {
-                  socketManager
-                    .getSocketFromUserID(req.body.toHost ? req.body.notifTo : req.body.notifFrom)
-                    .emit("acceptedNotif", { member: newMember, party: req.body.notifParty });
+                  if (socketManager.getSocketFromUserID(host)) {
+                    socketManager
+                      .getSocketFromUserID(host)
+                      .emit("acceptedNotif", { member: newMember, party: req.body.notifParty });
+                  }
+                  if (socketManager.getSocketFromUserID(newMember)) {
+                    socketManager
+                      .getSocketFromUserID(newMember)
+                      .emit("joinedParty", { host: host, party: req.body.notifParty });
+                  }
                   res.send(updated.notifs);
                 });
               });

@@ -27,15 +27,23 @@ const SearchCarousel = (props) => {
     }
   }, [props]);
 
-  const updateParties = ({ member, party }) => {
+  const updateMyParties = ({ member, party }) => {
     setMyParties((prevState) => ({
       ...prevState,
       [member]: prevState[member].filter((items) => items._id !== party),
     }));
   };
 
+  const updateActiveParties = ({ host, party }) => {
+    setActiveParties((prevState) => ({
+      ...prevState,
+      [host]: prevState[host].filter((items) => items._id !== party),
+    }));
+  };
+
   useEffect(() => {
-    socket.on("acceptedNotif", updateParties);
+    socket.on("acceptedNotif", updateMyParties);
+    socket.on("joinedParty", updateActiveParties);
   }, []);
 
   const handleInvite = (userId, partyId) => {
