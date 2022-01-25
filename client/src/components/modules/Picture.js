@@ -4,15 +4,15 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
 const Picture = (props) => {
-  const [tempPath, setTempPath] = useState("");
-  const [title, setTitle] = useState("");
-  const [cap, setCap] = useState("");
-
-  const addPics = (event) => {
-    event.preventDefault();
+  let tempPath = "";
+  let title = "";
+  let cap = "";
+  const addPics = () => {
+    const id = tempPath;
     if (tempPath.includes("/d/")) {
-      const id = tempPath.split("/d/");
-      setTempPath("https://drive.google.com/uc?id=" + id[1].split("/")[0]);
+      const temp = tempPath.split("/d/");
+      const id ="https://drive.google.com/uc?id=" + temp[1].split("/")[0];
+      tempPath = id;
     }
     post(`/api/addPics`, {
       userid: props.userId,
@@ -20,13 +20,14 @@ const Picture = (props) => {
       picTitle: title,
       picCap: cap,
     }).then((results) => {
-      setTempPath("");
-      setTitle("");
-      setCap("");
+      tempPath="";
+      title = "";
+      cap = "";
       props.add();
       props.onHide();
-    });
+    }); 
   };
+
 
   return (
     <>
@@ -46,8 +47,7 @@ const Picture = (props) => {
             className="form-control"
             type="text"
             placeholder="Image Link"
-            value={tempPath}
-            onChange={(event) => setTempPath(event.target.value)}
+            onChange={(event) => tempPath = event.target.value}
           />
           <br />
           Image Title:
@@ -55,8 +55,7 @@ const Picture = (props) => {
             className="form-control"
             type="text"
             placeholder="My Food"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => title = event.target.value}
           />
           <br />
           Image Caption
@@ -64,12 +63,11 @@ const Picture = (props) => {
             className="form-control"
             type="text"
             placeholder="Food <3"
-            value={cap}
-            onChange={(event) => setCap(event.target.value)}
+            onChange={(event) => cap = event.target.value}
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={addPics}>Submit</Button>
+          <Button onClick={() => addPics()}>Submit</Button>
         </Modal.Footer>
       </Modal>
     </>

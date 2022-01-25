@@ -41,6 +41,7 @@ const Party = ({location, userId, partyId }) => {
     post("/api/close", {partyid: partyId}).then((result) => {
     });
   }
+  console.log(location.state.show);
   return (
     <>
       <h1 className="u-textCenter">Party Summary: {party}</h1>
@@ -49,7 +50,7 @@ const Party = ({location, userId, partyId }) => {
         <Link
               to={userId ? `/profile/${userId}` : "/"}
             >
-              <button hidden = {location.state.show.showButtons} onClick = {() => closeParty()}>Close Party</button>
+              <button hidden = {location.state.show} onClick = {() => closeParty()}>End Party</button>
               </Link>
       </p>
       <h2>Members:</h2>

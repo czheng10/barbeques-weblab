@@ -32,7 +32,7 @@ const RemovePic = (props) => {
           <Form.Select aria-label="Default select example" onChange={(event) => selectedPic(event)}>
             {allPics.map((item, index) => (
               <option key={index} value={index + " " + item.title}>
-                Picture{index + ": " + item.title}
+                Picture {index + ": " + item.title}
               </option>
             ))}
           </Form.Select>

@@ -68,7 +68,7 @@ const SearchCarousel = (props) => {
           <Carousel.Caption className="profile-card p-0">
             <div className="profile-card-top py-3">
               <img className="profile-card-pfp" src={user.pfp} />
-              <Link to={`/profile/${user._id}`}>
+              <Link to={`/profile/${user._id}`} state = {{userId: props.userId}}>
                 <h2 className="pt-3">{user.name}</h2>
               </Link>
             </div>
