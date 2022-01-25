@@ -19,7 +19,7 @@ const Notifications = ({ userId }) => {
           get("/api/user", { userid: notif.from }).then((user) => {
             setNotifMetadata((prevState) => ({ ...prevState, [notif.from]: user }));
           });
-          get("/api/party", { partyId: notif.party_id }).then((party) => {
+          get("/api/partyinfo", { partyId: notif.party_id }).then((party) => {
             setNotifMetadata((prevState) => ({ ...prevState, [notif.party_id]: party }));
           });
         });

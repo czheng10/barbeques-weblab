@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
 import "./Party.css";
+import { Link, navigate } from "@reach/router";
 
 const Party = ({ userId, partyId }) => {
   const [user, setUser] = useState(null);
@@ -36,22 +37,24 @@ const Party = ({ userId, partyId }) => {
     return <div>Loading</div>;
   }
 
+  const closeParty = () => {
+    post("/api/close", {partyid: partyId}).then((result) => {
+    });
+  }
   return (
     <>
-      <h1 className="u-textCenter">Feedback for Party: {party}</h1>
+      <h1 className="u-textCenter">Party Summary: {party}</h1>
       <p>
-        <b>Host: {user} </b>
+        <b>Host: {user} </b> 
+        <Link
+              to={userId ? `/profile/${userId}` : "/"}
+            >
+              <button hidden = {location.state.show.showButtons} onClick = {() => closeParty()}>Close Party</button>
+              </Link>
       </p>
-      {members.map((item) => 
-        <Card>
-        <Card.Header as="h5">{item}</Card.Header>
-        <Card.Body>
-          <Card.Title>Check All applicable boxes</Card.Title>
-          <div class=""><input type="checkbox"/>a</div>
-          <div class=""><input type="checkbox"/>b</div>
-          <div class=""><input type="checkbox"/>c</div>
-        </Card.Body>
-      </Card>)}
+      <h2>Members:</h2>
+      {members.length === 0 ? <h4>No Members So Far</h4>: members.map((item, index) => 
+        <h5 key = {index}>{item}</h5>)}
     </>
   );
 };

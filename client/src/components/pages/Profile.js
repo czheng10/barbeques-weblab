@@ -147,11 +147,15 @@ const Profile = ({ userId, targetUserId }) => {
                       {group.parties.length ? (
                         group.parties.map((party, j) => ( group.status === "Past" ?
                           <Card body className="my-2 partyCard" key={j}>
-                            <Link to={`/party/${party._id}`}>{party.name}</Link>
+                            <Link to={`/feedback/${party._id}`}
+                            state = {{show: showButtons}}>{party.name}
+                                  
+                            </Link>
                           </Card> 
                           :
                           <Card body className="my-2 partyCard" key={j}>
-                            <h5>{party.name}</h5>
+                            <Link to={`/party/${party._id}`}
+                            state = {{show: showButtons}}>{party.name}</Link>
                           </Card> 
                         ))
                       ) : (

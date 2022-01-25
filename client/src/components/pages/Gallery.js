@@ -4,7 +4,7 @@ import Picture from "../modules/Picture.js"
 import { get, post } from "../../utilities";
 import RemovePic from "../modules/RemovePic.js";
 
-const Gallery = (props) => {
+const Gallery = ({userId}) => {
     const [modalShow, setShow] = useState(false);
     const [removeShow, setRemove] = useState(false);
     console.log(props.user);

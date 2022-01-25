@@ -9,11 +9,13 @@ import Notifications from "./pages/Notifications.js";
 import Gallery from "./pages/Gallery.js";
 import ViewProfile from "./pages/ViewOther.js";
 import Party from "./pages/Party.js";
+import Survey from "./pages/FeedBack.js";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities.js";
+import Feedback from "react-bootstrap/esm/Feedback";
 
 /**
  * Define the "App" component
@@ -64,6 +66,7 @@ const App = () => {
         <Notifications path="/notifications" userId={userId} />
         <Gallery path="/gallery" userId={userId} />
         <ViewProfile path="/viewprofile/:otherUserId" userId={userId} />
+        <Survey path= "/feedback/:partyId" userId = {userId} />
         <Party path="/party/:partyId" userId={userId} />
         <NotFound default />
       </Router>

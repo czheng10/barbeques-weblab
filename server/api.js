@@ -85,6 +85,14 @@ router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+router.post("/close", auth.ensureLoggedIn, (req, res) => {
+  Party.findById(req.body.partyid).then((party) => {
+    console.log(party);
+    party.status = 0;
+    party.save().then((person) => res.send(person));
+  });
+});
+
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   const phrase = req.query.phrase;
   const findNamePromise = User.find({ name: { $regex: phrase, $options: "i" } });
@@ -185,7 +193,7 @@ router.get("/active-parties", auth.ensureLoggedIn, async (req, res) => {
     .map((party) => party.party_id);
   Party.find({ _id: { $in: partyIds } }).then((results) => {
     if (results) {
-      res.send(results.filter((result) => result.host.toString() === req.query.userId));
+      res.send(results.filter((result) => result.host.toString() === req.query.userId && result.status === 1));
     } else {
       res.send([]);
     }
