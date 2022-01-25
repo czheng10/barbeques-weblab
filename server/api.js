@@ -22,7 +22,6 @@ const router = express.Router();
 
 //initialize socket
 const socketManager = require("./server-socket");
-const user = require("./models/user");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -73,12 +72,12 @@ router.get("/partyNames", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
-  Party.findById(req.body.oldId).then((party) => {
-    party.name = req.body.newName;
-    party.save().then((person) => res.send(person));
-  });
-});
+// router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
+//   Party.findById(req.body.oldId).then((party) => {
+//     party.name = req.body.newName;
+//     party.save().then((person) => res.send(person));
+//   });
+// });
 
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   const phrase = req.query.phrase;
@@ -104,6 +103,7 @@ router.post(`/newPfp`, auth.ensureLoggedIn, (req, res) => {
     results.save().then((person) => res.send(person));
   });
 });
+
 router.post("/updatedbio", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((results) => {
     results.bio = req.body.newBio;
@@ -191,7 +191,9 @@ router.post("/invite", auth.ensureLoggedIn, (req, res) => {
       party_id: mongoose.Types.ObjectId(req.body.partyId),
       from: mongoose.Types.ObjectId(req.body.from),
     });
-    user.save();
+    user.save().then((result) => {
+      socketManager.getSocketFromUserID(req.body.to).emit("newNotif", result.notifs);
+    });
   });
 });
 
