@@ -5,7 +5,7 @@ import { Link, navigate } from "@reach/router";
 import { get, post } from "../../utilities.js";
 import "./SearchCarousel.css";
 
-const background = require("../../images/search-background.jpg");
+const background = require("../../images/bbq-party.jpg");
 
 const SearchCarousel = (props) => {
   const [activeParties, setActiveParties] = useState({});

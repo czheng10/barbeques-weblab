@@ -17,7 +17,10 @@
 .profile-background {
   min-height: 75vh;
   min-width: 95vw;
-  border-radius: 20px;
+  opacity: 0.25;
+  object-fit: cover;
+  border-style: solid;
+  border-color: black;
 }
 
 .profile-card {

@@ -20,7 +20,7 @@ const SearchResult = (props) => {
   }
   return (
     <>
-      <h1 className="u-textCenter my-3">
+      <h1 className="u-textCenter search-header my-3">
         {props.searchPhrase ? `Search Results for: ${props.searchPhrase}` : `All Search Results`}
       </h1>
       <SearchCarousel results={searchResults} userId={props.userId} />
