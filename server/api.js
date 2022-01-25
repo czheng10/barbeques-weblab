@@ -185,7 +185,7 @@ router.get("/active-parties", auth.ensureLoggedIn, async (req, res) => {
     .map((party) => party.party_id);
   Party.find({ _id: { $in: partyIds } }).then((results) => {
     if (results) {
-      res.send(results);
+      res.send(results.filter((result) => result.host.toString() === req.query.userId));
     } else {
       res.send([]);
     }
