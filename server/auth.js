@@ -25,7 +25,7 @@ function getOrCreateUser(user) {
     const newUser = new User({
       name: user.name,
       googleid: user.sub,
-      bio: "",
+      bio: "Hello, my name is " + user.name,
       pfp: "https://drive.google.com/uc?id=1vgaZ0DpRkYT8CojTv_n10WQbfXmMhXCH",
       allergies: [],
       email: user.email,
