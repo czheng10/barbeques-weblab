@@ -64,13 +64,10 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
                 id="basic-nav-dropdown"
               >
                 <NavDropdown.Item>
-                <Link
-                    to={userId ? `/profile/${userId}` : "/"}
-                    className="Navbar-link"
-                  >
-              <p className= "navbar-dropdownprofile">My Profile</p>
-              </Link>
-            </NavDropdown.Item>
+                  <Link to={userId ? `/profile/${userId}` : "/"} className="Navbar-link profile-link">
+                    <p className="navbar-dropdownprofile">My Profile</p>
+                  </Link>
+                </NavDropdown.Item>
                 <NavDropdown.Item>
                   <GoogleLogout
                     clientId={GOOGLE_CLIENT_ID}
