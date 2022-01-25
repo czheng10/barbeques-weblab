@@ -197,11 +197,7 @@ router.get("/active-parties", auth.ensureLoggedIn, async (req, res) => {
     status: 1,
   }).then((results) => {
     if (results) {
-<<<<<<< HEAD
-      res.send(results.filter((result) => result.host.toString() === req.query.userId && result.status === 1));
-=======
-      res.send(results);
->>>>>>> facfd24fff55e3ed4d70391c44bd8167a85b415f
+      res.send(results.filter((result) =>  result.status === 1));
     } else {
       res.send([]);
     }
