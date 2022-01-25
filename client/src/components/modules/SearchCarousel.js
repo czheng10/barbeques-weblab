@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Dropdown } from "react-bootstrap";
-import TEST_PFP from "../../images/logo2.jpg";
 import { Link } from "@reach/router";
 import { get, post } from "../../utilities.js";
 import { socket } from "../../client-socket.js";
@@ -68,13 +67,14 @@ const SearchCarousel = (props) => {
           />
           <Carousel.Caption className="profile-card p-0">
             <div className="profile-card-top py-3">
-              <img className="profile-card-pfp" src={TEST_PFP} />
+              <img className="profile-card-pfp" src={user.pfp} />
               <Link to={`/profile/${user._id}`}>
                 <h2 className="pt-3">{user.name}</h2>
               </Link>
             </div>
             <div className="profile-card-bottom py-3">
               <p>{user.bio}</p>
+              <p>{user.email}</p>
               <strong>Dietary Restrictions</strong>
               {user.allergies ? <p>Allergies: {user.allergies.join(", ")}</p> : <p>N/A</p>}
               <span className="d-flex u-flex-justifyCenter button-dropdown">
