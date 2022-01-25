@@ -76,13 +76,6 @@ router.get("/users", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-// router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
-//   Party.findById(req.body.oldId).then((party) => {
-//     party.name = req.body.newName;
-//     party.save().then((person) => res.send(person));
-//   });
-// });
-
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   const phrase = req.query.phrase;
   const findNamePromise = User.find({ name: { $regex: phrase, $options: "i" } });
