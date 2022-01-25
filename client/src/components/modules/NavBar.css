@@ -99,9 +99,3 @@
   padding-bottom: 20px;
   overflow: hidden;
 }
-
-.navbar-static-top {
-  top: 0px;
-  position: fixed;
-  width: 100%;
-}

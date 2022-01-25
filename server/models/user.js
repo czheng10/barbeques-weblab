@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
   parties: [
     {
       party_id: Schema.Types.ObjectId,
-      status: Number,
+      feedback: Number,
     },
   ],
   notifs: [

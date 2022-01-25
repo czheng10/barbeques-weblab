@@ -63,7 +63,11 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
                 title={user.name}
                 id="basic-nav-dropdown"
               >
-                <NavDropdown.Item href={`/profile/${userId}`}>My Profile</NavDropdown.Item>
+                <NavDropdown.Item><Link
+              to={userId ? `/profile/${userId}` : "/"}
+            >
+              <p>My Profile</p>
+            </Link></NavDropdown.Item>
                 <NavDropdown.Item>
                   <GoogleLogout
                     clientId={GOOGLE_CLIENT_ID}
@@ -78,7 +82,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
           </Nav>
         </Navbar>
       ) : (
-        <Navbar className="navbar-static-top navbar-nl" variant="dark" expand="sm">
+        <Navbar className="navbar-nl" variant="dark" expand="sm">
           <div className="navbar-nlcontainer">
             <img
               className="navbar-nlimage"

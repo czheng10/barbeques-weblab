@@ -38,9 +38,11 @@ const Profile = ({ userId, targetUserId }) => {
   useEffect(() => {
     if (user) {
       const statuses = {};
-      for (const party of user.parties) {
-        statuses[party.party_id] = party.status;
-      }
+      get("/api/parties", { userid: user._id }).then((party) => {
+        for(let i = 0; i < party.length; i++){
+          statuses[party[i]._id] = party[i].status;
+        }
+      });
       setPartyStatus(statuses);
     }
   }, [user]);
@@ -143,10 +145,14 @@ const Profile = ({ userId, targetUserId }) => {
                     <h6 className="text-start profile-partyHeaders">{group.status}</h6>
                     <div className="p-1 profile-partyGroup">
                       {group.parties.length ? (
-                        group.parties.map((party, j) => (
+                        group.parties.map((party, j) => ( group.status === "Past" ?
                           <Card body className="my-2 partyCard" key={j}>
                             <Link to={`/party/${party._id}`}>{party.name}</Link>
-                          </Card>
+                          </Card> 
+                          :
+                          <Card body className="my-2 partyCard" key={j}>
+                            <h5>{party.name}</h5>
+                          </Card> 
                         ))
                       ) : (
                         <p>N/A</p>
