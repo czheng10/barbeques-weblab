@@ -214,7 +214,7 @@ router.post("/invite", auth.ensureLoggedIn, (req, res) => {
       !user.notifs.filter(
         (notif) =>
           notif.party_id.toString() === req.body.partyId && notif.from.toString() === req.body.from
-      )
+      ).length
     ) {
       user.notifs.push({
         party_id: mongoose.Types.ObjectId(req.body.partyId),
