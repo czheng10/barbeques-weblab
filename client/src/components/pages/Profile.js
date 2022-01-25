@@ -51,7 +51,7 @@ const Profile = ({ userId, targetUserId }) => {
     if (partyStatus) {
       get("/api/parties", { userid: targetUserId }).then((party_list) => {
         const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
-        const pastParties = party_list.filter((party) => partyStatus[party._id] === 0 && party.members.length > 1);
+        const pastParties = party_list.filter((party) => partyStatus[party._id] === 0 && party.members.length > 0);
         setParties([
           { status: "Upcoming", parties: upcomingParties },
           { status: "Past", parties: pastParties },
