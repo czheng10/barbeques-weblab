@@ -76,22 +76,12 @@ router.get("/users", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-<<<<<<< HEAD
-// router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
-//   Party.findById(req.body.oldId).then((party) => {
-//     party.name = req.body.newName;
-//     party.save().then((person) => res.send(person));
-//   });
-// });
-=======
-
 router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
   Party.findById(req.body.oldId).then((party) => {
     party.name = req.body.newName;
     party.save().then((person) => res.send(person));
   });
 });
->>>>>>> b3bed6bdc915d1d0778f1b1a412aca72f815d5ea
 
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   const phrase = req.query.phrase;
