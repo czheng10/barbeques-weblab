@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
-import "./Feedback.css";
+import "./FeedBack.css";
 import "../../utilities.css";
 
 const criteria = {
@@ -26,8 +26,7 @@ const criteria = {
   "Seafood Splash": "Seafood pro",
   "Vegetable Visionary": "Yummy vegetables",
   "Breakfast Bunch": "Breakfast food pro",
-  "Un-pho-gettable": "Yummy noodles",
-};
+  "Un-pho-gettable": "Yummy noodles"};
 const category = [
   "Punctual Peach",
   "GrillBoss",
@@ -49,7 +48,7 @@ const category = [
   "Seafood Splash",
   "Vegetable Visionary",
   "Breakfast Bunch",
-  "Un-pho-gettable",
+  "Un-pho-gettable"
 ];
 const Survey = ({ location, userId, partyId }) => {
   const [user, setUser] = useState(null);
