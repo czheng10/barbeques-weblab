@@ -58,11 +58,7 @@ const Party = ({ location, userId, partyId }) => {
           <img className="hostpic" src={bbq} alt="logo" />
           <div>
             <Link to={userId ? `/profile/${userId}` : "/"}>
-              <button
-                className="btn"
-                hidden={location.state.show.showButtons}
-                onClick={() => closeParty()}
-              >
+              <button className="btn" hidden={location.state.show} onClick={() => closeParty()}>
                 End Party
               </button>
             </Link>

@@ -16,7 +16,6 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
     navigate(`/search/${searchPhrase}`);
     setSearchPhrase("");
   };
-
   return (
     <div>
       {userId ? (
@@ -48,7 +47,7 @@ const NavBar = ({ userId, handleLogin, handleLogout, user }) => {
               </Form>
             </Nav.Item>
             <Nav.Item className="mx-3">
-              <Link to="/gallery" className="nav-link Navbar-link">
+              <Link to= {`/gallery/${userId}`} state = {{show: ""}} className="nav-link Navbar-link">
                 Gallery
               </Link>
             </Nav.Item>

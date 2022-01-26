@@ -9,7 +9,8 @@ import PopupCard from "../modules/PopupCard.js";
 import MakeParty from "../modules/MakeParty.js";
 import BioPopupCard from "../modules/BioPopup.js";
 
-const Profile = ({ userId, targetUserId }) => {
+const Profile = ({ location, userId, targetUserId }) => {
+  console.log(userId, targetUserId);
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [partyShow, setPartyShow] = useState(false);
@@ -33,7 +34,7 @@ const Profile = ({ userId, targetUserId }) => {
     get("/api/user", { userid: targetUserId }).then((userObj) => {
       setUser(userObj);
     });
-  }, []);
+  }, [targetUserId]);
 
   useEffect(() => {
     if (user) {
@@ -166,6 +167,9 @@ const Profile = ({ userId, targetUserId }) => {
                     </div>
                   </div>
                 ))}
+                {showButtons === "hidden" ? 
+                <Link to={`/gallery/${targetUserId}`}
+                state = {{show: showButtons}}><button>View Gallery</button></Link>:<></> }
               </div>
             </div>
           </div>
