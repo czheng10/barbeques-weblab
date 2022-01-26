@@ -298,6 +298,9 @@ router.post("/invite", auth.ensureLoggedIn, (req, res) => {
           socketManager.getSocketFromUserID(req.body.to).emit("newNotif", result.notifs);
         }
       });
+      res.send({ message: `Successfully sent notification to ${user.name}` });
+    } else {
+      res.send({ message: `Already sent notification to ${user.name}` });
     }
   });
 });
