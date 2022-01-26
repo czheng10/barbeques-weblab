@@ -10,17 +10,17 @@ const criteria = [
   "Dessert master",
   "Yelp Boss",
   "Good host",
-  "Always willing to try every dish",
-  " Great at dinner conversation",
+  "Brave taste-tester",
+  "Dinner conversation pro",
   "Delicious appetizers",
   "Pro with meat dishes",
   "Pretty plating",
   "Soup master",
   "Really good drinks",
-  "Great at making healthy dishes",
+  "Healthy dishes pro",
   "Really good sauces",
   "Seafood pro",
-  "Delicious vegetable dishes",
+  "Yummy vegetables",
   "Breakfast food pro",
   "Yummy noodles",
 ];
@@ -83,16 +83,21 @@ const Achievement = ({ userId }) => {
   }, [userId]);
 
   return (
-    <>
+    <div className="achievements-list">
       {achievement
         .filter((item) => item >= 10)
         .map((item, index) => (
-          <>
-            <img className="icons" src={require("../../images/" + imgsrc[index]).default} />
-            <figcaption>{criteria[index]}</figcaption>
-          </>
+          <div className="rewards" key={index}>
+            <div className="front">
+              <img className="icons" src={require("../../images/" + imgsrc[index]).default} />
+              <p className="rewardtitle">{category[index]}</p>
+            </div>
+            <div className="back">
+              <p className="rewardtitle">{criteria[index]}</p>
+            </div>
+          </div>
         ))}
-    </>
+    </div>
   );
 };
 

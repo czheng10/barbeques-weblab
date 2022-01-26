@@ -33,6 +33,16 @@ const Home = () => {
           <p>Find friends who crave (and avoid) the same foods as you.</p>
         </div>
       </div>
+      <div className="disclaimers">
+        <p className="disclaim">
+          Our site is here to help you take the initial steps for planning a get-together.{" "}
+        </p>
+        <p className="disclaim">
+          Please keep Covid policies in mind and contact others through their given email.{" "}
+        </p>
+        <p className="disclaim">Thank you!</p>
+        <p>- Amanda, Cindy, Peihua </p>
+      </div>
     </div>
   );
 };
