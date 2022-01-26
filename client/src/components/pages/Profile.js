@@ -96,6 +96,13 @@ const Profile = ({ location, userId, targetUserId }) => {
               updateBio={setUserBio}
               onHide={() => setBioModalShow(false)}
             />
+            {showButtons === "hidden" ? (
+              <Link to={`/gallery/${targetUserId}`} state={{ show: showButtons }}>
+                <button className="btn">View Gallery</button>
+              </Link>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         <div className="col-6">
@@ -173,6 +180,7 @@ const Profile = ({ location, userId, targetUserId }) => {
                     </div>
                   </div>
                 ))}
+<<<<<<< HEAD
                 {showButtons === "hidden" ? (
                   <Link to={`/gallery/${targetUserId}`} state={{ show: showButtons }}>
                     <button>View Gallery</button>
@@ -180,6 +188,8 @@ const Profile = ({ location, userId, targetUserId }) => {
                 ) : (
                   <></>
                 )}
+=======
+>>>>>>> dbdf377482138ce208d16bf4cee69f5accdd0581
               </div>
             </div>
           </div>

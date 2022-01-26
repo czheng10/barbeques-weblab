@@ -56,3 +56,7 @@
 .userbio {
   color: var(--primary-xdark);
 }
+
+.carousel-dark .carousel-control-next-icon {
+  filter: none;
+}
