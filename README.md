@@ -1,90 +1,30 @@
-# How to code a webapp with this skeleton
+# Barbeques
+  Barbeques is a one-stop shop for food and friendship! Here, you can show off your beautiful dishes by uploading images to your gallery for all to see, host and plan parties with longtime friends, and make new friends through our search (especially if you're looking for someone with the same dietary restrictions). After a party ends, give feedback to each member, and earn achievements for your amazing cooking skills.
+  Our website targets the average college student, who is learning to cook for themselves for the first time. Barbeques helps everyone, from newbies to natural talents, share their cooking journey, and meet other college students who are in the same boat. Barbeques encourage students to host and join parties with others, give positive feedback, and build up each other's confidence in their cooking skills through rewarding them with badges for getting a certain compliment 3+ times. We realize that it may have been hard for college students to meet others because of COVID, so as a team, we hope to make our website something that can bring people together through our common passion: food.
 
-## Initial setup
+## How to run Barbeques
+  First, 'npm install'
+  Then open two seperate terminals, and 'npm run hotloader' in the first, and 'npm start' in the second.
+  Then open http://localhost:5000
 
-All teammates will need (explained in http://weblab.to/install)
-  - A bash console (on Mac or Linux, this is Terminal. On Windows, we recommend Git Bash)
-  - NodeJS version 16. If it is installed correctly, typing "node --version" should give v16.13.1 and "npm --version" should give 8.1.2
-  - Visual Studio Code (or another code editor)
-  - the Prettier VSCode extension
+ ## Sources
+ - https://react-bootstrap.github.io/components/
+ - https://stackoverflow.com/questions/41446560/react-setstate-not-updating-state
+ - https://blog.logrocket.com/react-hooks-cheat-sheet-unlock-solutions-to-common-problems-af4caf699e70/
+ - https://stackoverflow.com/questions/61301734/how-to-flip-div-on-hover-using-css
+ - https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
+ - https://www.w3schools.com/css/css_rwd_mediaqueries.asp
+ - https://css-tricks.com/snippets/css/media-queries-for-standard-devices/
+ - https://reactjs.org/docs/hooks-intro.html
+ - https://stackoverflow.com/questions/55625431/warning-validatedomnesting-a-cannot-appear-as-a-descendant-of-a
+ - https://dev.to/medaminefh/passing-data-with-react-router-using-link-1h39
 
-Also, all of you will need to go through the MongoDB Atlas setup (http://weblab.to/mongo-setup). 
+Note: We intend for most uploads of images on our website to mainly use google drive links although regular url image link works too.
+How to get a Google Drive Link of an Image:
+1. Go to your Google Drive and click New > File Upload 
+2. Upload the image from your computer
+3. Click on the image you uploaded in your Goggle Drive and go to the top right corner to find the get link button
+4. Set the settings of who can view to "Anyone with the link" and copy the provided link!
 
-Additionally for authentication, one of you will need to obtain a CLIENT_ID, instructions are at http://weblab.to/clientid 
+For more help, check out: https://www.depts.ttu.edu/education/ciel/documents/Google_Job_Aids/Google_Drive_Images_in_Google_Drive.pdf
 
-## Downloading these files
-
-First, you probably have a team repository somewhere (the link looks like: https://github.com/weblab-class/teammate1-teammate2-teammate3). You each should clone this (empty) repository by navigating to where you want your folder to be (**NOT in catbook**) and typing: git clone https://github.com/weblab-class/teammate1-teammate2-teammate3.git <-- with the correct link.
-
-Then, one of your team members will need to do the following: 
-
-First on GitHub, download the skeleton (this repository) as a zip file, by clicking Code -> Download as ZIP. (Do not clone it, since this will download extra files, like .git, which will lead to GitHub being confused). 
-
-Then, drag over all of the files in this skeleton into your team's folder. **Make sure to also drag over the hidden files!** To see these hidden files, navigate to the skeleton in Finder/File Explorer and press command+shift+period (mac) or View > Show > Hidden items (windows). 
-
-The files/folders you must drag over are:
-  - .babelrc (hidden)
-  - .gitignore (hidden)
-  - .npmrc (hidden)
-  - .prettierrc (hidden)
-  - client (folder)
-  - package-lock.json
-  - package.json
-  - README.md
-  - server (folder)
-  - webpack.config.js
-
-[Quick youtube demo on dragging the files](https://www.youtube.com/watch?v=7Q_xxowPW1c)
-
-Then, in terminal, navigate to your teams folder and push all of the files to your team's GitHub repository as usual:
-   - git add -A
-   - git commit -m "Skeleton code"
-   - git push 
-
-Now the rest of your teammates can pull all these files with a 'git pull'!
-
-Post on Piazza if you run into any issues
-
-## What you need to change in the skeleton
-
-- Change the Frontend CLIENT_ID (Skeleton.js) to your team's CLIENT_ID (obtain this at http://weblab.to/clientid)
-- Change the Server CLIENT_ID to the same CLIENT_ID (auth.js) 
-- Change the Database SRV (mongoConnectionURL) for Atlas (server.js). You got this in the MongoDB setup. remember to replace <password> and <dbname> (should be no < or > in your SRV)
-- Change the Database Name for MongoDB to whatever you put in the SRV to replace <dbname> (server.js)
-- (Optional) Add a favicon to your website at the path client/dist/favicon.ico
-- (Optional) Update website title in client/dist/index.html
-- (Optional) Update this README file ;)
-- (Optional) Update the package.json file with your app name :) (line 2)
-  
-## How to run this skeleton
-First, 'npm install'
-Then open two seperate terminals, and 'npm run hotloader' in the first, and 'npm start' in the second.
-Then open http://localhost:5000
-
-## How to go from this skeleton to your actual app
-Check out this [How to Get Started Guide](http://weblab.to/get-started)
-  
-## Socket stuff
-Note: we'll be getting to this in lecture in week 2, so don't worry if you don't know it yet
-
-- If you're not using realtime updating or don't need server->client communication, you can remove socket entirely! (server-socket.js, client-socket.js, and anything that imports them)
-- If you are using sockets, consider what you want to do with the FIXME in server-socket.js
-
-## Edit at your own risk
-
-the following files students do not need to edit. feel free to read them if you would like.
-
-```
-client/src/index.js
-client/src/utilities.js
-client/src/client-socket.js
-server/validator.js
-server/server-socket.js
-.babelrc
-.npmrc
-.prettierrc
-package-lock.json
-webpack.config.js
-```
-
-## Good luck on your project :)
