@@ -46,6 +46,11 @@ const Pfp = (props) => {
             ></button>
           </Modal.Header>
           <Modal.Body>
+            <p className="instructions">1. Upload your picture to Google Drive</p>
+            <p className="instructions">
+              2. Copy the link next to "Anyone on the internet with this link can view"
+            </p>
+            <p className="instructions3">3. Paste!</p>
             <input type="text" placeholder="Image Link" onChange={(event) => handleChange(event)} />
           </Modal.Body>
           <Modal.Footer>
