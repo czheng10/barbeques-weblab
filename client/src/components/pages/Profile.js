@@ -45,9 +45,7 @@ const Profile = ({ location, userId, targetUserId }) => {
     if (partyStatus) {
       get("/api/parties", { userid: targetUserId }).then((party_list) => {
         const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
-        const pastParties = party_list.filter(
-          (party) => partyStatus[party._id] === 0 && party.members.length > 0
-        );
+        const pastParties = party_list.filter((party) => partyStatus[party._id] === 0);
         setParties([
           { status: "Upcoming", parties: upcomingParties },
           { status: "Past", parties: pastParties },
@@ -95,6 +93,14 @@ const Profile = ({ location, userId, targetUserId }) => {
   }
   if (loading) {
     return <div>Loading</div>;
+  }
+  const finishedFeedback = (id) => {
+    for(const status of user.parties){
+      if(JSON.stringify(status.party_id) === JSON.stringify(id)){
+        return status.feedback === 1;
+      }
+    }
+    return false;
   }
   return (
     <>
@@ -187,9 +193,9 @@ const Profile = ({ location, userId, targetUserId }) => {
                         group.parties.map((party, j) =>
                           group.status === "Past" ? (
                             <Card body className="my-2 partyCard" key={j}>
-                              <Link to={`/feedback/${party._id}`} state={{ show: showButtons }}>
+                              {showButtons === "hidden" || finishedFeedback(party._id) || party.members.length === 0? <> {party.name}</> : <Link to={`/feedback/${party._id}`} state={{ show: showButtons }}>
                                 {party.name}
-                              </Link>
+                              </Link>}
                             </Card>
                           ) : (
                             <Card body className="my-2 partyCard" key={j}>

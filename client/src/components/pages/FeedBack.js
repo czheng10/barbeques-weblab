@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import { get, post } from "../../utilities";
-import { Link } from "@reach/router";
+import { navigate } from "@reach/router";
 import "./Feedback.css";
 const criteria = {
   "Punctual Peach": "always on time",
@@ -70,7 +70,7 @@ const Survey = ({ location, userId, partyId }) => {
   }, []);
 
   useEffect(() => {
-    get("/api/users", { partyid: partyId, userid: userId }).then((result) => {
+    get("/api/otherusers", { partyid: partyId, userid: userId }).then((result) => {
       setMembers(result.map((users) => users.name));
       setId(result.map((users) => users._id));
       let ary = [];
@@ -97,8 +97,13 @@ const Survey = ({ location, userId, partyId }) => {
     }
   };
   const finishFeedback = () => {
-    post("/api/survey", { users: memberId, achievement: collectInfo }).then(() => {
-      post("/api/finish", { userid: userId, partyid: partyId }).then((result) => {});
+    
+    post("/api/survey", {users:memberId, achievement: collectInfo}).then(() => 
+    {
+      post("/api/finish", {userid: userId, partyid: partyId}).then((result) => 
+      {
+        navigate(`/profile/${userId}`);
+      });
     });
   };
   return (
@@ -107,7 +112,7 @@ const Survey = ({ location, userId, partyId }) => {
       <p>
         <b>Host: {user} </b>
       </p>
-      {members.map((item, index) => (
+      {members.map((item, index) => 
         <Card key={index}>
           <Card.Header as="h5">{item}</Card.Header>
           <Card.Body>
@@ -120,15 +125,10 @@ const Survey = ({ location, userId, partyId }) => {
                 </div>
               ))}
             </div>
-          </Card.Body>
+            </Card.Body>
         </Card>
-      ))}
-      <Link to={userId ? `/profile/${userId}` : "/"}>
-        <button hidden={location.state.show.showButtons} onClick={() => finishFeedback()}>
-          {" "}
-          Submit Feedback{" "}
-        </button>
-      </Link>
+      )}
+      <button hidden = {location.state.show.showButtons} onClick={() => finishFeedback()}> Submit Feedback </button>
     </>
   );
 };
