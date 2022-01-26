@@ -65,11 +65,6 @@ const Profile = ({ location, userId, targetUserId }) => {
     setShowButtons(userId === targetUserId ? "" : "hidden");
   }, [userId, targetUserId]);
 
-  useEffect(() => {
-    if (user) {
-    }
-  }, [user]);
-
   if (!userId) {
     return <div>Please log in first.</div>;
   }
