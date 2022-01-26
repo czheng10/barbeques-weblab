@@ -95,6 +95,7 @@ const Achievement = ({ userId }) => {
           </div>
           <div className="back">
             <p className="rewardtitle">{criteria[index]}</p>
+            <p>Awarded: {item} times</p>
           </div>
         </div> :
         <></>
