@@ -3,9 +3,7 @@ import Card from 'react-bootstrap/Card';
 import { get, post } from "../../utilities";
 import { Link } from "@reach/router";
 import "./Feedback.css";
-
-const Survey = ({ location, userId, partyId }) => {
-  const criteria = {"Punctual Peach": "always on time","GrillBoss": "great at working the grill",
+const criteria = {"Punctual Peach": "always on time","GrillBoss": "great at working the grill",
   "Spice Girl": "good at spicy food","Seasoned Veteran": "pro at seasoning",
   "Smart Cookie": "pro planner","Icing on the Cake": "desert master",
   "Restaurant Egg-xpert": "really good at finding restaurants","Hearty Host": "a really good host",
@@ -14,9 +12,10 @@ const Survey = ({ location, userId, partyId }) => {
   "Soup-erhero": "pro at soups","Pitcher Perfect": "makes really good drinks ","Health Honey": "makes really good healthy dishes",
   "Saucy Sensation": "Really good at making sauces","Seafood splash": "seafood pro","Vegetable visionary": "really good at vegetable dishes",
   "Breakfast bunch": "breakfast food pro","Un-pho-gettable": "good noodles"};
-  const category = ["Punctual Peach","GrillBoss","Spice Girl","Seasoned Veteran","Smart Cookie","Icing on the Cake","Restaurant Egg-xpert","Hearty Host",
+const category = ["Punctual Peach","GrillBoss","Spice Girl","Seasoned Veteran","Smart Cookie","Icing on the Cake","Restaurant Egg-xpert","Hearty Host",
   "Chomp Champ","Winner Winner Chicken Dinner","Appetizer Ace","Protein pro","Presentation Pea","Soup-erhero","Pitcher Perfect","Health Honey",
-  "Saucy Sensation","Seafood splash","Vegetable visionary","Breakfast bunch","Un-pho-gettable"]
+  "Saucy Sensation","Seafood splash","Vegetable visionary","Breakfast bunch","Un-pho-gettable"];
+const Survey = ({ location, userId, partyId }) => {
   const [user, setUser] = useState(null);
   const [party, setParty] = useState("");
   const [members, setMembers] = useState([]);

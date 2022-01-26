@@ -7,6 +7,7 @@ import "./Profile.css";
 import Pfp from "../modules/pfp.js";
 import PopupCard from "../modules/PopupCard.js";
 import MakeParty from "../modules/MakeParty.js";
+import Achievement from "../modules/Achievement.js";
 import BioPopupCard from "../modules/BioPopup.js";
 
 const Profile = ({ location, userId, targetUserId }) => {
@@ -120,7 +121,7 @@ const Profile = ({ location, userId, targetUserId }) => {
           <div className="row">
             <div className="profile-achievements col justify-content-center">
               <h3 className="profile-titles">Achievements</h3>
-              <p className="profile-achievementsContainer profile-Text">Coming Soon</p>
+              <p className="profile-achievementsContainer profile-Text"><Achievement userId = {targetUserId}/></p>
             </div>
             <div className="profile-parties col justify-content-center">
               <h3 className="profile-titles">Parties</h3>
