@@ -58,8 +58,7 @@ router.get("/partyinfo", (req, res) => {
 
 router.get("/parties", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.query.userid).then((user) => {
-    let reduce = user.parties.filter((party) => party.feedback === 0);
-    Party.find({ _id: { $in: reduce.map((party) => party.party_id) } }).then((result) =>
+    Party.find({ _id: { $in: user.parties.map((party) => party.party_id) } }).then((result) =>
       result ? res.send(result) : res.send([])
     );
   });
@@ -70,6 +69,17 @@ router.get("/users", auth.ensureLoggedIn, (req, res) => {
   allUsers = [];
   Party.findById(req.query.partyid).then((parties) => {
     ids = parties.members;
+    allUsers = ids
+      .map((id) => User.findById(id));
+    Promise.all(allUsers).then((allResult) => res.send(allResult));
+  });
+});
+
+router.get("/otherusers", auth.ensureLoggedIn, (req, res) => {
+  ids = [];
+  allUsers = [];
+  Party.findById(req.query.partyid).then((parties) => {
+    ids = parties.members.concat([parties.host]);
     allUsers = ids
       .filter((id) => JSON.stringify(id) !== JSON.stringify(req.query.userid))
       .map((id) => User.findById(id));
@@ -86,7 +96,6 @@ router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/close", auth.ensureLoggedIn, (req, res) => {
   Party.findById(req.body.partyid).then((party) => {
-    console.log(party);
     party.status = 0;
     party.save().then((person) => res.send(person));
   });
@@ -113,7 +122,6 @@ router.post("/finish", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/survey", auth.ensureLoggedIn, (req, res) => {
-  console.log(req.body.users, req.body.achievement);
   let survey = req.body.users.map((userid, index) => {
     User.findById(userid).then((user) => {
       let sumAchievements = [];
@@ -121,7 +129,6 @@ router.post("/survey", auth.ensureLoggedIn, (req, res) => {
         sumAchievements.push(user.achievements[i] + req.body.achievement[index][i]);
       }
       user.achievements = sumAchievements;
-      console.log(sumAchievements);
       user.save();
     });
   });

@@ -12,16 +12,11 @@ const Party = ({ location, userId, partyId }) => {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    if (userId) {
-      get("/api/user", { userid: userId }).then((result) => {
-        setUser(result.name);
-      });
-    }
-  }, [userId]);
-
-  useEffect(() => {
     get("/api/partyinfo", { partyid: partyId }).then((result) => {
       setParty(result.name);
+      get("/api/user", { userid: result.host }).then((user) => {
+        setUser(user.name);
+      });
     });
   }, []);
 
@@ -40,7 +35,11 @@ const Party = ({ location, userId, partyId }) => {
   }
 
   const closeParty = () => {
-    post("/api/close", { partyid: partyId }).then((result) => {});
+    post("/api/close", { partyid: partyId }).then((result) => {
+      if (result.members.length === 0){
+        post("/api/finish", { partyid: partyId, userid: result.host }).then((user) => {});
+      }
+    });
   };
   return (
     <div className="party-all">
