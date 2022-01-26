@@ -5,7 +5,7 @@ import { get, post } from "../../utilities";
 import RemovePic from "../modules/RemovePic.js";
 import "./Gallery.css";
 
-const Gallery = ({location, targetUserId }) => {
+const Gallery = ({ location, targetUserId }) => {
   const [user, setUser] = useState(null);
   const [modalShow, setShow] = useState(false);
   const [removeShow, setRemove] = useState(false);
@@ -34,34 +34,45 @@ const Gallery = ({location, targetUserId }) => {
   console.log("location", location.state.show);
   return (
     <>
-      <button hidden = {location.state.show} className="btn btn-primary" onClick={() => setShow(true)}>
-        Upload
-      </button>
-      <Picture
-        show={modalShow}
-        userId={targetUserId}
-        add={changedPictures}
-        onHide={() => setShow(false)}
-      />
-      <button hidden = {location.state.show} className="btn btn-primary" onClick={() => setRemove(true)}>
-        delete
-      </button>
-      <RemovePic
-        show={removeShow}
-        allPics={pictures}
-        userId={targetUserId}
-        remove={() => changedPictures()}
-        onHide={() => setRemove(false)}
-      />
+      <div className="u-textCenter gallery-intro">
+        <h2 className="galleryheader">{user.name}'s Gallery</h2>
+        <button
+          hidden={location.state.show}
+          className="btn btn-primary gallery-button"
+          onClick={() => setShow(true)}
+        >
+          Upload
+        </button>
+        <Picture
+          show={modalShow}
+          userId={targetUserId}
+          add={changedPictures}
+          onHide={() => setShow(false)}
+        />
+        <button
+          hidden={location.state.show}
+          className="btn btn-primary gallery-button"
+          onClick={() => setRemove(true)}
+        >
+          Delete
+        </button>
+        <RemovePic
+          show={removeShow}
+          allPics={pictures}
+          userId={targetUserId}
+          remove={() => changedPictures()}
+          onHide={() => setRemove(false)}
+        />
+      </div>
       {pictures.length === 0 ? (
         <h1>No Pictures in Gallery</h1>
       ) : (
         <Carousel>
           {pictures.map((item, index) => (
-            <Carousel.Item key = {index}>
+            <Carousel.Item key={index}>
               <div className="gallery-card p-3 u-textCenter" key={index}>
                 <img className="gallery-img" src={item.src} />
-                <h3>{item.title}</h3>
+                <h3 className= "gallery-titles" >{item.title}</h3>
                 <p>{item.caption}</p>
               </div>
             </Carousel.Item>

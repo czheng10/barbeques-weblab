@@ -17,3 +17,37 @@
   height: 60vh;
   width: auto;
 }
+
+.galleryheader {
+  font-family: var(--logo-font);
+  font-size: 40px;
+  color: var(--primary-xdark);
+}
+
+.gallery-intro {
+  justify-items: center;
+  margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.gallery-button {
+  margin: 5px;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  filter: invert(100%);
+}
+
+.gallery-img {
+  width: 450px;
+  height: auto;
+  border-color: var(--primary-dark);
+  border-radius: 30px;
+  border-style: inset;
+  box-shadow: 2px 2px 4px var(--primary-xdark);
+}
+
+.gallery-titles {
+  margin-top: 10px;
+}
