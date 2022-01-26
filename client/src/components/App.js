@@ -14,7 +14,7 @@ import "../utilities.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities.js";
-import Feedback from "react-bootstrap/esm/Feedback";
+//import Feedback from "react-bootstrap/esm/Feedback";
 
 /**
  * Define the "App" component
