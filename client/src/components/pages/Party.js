@@ -4,12 +4,25 @@ import { get, post } from "../../utilities";
 import bbq from "../../images/BarbequeLogo.png";
 import bbq2 from "../../images/logob.png";
 import "./Party.css";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
+import { socket } from "../../client-socket.js";
 
 const Party = ({ location, userId, partyId }) => {
   const [user, setUser] = useState(null);
   const [party, setParty] = useState("");
   const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    if (userId) {
+      get("/api/user", { userid: userId }).then((result) => {
+        setUser(result.name);
+      });
+    }
+  }, [userId]);
+
+  const updateMembers = (member) => {
+    setMembers((prevState) => [...prevState, member.name]);
+  };
 
   useEffect(() => {
     get("/api/partyinfo", { partyid: partyId }).then((result) => {
@@ -18,6 +31,7 @@ const Party = ({ location, userId, partyId }) => {
         setUser(user.name);
       });
     });
+    socket.on("newMember", updateMembers);
   }, []);
 
   useEffect(() => {

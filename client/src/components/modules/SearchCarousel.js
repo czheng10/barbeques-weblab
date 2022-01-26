@@ -40,9 +40,21 @@ const SearchCarousel = (props) => {
     }));
   };
 
+  const updateParties = (party) => {
+    if (party.host !== props.userId) {
+      setActiveParties((prevState) => ({
+        ...prevState,
+        [party.host]: prevState[party.host].concat(party),
+      }));
+    } else {
+      setMyParties((prevState) => prevState.map((party) => prevState[party].concat(party)));
+    }
+  };
+
   useEffect(() => {
     socket.on("acceptedNotif", updateMyParties);
     socket.on("joinedParty", updateActiveParties);
+    socket.on("newParty", updateParties);
   }, []);
 
   const handleInvite = (userId, partyId) => {

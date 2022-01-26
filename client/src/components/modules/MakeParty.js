@@ -9,8 +9,8 @@ const MakeParty = (props) => {
   const addParty = (event) => {
     event.preventDefault();
     post(`/api/newparty`, { userid: props.userId, name: partyName }).then((partyId) =>
-      post(`/api/addparty`, { userid: props.userId, partyid: partyId }).then((user) => {
-        props.updateUser(user);
+      post(`/api/addparty`, { userid: props.userId, partyid: partyId }).then((party) => {
+        props.updateUser(party);
         setPartyName("");
       })
     );

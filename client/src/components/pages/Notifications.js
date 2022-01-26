@@ -32,8 +32,15 @@ const Notifications = ({ userId }) => {
     setLoading(false);
   }, [activeNotifs]);
 
+  const updateNotifs = (party) => {
+    setActiveNotifs(
+      activeNotifs.filter((notif) => notif.party_id.toString() !== party._id.toString())
+    );
+  };
+
   useEffect(() => {
     socket.on("newNotif", setActiveNotifs);
+    socket.on("deleteInvites", updateNotifs);
   }, []);
 
   const handleNotifAction = (notif, action) => {

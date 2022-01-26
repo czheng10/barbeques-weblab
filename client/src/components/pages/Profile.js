@@ -4,6 +4,7 @@ import { get } from "../../utilities.js";
 import { Link } from "@reach/router";
 import "../../utilities.css";
 import "./Profile.css";
+import { socket } from "../../client-socket.js";
 import Pfp from "../modules/pfp.js";
 import PopupCard from "../modules/PopupCard.js";
 import MakeParty from "../modules/MakeParty.js";
@@ -18,6 +19,7 @@ const Profile = ({ location, userId, targetUserId }) => {
   const [parties, setParties] = useState([]);
   const [partyStatus, setPartyStatus] = useState(null);
   const [showButtons, setShowButtons] = useState("hidden");
+  const [loading, setLoading] = useState(true);
   const setUserBio = (bio) => {
     setUser((prevState) => ({ ...prevState, bio: bio }));
   };
@@ -26,27 +28,18 @@ const Profile = ({ location, userId, targetUserId }) => {
     setUser((prevState) => ({ ...prevState, allergies: allergy }));
   };
 
-  useEffect(() => {
-    setShowButtons(userId === targetUserId ? "" : "hidden");
-  }, [userId, targetUserId]);
-
-  useEffect(() => {
+  const setUpProfile = () => {
     get("/api/user", { userid: targetUserId }).then((userObj) => {
       setUser(userObj);
-    });
-  }, [targetUserId]);
-
-  useEffect(() => {
-    if (user) {
       const statuses = {};
-      get("/api/parties", { userid: user._id }).then((party) => {
+      get("/api/parties", { userid: targetUserId }).then((party) => {
         for (const item of party) {
           statuses[item._id] = item.status;
         }
+        setPartyStatus(statuses);
       });
-      setPartyStatus(statuses);
-    }
-  }, [user]);
+    });
+  };
 
   useEffect(() => {
     if (partyStatus) {
@@ -57,14 +50,48 @@ const Profile = ({ location, userId, targetUserId }) => {
           { status: "Upcoming", parties: upcomingParties },
           { status: "Past", parties: pastParties },
         ]);
+        setLoading(false);
       });
     }
   }, [partyStatus]);
 
+  useEffect(() => {
+    setLoading(true);
+    setUpProfile();
+  }, [targetUserId]);
+
+  useEffect(() => {
+    setUpProfile();
+  }, []);
+
+  const closeParty = (party) => {
+    setPartyStatus((prevState) => ({ ...prevState, [party._id]: party.status }));
+  };
+
+  useEffect(() => {
+    socket.on("closedParty", closeParty);
+  }, []);
+
+  const updateParties = (party) => {
+    setPartyStatus((prevState) => ({ ...prevState, [party._id]: party.status }));
+    setParties(
+      parties.map((prevParty) => {
+        if (prevParty.status === "Upcoming") {
+          return { status: "Upcoming", parties: prevParty.parties.concat(party) };
+        }
+        return prevParty;
+      })
+    );
+  };
+
+  useEffect(() => {
+    setShowButtons(userId === targetUserId ? "" : "hidden");
+  }, [userId, targetUserId]);
+
   if (!userId) {
     return <div>Please log in first.</div>;
   }
-  if (!user) {
+  if (loading) {
     return <div>Loading</div>;
   }
   const finishedFeedback = (id) => {
@@ -156,7 +183,7 @@ const Profile = ({ location, userId, targetUserId }) => {
                   showButton={showButtons}
                   userId={targetUserId}
                   onHide={() => setPartyShow(false)}
-                  updateUser={setUser}
+                  updateUser={updateParties}
                 />
                 {parties.map((group, i) => (
                   <div key={i}>

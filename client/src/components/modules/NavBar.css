@@ -106,7 +106,7 @@ a:hover {
 }
 
 .navbar-dropdownprofile {
-  font-family: "Dosis", sans-serif;
+  font-family: "Dosis";
   font-size: 15px;
   margin-bottom: 5px;
   color: var(--primary-xdark);

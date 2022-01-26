@@ -31,7 +31,7 @@ function getOrCreateUser(user) {
       email: user.email,
       total_parties: 0,
       parties: [],
-      achievements: [10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      achievements: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       pictures: [],
     });
 
