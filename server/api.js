@@ -206,7 +206,10 @@ router.post("/newparty", auth.ensureLoggedIn, (req, res) => {
       members: [],
       status: 1,
     });
-    newParty.save().then((party) => res.send(JSON.stringify(party._id)));
+    newParty.save().then((party) => {
+      socketManager.getIo().emit("newParty", party);
+      res.send(JSON.stringify(party._id));
+    });
   });
 });
 
@@ -216,7 +219,7 @@ router.post("/addparty", auth.ensureLoggedIn, (req, res) => {
       const newParty = { party_id: party._id, feedback: 0 };
       results.parties.push(newParty);
       results.total_parties = results.total_parties + 1;
-      results.save().then((person) => res.send(person));
+      results.save().then((person) => res.send(party));
     })
   );
 });

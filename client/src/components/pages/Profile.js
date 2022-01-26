@@ -27,39 +27,48 @@ const Profile = ({ location, userId, targetUserId }) => {
   };
 
   useEffect(() => {
+    get("/api/user", { userid: targetUserId }).then((userObj) => {
+      setUser(userObj);
+    });
+    const statuses = {};
+    get("/api/parties", { userid: targetUserId }).then((party) => {
+      for (const item of party) {
+        statuses[item._id] = item.status;
+      }
+    });
+    setPartyStatus(statuses);
+    get("/api/parties", { userid: targetUserId }).then((party_list) => {
+      const upcomingParties = party_list.filter((party) => statuses[party._id] === 1);
+      const pastParties = party_list.filter(
+        (party) => statuses[party._id] === 0 && party.members.length > 0
+      );
+      setParties([
+        { status: "Upcoming", parties: upcomingParties },
+        { status: "Past", parties: pastParties },
+      ]);
+    });
+  }, [targetUserId]);
+
+  const updateParties = (party) => {
+    setPartyStatus((prevState) => ({ ...prevState, [party._id]: party.status }));
+    setParties(
+      parties.map((prevParty) => {
+        if (prevParty.status === "Upcoming") {
+          return { status: "Upcoming", parties: prevParty.parties.concat(party) };
+        }
+        return prevParty;
+      })
+    );
+  };
+
+  useEffect(() => {
     setShowButtons(userId === targetUserId ? "" : "hidden");
   }, [userId, targetUserId]);
 
   useEffect(() => {
-    get("/api/user", { userid: targetUserId }).then((userObj) => {
-      setUser(userObj);
-    });
-  }, [targetUserId]);
-
-  useEffect(() => {
     if (user) {
-      const statuses = {};
-      get("/api/parties", { userid: user._id }).then((party) => {
-        for (const item of party) {
-          statuses[item._id] = item.status;
-        }
-      });
-      setPartyStatus(statuses);
     }
   }, [user]);
-
-  useEffect(() => {
-    if (partyStatus) {
-      get("/api/parties", { userid: targetUserId }).then((party_list) => {
-        const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
-        const pastParties = party_list.filter((party) => partyStatus[party._id] === 0 && party.members.length > 0);
-        setParties([
-          { status: "Upcoming", parties: upcomingParties },
-          { status: "Past", parties: pastParties },
-        ]);
-      });
-    }
-  }, [partyStatus]);
 
   if (!userId) {
     return <div>Please log in first.</div>;
@@ -121,7 +130,9 @@ const Profile = ({ location, userId, targetUserId }) => {
           <div className="row">
             <div className="profile-achievements col justify-content-center">
               <h3 className="profile-titles">Achievements</h3>
-              <p className="profile-achievementsContainer profile-Text"><Achievement userId = {targetUserId}/></p>
+              <p className="profile-achievementsContainer profile-Text">
+                <Achievement userId={targetUserId} />
+              </p>
             </div>
             <div className="profile-parties col justify-content-center">
               <h3 className="profile-titles">Parties</h3>
@@ -139,7 +150,7 @@ const Profile = ({ location, userId, targetUserId }) => {
                   showButton={showButtons}
                   userId={targetUserId}
                   onHide={() => setPartyShow(false)}
-                  updateUser={setUser}
+                  updateUser={updateParties}
                 />
                 {parties.map((group, i) => (
                   <div key={i}>
@@ -167,9 +178,13 @@ const Profile = ({ location, userId, targetUserId }) => {
                     </div>
                   </div>
                 ))}
-                {showButtons === "hidden" ? 
-                <Link to={`/gallery/${targetUserId}`}
-                state = {{show: showButtons}}><button>View Gallery</button></Link>:<></> }
+                {showButtons === "hidden" ? (
+                  <Link to={`/gallery/${targetUserId}`} state={{ show: showButtons }}>
+                    <button>View Gallery</button>
+                  </Link>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
