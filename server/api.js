@@ -304,7 +304,7 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
           );
           if (!party.members.includes(newMember)) {
             party.members = party.members.concat(newMember);
-            party.save().then(() => {
+            party.save().then((part) => {
               User.findById(newMember).then((new_user) => {
                 new_user.total_parties += 1;
                 new_user.parties.push({ party_id: req.body.notifParty, feedback: 0 });
@@ -318,6 +318,11 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
                     socketManager
                       .getSocketFromUserID(newMember)
                       .emit("joinedParty", { host: host, party: req.body.notifParty });
+                  }
+                  for (const member of part.members.concat(host)) {
+                    if (socketManager.getSocketFromUserID(member)) {
+                      socketManager.getSocketFromUserID(member).emit("newMember", result);
+                    }
                   }
                   res.send(updated.notifs);
                 });

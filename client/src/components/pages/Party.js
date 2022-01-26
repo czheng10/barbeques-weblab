@@ -5,6 +5,7 @@ import bbq from "../../images/BarbequeLogo.png";
 import bbq2 from "../../images/logob.png";
 import "./Party.css";
 import { Link } from "@reach/router";
+import { socket } from "../../client-socket.js";
 
 const Party = ({ location, userId, partyId }) => {
   const [user, setUser] = useState(null);
@@ -19,10 +20,15 @@ const Party = ({ location, userId, partyId }) => {
     }
   }, [userId]);
 
+  const updateMembers = (member) => {
+    setMembers((prevState) => [...prevState, member.name]);
+  };
+
   useEffect(() => {
     get("/api/partyinfo", { partyid: partyId }).then((result) => {
       setParty(result.name);
     });
+    socket.on("newMember", updateMembers);
   }, []);
 
   useEffect(() => {

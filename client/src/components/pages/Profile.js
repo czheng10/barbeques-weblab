@@ -18,6 +18,7 @@ const Profile = ({ location, userId, targetUserId }) => {
   const [parties, setParties] = useState([]);
   const [partyStatus, setPartyStatus] = useState(null);
   const [showButtons, setShowButtons] = useState("hidden");
+  const [loading, setLoading] = useState(true);
   const setUserBio = (bio) => {
     setUser((prevState) => ({ ...prevState, bio: bio }));
   };
@@ -26,28 +27,38 @@ const Profile = ({ location, userId, targetUserId }) => {
     setUser((prevState) => ({ ...prevState, allergies: allergy }));
   };
 
-  useEffect(() => {
+  const setUpProfile = () => {
     get("/api/user", { userid: targetUserId }).then((userObj) => {
       setUser(userObj);
+      const statuses = {};
+      get("/api/parties", { userid: targetUserId }).then((party) => {
+        for (const item of party) {
+          statuses[item._id] = item.status;
+        }
+        setPartyStatus(statuses);
+        get("/api/parties", { userid: targetUserId }).then((party_list) => {
+          const upcomingParties = party_list.filter((party) => statuses[party._id] === 1);
+          const pastParties = party_list.filter(
+            (party) => statuses[party._id] === 0 && party.members.length > 0
+          );
+          setParties([
+            { status: "Upcoming", parties: upcomingParties },
+            { status: "Past", parties: pastParties },
+          ]);
+          setLoading(false);
+        });
+      });
     });
-    const statuses = {};
-    get("/api/parties", { userid: targetUserId }).then((party) => {
-      for (const item of party) {
-        statuses[item._id] = item.status;
-      }
-    });
-    setPartyStatus(statuses);
-    get("/api/parties", { userid: targetUserId }).then((party_list) => {
-      const upcomingParties = party_list.filter((party) => statuses[party._id] === 1);
-      const pastParties = party_list.filter(
-        (party) => statuses[party._id] === 0 && party.members.length > 0
-      );
-      setParties([
-        { status: "Upcoming", parties: upcomingParties },
-        { status: "Past", parties: pastParties },
-      ]);
-    });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    setUpProfile();
   }, [targetUserId]);
+
+  useEffect(() => {
+    setUpProfile();
+  }, []);
 
   const updateParties = (party) => {
     setPartyStatus((prevState) => ({ ...prevState, [party._id]: party.status }));
@@ -68,7 +79,7 @@ const Profile = ({ location, userId, targetUserId }) => {
   if (!userId) {
     return <div>Please log in first.</div>;
   }
-  if (!user) {
+  if (loading) {
     return <div>Loading</div>;
   }
   return (

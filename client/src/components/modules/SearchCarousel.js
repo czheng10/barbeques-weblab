@@ -47,7 +47,7 @@ const SearchCarousel = (props) => {
         [party.host]: prevState[party.host].concat(party),
       }));
     } else {
-      setMyParties(myParties.map((party) => prevState[party].concat(party)));
+      setMyParties((prevState) => prevState.map((party) => prevState[party].concat(party)));
     }
   };
 
