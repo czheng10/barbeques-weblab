@@ -96,26 +96,36 @@ router.post("/close", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/finish", auth.ensureLoggedIn, (req, res) => {
-  console.log(req.body.users, "users");
-  let allFeedback = req.body.users.map((userid) =>
-    User.findById(userid).then((user) => {
-      console.log(user.parties)
-      let index = 0;
-      for (let idx = 0; idx < user.parties.length; idx++) {
-        console.log(JSON.stringify(user.parties[idx].party_id) === JSON.stringify(req.body.partyid));
-        console.log(req.body.partyid);
-        if(JSON.stringify(user.parties[idx].party_id) === JSON.stringify(req.body.partyid)){
-          index = idx;
-          break;
-        }
+  User.findById(req.body.userid).then((user) => {
+    let index = 0;
+    for (let idx = 0; idx < user.parties.length; idx++) {
+      if(JSON.stringify(user.parties[idx].party_id) === JSON.stringify(req.body.partyid)){
+        index = idx;
+        break;
       }
-      const change = { party_id: req.body.partyid, feedback: 1 };
-      user.parties = user.parties.slice(0,index).concat([change]).concat(user.parties.slice(index+1, user.parties.length));
-      user.save(); 
-    })
-  );
-  Promise.all(allFeedback).then((allResults) => {res.send(allResults)});
+    }
+    const change = { party_id: req.body.partyid, feedback: 1 };
+    user.parties = user.parties.slice(0,index).concat([change]).concat(user.parties.slice(index+1, user.parties.length));
+    user.save().then((results) => {res.send(results)});
+  });
 });
+
+router.post("/survey", auth.ensureLoggedIn, (req, res) => {
+  console.log(req.body.users, req.body.achievement);
+  let survey = req.body.users.map((userid, index) => {
+      User.findById(userid).then((user) => {
+        let sumAchievements = [];
+        for(let i = 0; i < user.achievements.length; i++){
+          sumAchievements.push(user.achievements[i] + req.body.achievement[index][i]);
+        }
+        user.achievements = sumAchievements;
+        console.log(sumAchievements);
+        user.save();
+      });
+    });
+    Promise.all(survey).then((person) => res.send(person));
+  });
+  
 
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   const phrase = req.query.phrase;

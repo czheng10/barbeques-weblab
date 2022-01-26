@@ -10,7 +10,6 @@ import MakeParty from "../modules/MakeParty.js";
 import BioPopupCard from "../modules/BioPopup.js";
 
 const Profile = ({ location, userId, targetUserId }) => {
-  console.log(userId, targetUserId);
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [partyShow, setPartyShow] = useState(false);

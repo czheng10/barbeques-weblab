@@ -11,16 +11,17 @@ const Survey = ({ location, userId, partyId }) => {
   "Restaurant Egg-xpert": "really good at finding restaurants","Hearty Host": "a really good host",
   "Chomp Champ": "always willing to try every dish","Winner Winner Chicken Dinner": " great at dinner conversation",
   "Appetizer Ace": "good at appetizer","Protein pro": "great at meat dishes","Presentation Pea": "great at plating",
-  "Soup-erhero": "pro at soups","Perfect Pitch": "makes really good drinks ","Health Honey": "makes really good healthy dishes",
+  "Soup-erhero": "pro at soups","Pitcher Perfect": "makes really good drinks ","Health Honey": "makes really good healthy dishes",
   "Saucy Sensation": "Really good at making sauces","Seafood splash": "seafood pro","Vegetable visionary": "really good at vegetable dishes",
   "Breakfast bunch": "breakfast food pro","Un-pho-gettable": "good noodles"};
   const category = ["Punctual Peach","GrillBoss","Spice Girl","Seasoned Veteran","Smart Cookie","Icing on the Cake","Restaurant Egg-xpert","Hearty Host",
-  "Chomp Champ","Winner Winner Chicken Dinner","Appetizer Ace","Protein pro","Presentation Pea","Soup-erhero","Perfect Pitch","Health Honey",
+  "Chomp Champ","Winner Winner Chicken Dinner","Appetizer Ace","Protein pro","Presentation Pea","Soup-erhero","Pitcher Perfect","Health Honey",
   "Saucy Sensation","Seafood splash","Vegetable visionary","Breakfast bunch","Un-pho-gettable"]
   const [user, setUser] = useState(null);
   const [party, setParty] = useState("");
   const [members, setMembers] = useState([]);
   const [memberId, setId] = useState([]);
+  const [collectInfo, setCollect] = useState([]);
   useEffect(() => {
     if (userId) {
       get("/api/user", { userid: userId }).then((result) => {
@@ -38,8 +39,12 @@ const Survey = ({ location, userId, partyId }) => {
   useEffect(() => {
     get("/api/users", { partyid: partyId, userid: userId }).then((result) => {
       setMembers(result.map((users) => users.name));
-      const ids = result.map((users) => users._id).concat([userId]);
-      setId(ids);
+      setId(result.map((users) => users._id));
+      let ary = [];
+      for(let i = 0; i < result.length; i++){
+        ary.push([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+      }
+      setCollect(ary);
     });
   }, []);
 
@@ -52,10 +57,22 @@ const Survey = ({ location, userId, partyId }) => {
     return <div>Loading</div>;
   }
 
+  const collectFeedback = (event, index, idx) => {
+    console.log(collectInfo);
+    if (event.target.checked){
+      collectInfo[index][idx] = 1;
+    }else{
+      collectInfo[index][idx] = 0;
+    }
+    console.log(collectInfo[index]);
+  }
   const finishFeedback = () => {
-    console.log(memberId);
-    post("/api/finish", {users: memberId, partyid: partyId}).then((result) => {console.log("done")}
-    );
+    
+    post("/api/survey", {users:memberId, achievement: collectInfo}).then(() => 
+    {
+      post("/api/finish", {userid: userId, partyid: partyId}).then((result) => 
+      {});
+    });
   }
   return (
     <>
@@ -69,9 +86,9 @@ const Survey = ({ location, userId, partyId }) => {
         <Card.Body>
           <Card.Title>Check All Applicable Boxes</Card.Title>
           <div className = "categories">
-          {category.map((item, index) => 
-            <div key = {index}>
-              <input type="checkbox"/>
+          {category.map((item, idx) => 
+            <div key = {idx}>
+              <input type="checkbox" onChange = {(event) => collectFeedback(event, index, idx)}/>
               <label> {criteria[item]}</label>
             </div>
           )}
