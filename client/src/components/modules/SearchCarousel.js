@@ -68,15 +68,18 @@ const SearchCarousel = (props) => {
           <Carousel.Caption className="profile-card p-0">
             <div className="profile-card-top py-3">
               <img className="profile-card-pfp" src={user.pfp} />
-              <Link to={`/profile/${user._id}`} state = {{userId: props.userId}}>
+              <Link to={`/profile/${user._id}`} state={{ userId: props.userId }}>
                 <h2 className="pt-3">{user.name}</h2>
               </Link>
             </div>
             <div className="profile-card-bottom py-3">
-              <p>{user.bio}</p>
-              <p>{user.email}</p>
-              <strong>Dietary Restrictions</strong>
-              {user.allergies ? <p>Allergies: {user.allergies.join(", ")}</p> : <p>N/A</p>}
+              <p className="userbio">{user.bio}</p>
+              <p>Contact me at {user.email}</p>
+              {user.allergies.length > 0 ? (
+                <p>Dietary Restrictions: {user.allergies.join(", ")}</p>
+              ) : (
+                <p>Dietary Restrictions: N/A</p>
+              )}
               <span className="d-flex u-flex-justifyCenter button-dropdown">
                 <Dropdown className="search-dropdown">
                   <Dropdown.Toggle variant="light">Invite</Dropdown.Toggle>

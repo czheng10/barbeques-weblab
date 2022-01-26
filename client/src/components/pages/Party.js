@@ -43,41 +43,43 @@ const Party = ({ location, userId, partyId }) => {
     post("/api/close", { partyid: partyId }).then((result) => {});
   };
   return (
-    <div className="party-all">
-      <div className="">
-        <h1 className="u-textCenter party-header">
-          <span className="partysummary"> Party: </span>
-          <span className="partyname">{party}</span>
-        </h1>
-      </div>
-      <div className="hostContainer">
-        <p>
-          <h2>
-            <span className="partytitle"> Host: </span> {user}
-          </h2>
-          <img className="hostpic" src={bbq} alt="logo" />
-          <div>
-            <Link to={userId ? `/profile/${userId}` : "/"}>
-              <button className="btn" hidden={location.state.show} onClick={() => closeParty()}>
-                End Party
-              </button>
-            </Link>
-          </div>
-        </p>
-      </div>
-      <div className="party-members">
-        <h2 className="partymembersheader partytitle ">Members:</h2>
-        {members.length === 0 ? (
-          <h6>No Members So Far</h6>
-        ) : (
-          members.map((item, index) => (
-            <div className="members">
-              <h5 key={index}>{item}</h5>
+    <body className="partypage">
+      <div className="party-all">
+        <div className="">
+          <h1 className="u-textCenter party-header">
+            <span className="partysummary"> Party: </span>
+            <span className="partyname">{party}</span>
+          </h1>
+        </div>
+        <div className="hostContainer">
+          <p>
+            <h2>
+              <span className="partytitle"> Host: </span> {user}
+            </h2>
+            <img className="hostpic" src={bbq} alt="logo" />
+            <div>
+              <Link to={userId ? `/profile/${userId}` : "/"}>
+                <button className="btn" hidden={location.state.show} onClick={() => closeParty()}>
+                  End Party
+                </button>
+              </Link>
             </div>
-          ))
-        )}
+          </p>
+        </div>
+        <div className="party-members">
+          <h2 className="partymembersheader partytitle ">Members:</h2>
+          {members.length === 0 ? (
+            <h6>No Members So Far</h6>
+          ) : (
+            members.map((item, index) => (
+              <div className="members">
+                <h5 key={index}>{item}</h5>
+              </div>
+            ))
+          )}
+        </div>
       </div>
-    </div>
+    </body>
   );
 };
 
