@@ -45,3 +45,7 @@
   font-size: 15px;
   margin-top: 0px;
 }
+
+.achievements-list {
+  justify-items: center;
+}

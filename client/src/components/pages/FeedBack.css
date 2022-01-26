@@ -2,11 +2,37 @@
   column-count: 3 !important;
   column-gap: 50px;
 }
+
+.fb-header {
+  color: var(--primary-xdark);
+  font-family: var(--logo-font);
+  font-size: 60px;
+}
+
 .partyName {
-  color: black;
-  font-size: 15px;
+  color: black !important;
+  font-size: 50px;
   text-shadow: 2px 2px 5px var(--primary);
 }
+
 .hostName {
   color: var(--primary-xdark);
+}
+
+.person {
+  background-color: var(--primary-light);
+}
+
+.titles {
+  margin-left: 5px;
+}
+
+.hosting {
+  text-align: center;
+}
+
+.submit-button {
+  margin: 20px;
+  justify-self: center;
+  float: right;
 }

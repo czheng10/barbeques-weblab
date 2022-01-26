@@ -8,6 +8,7 @@ import "./SearchResult.css";
 
 const SearchResult = (props) => {
   const [searchResults, setSearchResults] = useState([]);
+  const [alert, setAlert] = useState("");
 
   useEffect(() => {
     if (props.userId) {
@@ -27,7 +28,19 @@ const SearchResult = (props) => {
       <h1 className="u-textCenter search-header my-3">
         {props.searchPhrase ? `Search Results for: ${props.searchPhrase}` : `All Search Results`}
       </h1>
-      <SearchCarousel results={searchResults} userId={props.userId} />
+      {alert ? (
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          {alert}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+            onClick={() => setAlert("")}
+          ></button>
+        </div>
+      ) : null}
+      <SearchCarousel results={searchResults} userId={props.userId} updateAlert={setAlert} />
     </>
   );
 };

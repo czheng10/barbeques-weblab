@@ -57,11 +57,13 @@ const SearchCarousel = (props) => {
     socket.on("newParty", updateParties);
   }, []);
 
-  const handleInvite = (userId, partyId) => {
+  const handleInvite = (userId, partyId, name) => {
     post("/api/invite", {
       from: props.userId,
       to: userId,
       partyId: partyId,
+    }).then((result) => {
+      props.updateAlert(result.message);
     });
   };
 
@@ -99,7 +101,10 @@ const SearchCarousel = (props) => {
                     <Dropdown.Header>Select one of your parties</Dropdown.Header>
                     {myParties[user._id] && myParties[user._id].length ? (
                       myParties[user._id].map((party, j) => (
-                        <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
+                        <Dropdown.Item
+                          key={j}
+                          onClick={() => handleInvite(user._id, party._id, user.name)}
+                        >
                           {party.name}
                         </Dropdown.Item>
                       ))
@@ -114,7 +119,10 @@ const SearchCarousel = (props) => {
                     <Dropdown.Header>Select one of their Parties</Dropdown.Header>
                     {activeParties[user._id] && activeParties[user._id].length ? (
                       activeParties[user._id].map((party, j) => (
-                        <Dropdown.Item key={j} onClick={() => handleInvite(user._id, party._id)}>
+                        <Dropdown.Item
+                          key={j}
+                          onClick={() => handleInvite(user._id, party._id, user.name)}
+                        >
                           {party.name}
                         </Dropdown.Item>
                       ))
