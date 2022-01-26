@@ -86,9 +86,29 @@ router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/close", auth.ensureLoggedIn, (req, res) => {
   Party.findById(req.body.partyid).then((party) => {
-    console.log(party);
     party.status = 0;
-    party.save().then((person) => res.send(person));
+    party.save().then((part) => {
+      User.findById(party.host).then((user) => {
+        user.notifs = user.notifs.filter(
+          (notif) => notif.party_id.toString() !== party._id.toString()
+        );
+        user.save().then((updatedUser) => {
+          if (socketManager.getSocketFromUserID(updatedUser._id)) {
+            socketManager.getSocketFromUserID(updatedUser._id).emit("closedParty", party);
+          }
+        });
+      });
+      User.find({}).then((users) => {
+        users.map((result) => {
+          result.notifs = result.notifs.filter(
+            (notif) => notif.party_id.toString() !== party._id.toString()
+          );
+          result.save().then();
+        });
+      });
+      socketManager.getIo().emit("deleteInvites", party);
+      res.send(part);
+    });
   });
 });
 
@@ -113,7 +133,6 @@ router.post("/finish", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/survey", auth.ensureLoggedIn, (req, res) => {
-  console.log(req.body.users, req.body.achievement);
   let survey = req.body.users.map((userid, index) => {
     User.findById(userid).then((user) => {
       let sumAchievements = [];
@@ -121,7 +140,6 @@ router.post("/survey", auth.ensureLoggedIn, (req, res) => {
         sumAchievements.push(user.achievements[i] + req.body.achievement[index][i]);
       }
       user.achievements = sumAchievements;
-      console.log(sumAchievements);
       user.save();
     });
   });

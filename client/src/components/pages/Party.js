@@ -4,7 +4,7 @@ import { get, post } from "../../utilities";
 import bbq from "../../images/BarbequeLogo.png";
 import bbq2 from "../../images/logob.png";
 import "./Party.css";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import { socket } from "../../client-socket.js";
 
 const Party = ({ location, userId, partyId }) => {

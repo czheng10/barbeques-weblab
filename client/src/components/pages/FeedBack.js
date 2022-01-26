@@ -1,20 +1,54 @@
 import React, { useState, useEffect } from "react";
-import Card from 'react-bootstrap/Card';
+import Card from "react-bootstrap/Card";
 import { get, post } from "../../utilities";
 import { Link } from "@reach/router";
 import "./Feedback.css";
-const criteria = {"Punctual Peach": "always on time","GrillBoss": "great at working the grill",
-  "Spice Girl": "good at spicy food","Seasoned Veteran": "pro at seasoning",
-  "Smart Cookie": "pro planner","Icing on the Cake": "desert master",
-  "Restaurant Egg-xpert": "really good at finding restaurants","Hearty Host": "a really good host",
-  "Chomp Champ": "always willing to try every dish","Winner Winner Chicken Dinner": " great at dinner conversation",
-  "Appetizer Ace": "good at appetizer","Protein pro": "great at meat dishes","Presentation Pea": "great at plating",
-  "Soup-erhero": "pro at soups","Pitcher Perfect": "makes really good drinks ","Health Honey": "makes really good healthy dishes",
-  "Saucy Sensation": "Really good at making sauces","Seafood splash": "seafood pro","Vegetable visionary": "really good at vegetable dishes",
-  "Breakfast bunch": "breakfast food pro","Un-pho-gettable": "good noodles"};
-const category = ["Punctual Peach","GrillBoss","Spice Girl","Seasoned Veteran","Smart Cookie","Icing on the Cake","Restaurant Egg-xpert","Hearty Host",
-  "Chomp Champ","Winner Winner Chicken Dinner","Appetizer Ace","Protein pro","Presentation Pea","Soup-erhero","Pitcher Perfect","Health Honey",
-  "Saucy Sensation","Seafood splash","Vegetable visionary","Breakfast bunch","Un-pho-gettable"];
+const criteria = {
+  "Punctual Peach": "always on time",
+  GrillBoss: "great at working the grill",
+  "Spice Girl": "good at spicy food",
+  "Seasoned Veteran": "pro at seasoning",
+  "Smart Cookie": "pro planner",
+  "Icing on the Cake": "desert master",
+  "Restaurant Egg-xpert": "really good at finding restaurants",
+  "Hearty Host": "a really good host",
+  "Chomp Champ": "always willing to try every dish",
+  "Winner Winner Chicken Dinner": " great at dinner conversation",
+  "Appetizer Ace": "good at appetizer",
+  "Protein pro": "great at meat dishes",
+  "Presentation Pea": "great at plating",
+  "Soup-erhero": "pro at soups",
+  "Pitcher Perfect": "makes really good drinks ",
+  "Health Honey": "makes really good healthy dishes",
+  "Saucy Sensation": "Really good at making sauces",
+  "Seafood splash": "seafood pro",
+  "Vegetable visionary": "really good at vegetable dishes",
+  "Breakfast bunch": "breakfast food pro",
+  "Un-pho-gettable": "good noodles",
+};
+const category = [
+  "Punctual Peach",
+  "GrillBoss",
+  "Spice Girl",
+  "Seasoned Veteran",
+  "Smart Cookie",
+  "Icing on the Cake",
+  "Restaurant Egg-xpert",
+  "Hearty Host",
+  "Chomp Champ",
+  "Winner Winner Chicken Dinner",
+  "Appetizer Ace",
+  "Protein pro",
+  "Presentation Pea",
+  "Soup-erhero",
+  "Pitcher Perfect",
+  "Health Honey",
+  "Saucy Sensation",
+  "Seafood splash",
+  "Vegetable visionary",
+  "Breakfast bunch",
+  "Un-pho-gettable",
+];
 const Survey = ({ location, userId, partyId }) => {
   const [user, setUser] = useState(null);
   const [party, setParty] = useState("");
@@ -40,14 +74,13 @@ const Survey = ({ location, userId, partyId }) => {
       setMembers(result.map((users) => users.name));
       setId(result.map((users) => users._id));
       let ary = [];
-      for(let i = 0; i < result.length; i++){
-        ary.push([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+      for (let i = 0; i < result.length; i++) {
+        ary.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
       }
       setCollect(ary);
     });
   }, []);
 
-  
   if (!userId) {
     return <div>Please login first</div>;
   }
@@ -57,46 +90,45 @@ const Survey = ({ location, userId, partyId }) => {
   }
 
   const collectFeedback = (event, index, idx) => {
-    console.log(collectInfo);
-    if (event.target.checked){
+    if (event.target.checked) {
       collectInfo[index][idx] = 1;
-    }else{
+    } else {
       collectInfo[index][idx] = 0;
     }
-    console.log(collectInfo[index]);
-  }
+  };
   const finishFeedback = () => {
-    
-    post("/api/survey", {users:memberId, achievement: collectInfo}).then(() => 
-    {
-      post("/api/finish", {userid: userId, partyid: partyId}).then((result) => 
-      {});
+    post("/api/survey", { users: memberId, achievement: collectInfo }).then(() => {
+      post("/api/finish", { userid: userId, partyid: partyId }).then((result) => {});
     });
-  }
+  };
   return (
     <>
       <h1 className="u-textCenter">Feedback for Party: {party}</h1>
       <p>
         <b>Host: {user} </b>
       </p>
-      {members.map((item, index) => 
-        <Card key = {index}>
-        <Card.Header as="h5">{item}</Card.Header>
-        <Card.Body>
-          <Card.Title>Check All Applicable Boxes</Card.Title>
-          <div className = "categories">
-          {category.map((item, idx) => 
-            <div key = {idx}>
-              <input type="checkbox" onChange = {(event) => collectFeedback(event, index, idx)}/>
-              <label> {criteria[item]}</label>
+      {members.map((item, index) => (
+        <Card key={index}>
+          <Card.Header as="h5">{item}</Card.Header>
+          <Card.Body>
+            <Card.Title>Check All Applicable Boxes</Card.Title>
+            <div className="categories">
+              {category.map((item, idx) => (
+                <div key={idx}>
+                  <input type="checkbox" onChange={(event) => collectFeedback(event, index, idx)} />
+                  <label> {criteria[item]}</label>
+                </div>
+              ))}
             </div>
-          )}
-          </div>
-        </Card.Body>
-      </Card>)}
-      <Link
-      to={userId ? `/profile/${userId}` : "/"}
-      ><button hidden = {location.state.show.showButtons} onClick={() => finishFeedback()}> Submit Feedback </button></Link>
+          </Card.Body>
+        </Card>
+      ))}
+      <Link to={userId ? `/profile/${userId}` : "/"}>
+        <button hidden={location.state.show.showButtons} onClick={() => finishFeedback()}>
+          {" "}
+          Submit Feedback{" "}
+        </button>
+      </Link>
     </>
   );
 };

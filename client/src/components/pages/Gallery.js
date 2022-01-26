@@ -31,7 +31,6 @@ const Gallery = ({ location, targetUserId }) => {
   if (!user || !pictures) {
     return <div>Loading</div>;
   }
-  console.log("location", location.state.show);
   return (
     <>
       <div className="u-textCenter gallery-intro">

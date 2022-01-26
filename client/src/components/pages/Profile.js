@@ -4,6 +4,7 @@ import { get } from "../../utilities.js";
 import { Link } from "@reach/router";
 import "../../utilities.css";
 import "./Profile.css";
+import { socket } from "../../client-socket.js";
 import Pfp from "../modules/pfp.js";
 import PopupCard from "../modules/PopupCard.js";
 import MakeParty from "../modules/MakeParty.js";
@@ -36,20 +37,25 @@ const Profile = ({ location, userId, targetUserId }) => {
           statuses[item._id] = item.status;
         }
         setPartyStatus(statuses);
-        get("/api/parties", { userid: targetUserId }).then((party_list) => {
-          const upcomingParties = party_list.filter((party) => statuses[party._id] === 1);
-          const pastParties = party_list.filter(
-            (party) => statuses[party._id] === 0 && party.members.length > 0
-          );
-          setParties([
-            { status: "Upcoming", parties: upcomingParties },
-            { status: "Past", parties: pastParties },
-          ]);
-          setLoading(false);
-        });
       });
     });
   };
+
+  useEffect(() => {
+    if (partyStatus) {
+      get("/api/parties", { userid: targetUserId }).then((party_list) => {
+        const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
+        const pastParties = party_list.filter(
+          (party) => partyStatus[party._id] === 0 && party.members.length > 0
+        );
+        setParties([
+          { status: "Upcoming", parties: upcomingParties },
+          { status: "Past", parties: pastParties },
+        ]);
+        setLoading(false);
+      });
+    }
+  }, [partyStatus]);
 
   useEffect(() => {
     setLoading(true);
@@ -58,6 +64,14 @@ const Profile = ({ location, userId, targetUserId }) => {
 
   useEffect(() => {
     setUpProfile();
+  }, []);
+
+  const closeParty = (party) => {
+    setPartyStatus((prevState) => ({ ...prevState, [party._id]: party.status }));
+  };
+
+  useEffect(() => {
+    socket.on("closedParty", closeParty);
   }, []);
 
   const updateParties = (party) => {
