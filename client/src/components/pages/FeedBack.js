@@ -120,8 +120,8 @@ const Survey = ({ location, userId, partyId }) => {
         </h4>
       </div>
       {members.map((item, index) => (
-        <div>
-          <Card key={index}>
+        <div key={index}>
+          <Card>
             <Card.Header className="person" as="h5">
               {item}
             </Card.Header>
