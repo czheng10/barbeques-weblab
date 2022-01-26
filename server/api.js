@@ -58,9 +58,7 @@ router.get("/partyinfo", (req, res) => {
 
 router.get("/parties", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.query.userid).then((user) => {
-    let reduce = user.parties.filter((party) => 
-    party.feedback === 0
-    );
+    let reduce = user.parties.filter((party) => party.feedback === 0);
     Party.find({ _id: { $in: reduce.map((party) => party.party_id) } }).then((result) =>
       result ? res.send(result) : res.send([])
     );
@@ -78,7 +76,6 @@ router.get("/users", auth.ensureLoggedIn, (req, res) => {
     Promise.all(allUsers).then((allResult) => res.send(allResult));
   });
 });
-
 
 router.post("/changeparty", auth.ensureLoggedIn, (req, res) => {
   Party.findById(req.body.oldId).then((party) => {
@@ -99,33 +96,37 @@ router.post("/finish", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.body.userid).then((user) => {
     let index = 0;
     for (let idx = 0; idx < user.parties.length; idx++) {
-      if(JSON.stringify(user.parties[idx].party_id) === JSON.stringify(req.body.partyid)){
+      if (JSON.stringify(user.parties[idx].party_id) === JSON.stringify(req.body.partyid)) {
         index = idx;
         break;
       }
     }
     const change = { party_id: req.body.partyid, feedback: 1 };
-    user.parties = user.parties.slice(0,index).concat([change]).concat(user.parties.slice(index+1, user.parties.length));
-    user.save().then((results) => {res.send(results)});
+    user.parties = user.parties
+      .slice(0, index)
+      .concat([change])
+      .concat(user.parties.slice(index + 1, user.parties.length));
+    user.save().then((results) => {
+      res.send(results);
+    });
   });
 });
 
 router.post("/survey", auth.ensureLoggedIn, (req, res) => {
   console.log(req.body.users, req.body.achievement);
   let survey = req.body.users.map((userid, index) => {
-      User.findById(userid).then((user) => {
-        let sumAchievements = [];
-        for(let i = 0; i < user.achievements.length; i++){
-          sumAchievements.push(user.achievements[i] + req.body.achievement[index][i]);
-        }
-        user.achievements = sumAchievements;
-        console.log(sumAchievements);
-        user.save();
-      });
+    User.findById(userid).then((user) => {
+      let sumAchievements = [];
+      for (let i = 0; i < user.achievements.length; i++) {
+        sumAchievements.push(user.achievements[i] + req.body.achievement[index][i]);
+      }
+      user.achievements = sumAchievements;
+      console.log(sumAchievements);
+      user.save();
     });
-    Promise.all(survey).then((person) => res.send(person));
   });
-  
+  Promise.all(survey).then((person) => res.send(person));
+});
 
 router.get("/search", auth.ensureLoggedIn, async (req, res) => {
   const phrase = req.query.phrase;
@@ -232,7 +233,7 @@ router.get("/active-parties", auth.ensureLoggedIn, async (req, res) => {
     status: 1,
   }).then((results) => {
     if (results) {
-      res.send(results.filter((result) =>  result.status === 1));
+      res.send(results.filter((result) => result.status === 1));
     } else {
       res.send([]);
     }
@@ -303,7 +304,7 @@ router.post("/update-notif", auth.ensureLoggedIn, (req, res) => {
             party.save().then(() => {
               User.findById(newMember).then((new_user) => {
                 new_user.total_parties += 1;
-                new_user.parties.push({ party_id: req.body.notifParty, status: 1 });
+                new_user.parties.push({ party_id: req.body.notifParty, feedback: 0 });
                 new_user.save().then((result) => {
                   if (socketManager.getSocketFromUserID(host)) {
                     socketManager
