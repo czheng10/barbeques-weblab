@@ -9,6 +9,7 @@
 
 .gallery-card {
   background-color: var(--green);
+  height: 75vh;
 }
 
 .gallery-img {
@@ -40,6 +41,7 @@
 }
 
 .gallery-img {
+  margin-top: 20px;
   width: 450px;
   height: auto;
   border-color: var(--primary-dark);
@@ -49,5 +51,14 @@
 }
 
 .gallery-titles {
-  margin-top: 10px;
+  margin: 20px;
+}
+
+.singlepost {
+  background-color: white;
+}
+
+.emptygallery {
+  text-align: center;
+  font-size: 40px;
 }

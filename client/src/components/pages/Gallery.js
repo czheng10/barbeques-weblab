@@ -65,14 +65,14 @@ const Gallery = ({ location, targetUserId }) => {
         />
       </div>
       {pictures.length === 0 ? (
-        <h1>No Pictures in Gallery</h1>
+        <h1 className="emptygallery">No Pictures in Gallery Yet!</h1>
       ) : (
         <Carousel>
           {pictures.map((item, index) => (
-            <Carousel.Item key={index}>
+            <Carousel.Item className="singlepost" key={index}>
               <div className="gallery-card p-3 u-textCenter" key={index}>
                 <img className="gallery-img" src={item.src} />
-                <h3 className= "gallery-titles" >{item.title}</h3>
+                <h3 className="gallery-titles">{item.title}</h3>
                 <p>{item.caption}</p>
               </div>
             </Carousel.Item>
