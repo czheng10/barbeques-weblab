@@ -1,6 +1,6 @@
 # Barbeques
   &nbsp;&nbsp;&nbsp; Barbeques is a one-stop shop for food and friendship! Here, you can show off your beautiful dishes by uploading images to your gallery for all to see, host and plan parties with longtime friends, and make new friends through our search (especially if you're looking for someone with the same dietary restrictions). After a party ends, give feedback to each member, and earn achievements for your amazing cooking skills.
- <br />
+ <br /><br />
   &nbsp;&nbsp;&nbsp; Our website targets the average college student, who is learning to cook for themselves for the first time. Barbeques helps everyone, from newbies to natural talents, share their cooking journey, and meet other college students who are in the same boat. Barbeques encourage students to host and join parties with others, give positive feedback, and build up each other's confidence in their cooking skills through rewarding them with badges for getting a certain compliment 3+ times. We realize that it may have been hard for college students to meet others because of COVID, so as a team, we hope to make our website something that can bring people together through our common passion: food.
 
 ## How to run Barbeques
