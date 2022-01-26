@@ -23,6 +23,7 @@
   font-family: var(--logo-font);
   font-size: 40px;
   color: var(--primary-xdark);
+  margin-top: 20px;
 }
 
 .gallery-intro {
@@ -61,4 +62,5 @@
 .emptygallery {
   text-align: center;
   font-size: 40px;
+  margin-top: 240px;
 }

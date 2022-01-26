@@ -52,7 +52,9 @@ const Profile = ({ location, userId, targetUserId }) => {
     if (partyStatus) {
       get("/api/parties", { userid: targetUserId }).then((party_list) => {
         const upcomingParties = party_list.filter((party) => partyStatus[party._id] === 1);
-        const pastParties = party_list.filter((party) => partyStatus[party._id] === 0 && party.members.length > 0);
+        const pastParties = party_list.filter(
+          (party) => partyStatus[party._id] === 0 && party.members.length > 0
+        );
         setParties([
           { status: "Upcoming", parties: upcomingParties },
           { status: "Past", parties: pastParties },
@@ -92,6 +94,13 @@ const Profile = ({ location, userId, targetUserId }) => {
               updateBio={setUserBio}
               onHide={() => setBioModalShow(false)}
             />
+            {showButtons === "hidden" ? (
+              <Link to={`/gallery/${targetUserId}`} state={{ show: showButtons }}>
+                <button className="btn">View Gallery</button>
+              </Link>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         <div className="col-6">
@@ -121,7 +130,9 @@ const Profile = ({ location, userId, targetUserId }) => {
           <div className="row">
             <div className="profile-achievements col justify-content-center">
               <h3 className="profile-titles">Achievements</h3>
-              <p className="profile-achievementsContainer profile-Text"><Achievement userId = {targetUserId}/></p>
+              <p className="profile-achievementsContainer profile-Text">
+                <Achievement userId={targetUserId} />
+              </p>
             </div>
             <div className="profile-parties col justify-content-center">
               <h3 className="profile-titles">Parties</h3>
@@ -167,9 +178,6 @@ const Profile = ({ location, userId, targetUserId }) => {
                     </div>
                   </div>
                 ))}
-                {showButtons === "hidden" ? 
-                <Link to={`/gallery/${targetUserId}`}
-                state = {{show: showButtons}}><button>View Gallery</button></Link>:<></> }
               </div>
             </div>
           </div>
