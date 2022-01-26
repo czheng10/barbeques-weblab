@@ -17,7 +17,6 @@ const Pfp = (props) => {
     if (tempPath.includes("/d/")) {
       const id = tempPath.split("/d/");
       tempPath = "https://drive.google.com/uc?id=" + id[1].split("/")[0];
-      console.log(tempPath);
     }
     post(`/api/newPfp`, { userid: props.userId, newPfp: tempPath }).then((results) => {
       toggleModal(false);

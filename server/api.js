@@ -65,22 +65,18 @@ router.get("/parties", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/users", auth.ensureLoggedIn, (req, res) => {
-  ids = [];
-  allUsers = [];
   Party.findById(req.query.partyid).then((parties) => {
-    ids = parties.members;
-    allUsers = ids
+    let ids = parties.members.concat([parties.host]);
+    let allUsers = ids
       .map((id) => User.findById(id));
     Promise.all(allUsers).then((allResult) => res.send(allResult));
   });
 });
 
 router.get("/otherusers", auth.ensureLoggedIn, (req, res) => {
-  ids = [];
-  allUsers = [];
   Party.findById(req.query.partyid).then((parties) => {
-    ids = parties.members.concat([parties.host]);
-    allUsers = ids
+    let ids = parties.members.concat([parties.host]);
+    let allUsers = ids
       .filter((id) => JSON.stringify(id) !== JSON.stringify(req.query.userid))
       .map((id) => User.findById(id));
     Promise.all(allUsers).then((allResult) => res.send(allResult));

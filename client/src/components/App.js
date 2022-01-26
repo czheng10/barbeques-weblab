@@ -7,7 +7,6 @@ import Home from "./pages/Home.js";
 import SearchResult from "./pages/SearchResult.js";
 import Notifications from "./pages/Notifications.js";
 import Gallery from "./pages/Gallery.js";
-import ViewProfile from "./pages/ViewOther.js";
 import Party from "./pages/Party.js";
 import Survey from "./pages/FeedBack.js";
 import "../utilities.css";
@@ -65,7 +64,6 @@ const App = () => {
         <SearchResult path="/search/" userId={userId} />
         <Notifications path="/notifications" userId={userId} />
         <Gallery path="/gallery/:targetUserId" userId={userId} />
-        <ViewProfile path="/viewprofile/:otherUserId" userId={userId} />
         <Survey path= "/feedback/:partyId" userId = {userId} />
         <Party path="/party/:partyId" userId={userId} />
         <NotFound default />

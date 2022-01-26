@@ -3,9 +3,10 @@ import Card from "react-bootstrap/Card";
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
 import "./Feedback.css";
+import "../../utilities.css"
 const criteria = {
   "Punctual Peach": "always on time",
-  GrillBoss: "great at working the grill",
+  "GrillBoss": "great at working the grill",
   "Spice Girl": "good at spicy food",
   "Seasoned Veteran": "pro at seasoning",
   "Smart Cookie": "pro planner",
@@ -55,6 +56,7 @@ const Survey = ({ location, userId, partyId }) => {
   const [members, setMembers] = useState([]);
   const [memberId, setId] = useState([]);
   const [collectInfo, setCollect] = useState([]);
+  const [host, setHost] = useState("");
   useEffect(() => {
     if (userId) {
       get("/api/user", { userid: userId }).then((result) => {
@@ -66,6 +68,9 @@ const Survey = ({ location, userId, partyId }) => {
   useEffect(() => {
     get("/api/partyinfo", { partyid: partyId }).then((result) => {
       setParty(result.name);
+      get("/api/user", { userid: result.host }).then((result) => {
+        setHost(result.name);
+      });
     });
   }, []);
 
@@ -79,7 +84,7 @@ const Survey = ({ location, userId, partyId }) => {
       }
       setCollect(ary);
     });
-  }, []);
+  }, [userId]);
 
   if (!userId) {
     return <div>Please login first</div>;
@@ -108,9 +113,9 @@ const Survey = ({ location, userId, partyId }) => {
   };
   return (
     <>
-      <h1 className="u-textCenter">Feedback for Party: {party}</h1>
+      <h1 className="u-textCenter">Feedback for Party: <span className = "partyName">{party}</span></h1>
       <p>
-        <b>Host: {user} </b>
+      Host: <span className = "hostName">{host}</span>
       </p>
       {members.map((item, index) => 
         <Card key={index}>

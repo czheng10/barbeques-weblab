@@ -2,3 +2,11 @@
   column-count: 3 !important;
   column-gap: 50px;
 }
+.partyName {
+  color: black;
+  font-size: 15px;
+  text-shadow: 2px 2px 5px var(--primary);
+}
+.hostName {
+  color: var(--primary-xdark);
+}

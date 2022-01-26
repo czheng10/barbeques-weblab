@@ -11,7 +11,7 @@ const Party = ({ location, userId, partyId }) => {
   const [user, setUser] = useState(null);
   const [party, setParty] = useState("");
   const [members, setMembers] = useState([]);
-
+  const [isHost, setHost] = useState(false);
   useEffect(() => {
     if (userId) {
       get("/api/user", { userid: userId }).then((result) => {
@@ -27,6 +27,7 @@ const Party = ({ location, userId, partyId }) => {
   useEffect(() => {
     get("/api/partyinfo", { partyid: partyId }).then((result) => {
       setParty(result.name);
+      setHost(JSON.stringify(result.host) === JSON.stringify(userId));
       get("/api/user", { userid: result.host }).then((user) => {
         setUser(user.name);
       });
@@ -70,11 +71,11 @@ const Party = ({ location, userId, partyId }) => {
           </h2>
           <img className="hostpic" src={bbq} alt="logo" />
           <div>
-            <Link to={userId ? `/profile/${userId}` : "/"}>
+            {isHost ? <Link to={userId ? `/profile/${userId}` : "/"}>
               <button className="btn" hidden={location.state.show} onClick={() => closeParty()}>
                 End Party
               </button>
-            </Link>
+            </Link> : <></>}
           </div>
         </p>
       </div>
