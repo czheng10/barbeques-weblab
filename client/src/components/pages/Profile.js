@@ -180,16 +180,6 @@ const Profile = ({ location, userId, targetUserId }) => {
                     </div>
                   </div>
                 ))}
-<<<<<<< HEAD
-                {showButtons === "hidden" ? (
-                  <Link to={`/gallery/${targetUserId}`} state={{ show: showButtons }}>
-                    <button>View Gallery</button>
-                  </Link>
-                ) : (
-                  <></>
-                )}
-=======
->>>>>>> dbdf377482138ce208d16bf4cee69f5accdd0581
               </div>
             </div>
           </div>
