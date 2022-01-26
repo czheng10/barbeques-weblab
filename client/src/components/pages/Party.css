@@ -1,0 +1,71 @@
+.party-header {
+  margin: 10px;
+}
+
+.partytitle {
+  color: var(--primary-xdark);
+  font-family: var(--logo-font);
+  font-size: 40px;
+}
+
+.partymembersheader {
+  font-weight: bold;
+}
+
+.party-all {
+  justify-items: center;
+  margin-bottom: 40px;
+}
+
+.hostContainer {
+  border-radius: 20px;
+  text-align: center;
+  padding: 15px;
+  margin-left: 80px;
+  margin-right: 80px;
+  background-color: var(--green);
+  box-shadow: 1px 1px 2px #36382e;
+}
+
+.partyname {
+  font-size: 50px;
+  text-shadow: 2px 2px 5px var(--primary);
+}
+
+.partysummary {
+  color: var(--primary-xdark);
+  font-family: var(--logo-font);
+  font-size: 60px;
+}
+
+.party-members {
+  border-radius: 20px;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color: var(--orange);
+  box-shadow: 1px 1px 2px #bf430d;
+}
+
+.hostpic {
+  width: 180px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.members {
+  padding: 20px;
+  margin: 10px;
+  background-image: url("../../images/envelope.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 25%;
+}
+
+h5 {
+  font-size: 20px;
+  color: black;
+  margin: 0px;
+}
