@@ -27,7 +27,8 @@
   color: white !important;
 }
 
-a {
+a,
+a:hover {
   color: var(--primary-xdark);
 }
 
