@@ -36,15 +36,15 @@ const category = [
   "Chomp Champ",
   "Winner Winner Chicken Dinner",
   "Appetizer Ace",
-  "Protein pro",
+  "Protein Pro",
   "Presentation Pea",
   "Soup-erhero",
   "Pitcher Perfect",
   "Health Honey",
   "Saucy Sensation",
   "Seafood splash",
-  "Vegetable visionary",
-  "Breakfast bunch",
+  "Vegetable Visionary",
+  "Breakfast Bunch",
   "Un-pho-gettable",
 ];
 const imgsrc = [

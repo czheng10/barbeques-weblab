@@ -3,28 +3,30 @@ import Card from "react-bootstrap/Card";
 import { get, post } from "../../utilities";
 import { navigate } from "@reach/router";
 import "./Feedback.css";
+import "../../utilities.css";
+
 const criteria = {
-  "Punctual Peach": "always on time",
-  GrillBoss: "great at working the grill",
-  "Spice Girl": "good at spicy food",
-  "Seasoned Veteran": "pro at seasoning",
-  "Smart Cookie": "pro planner",
-  "Icing on the Cake": "desert master",
-  "Restaurant Egg-xpert": "really good at finding restaurants",
-  "Hearty Host": "a really good host",
-  "Chomp Champ": "always willing to try every dish",
-  "Winner Winner Chicken Dinner": " great at dinner conversation",
-  "Appetizer Ace": "good at appetizer",
-  "Protein pro": "great at meat dishes",
-  "Presentation Pea": "great at plating",
-  "Soup-erhero": "pro at soups",
-  "Pitcher Perfect": "makes really good drinks ",
-  "Health Honey": "makes really good healthy dishes",
-  "Saucy Sensation": "Really good at making sauces",
-  "Seafood splash": "seafood pro",
-  "Vegetable visionary": "really good at vegetable dishes",
-  "Breakfast bunch": "breakfast food pro",
-  "Un-pho-gettable": "good noodles",
+  GrillBoss: "Great at working the grill",
+  "Punctual Peach": "Always on time",
+  "Spice Girl": "Pro at spicy food",
+  "Seasoned Veteran": "Pro at seasoning",
+  "Smart Cookie": "Pro planner",
+  "Icing on the Cake": "Dessert master",
+  "Restaurant Egg-xpert": "Yelp Boss",
+  "Hearty Host": "Good host",
+  "Chomp Champ": "Brave taste-tester",
+  "Winner Winner Chicken Dinner": "Dinner conversation pro",
+  "Appetizer Ace": "Delicious appetizers",
+  "Protein Pro": "Pro with meat dishes",
+  "Presentation Pea": "Pretty plating",
+  "Soup-erhero": "Soup master",
+  "Pitcher Perfect": "Really good drinks",
+  "Health Honey": "Healthy dishes pro",
+  "Saucy Sensation": "Really good sauces",
+  "Seafood Splash": "Seafood pro",
+  "Vegetable Visionary": "Yummy vegetables",
+  "Breakfast Bunch": "Breakfast food pro",
+  "Un-pho-gettable": "Yummy noodles",
 };
 const category = [
   "Punctual Peach",
@@ -38,15 +40,15 @@ const category = [
   "Chomp Champ",
   "Winner Winner Chicken Dinner",
   "Appetizer Ace",
-  "Protein pro",
+  "Protein Pro",
   "Presentation Pea",
   "Soup-erhero",
   "Pitcher Perfect",
   "Health Honey",
   "Saucy Sensation",
-  "Seafood splash",
-  "Vegetable visionary",
-  "Breakfast bunch",
+  "Seafood Splash",
+  "Vegetable Visionary",
+  "Breakfast Bunch",
   "Un-pho-gettable",
 ];
 const Survey = ({ location, userId, partyId }) => {
@@ -97,38 +99,54 @@ const Survey = ({ location, userId, partyId }) => {
     }
   };
   const finishFeedback = () => {
-    
-    post("/api/survey", {users:memberId, achievement: collectInfo}).then(() => 
-    {
-      post("/api/finish", {userid: userId, partyid: partyId}).then((result) => 
-      {
+    post("/api/survey", { users: memberId, achievement: collectInfo }).then(() => {
+      post("/api/finish", { userid: userId, partyid: partyId }).then((result) => {
         navigate(`/profile/${userId}`);
       });
     });
   };
   return (
     <>
-      <h1 className="u-textCenter">Feedback for Party: {party}</h1>
-      <p>
-        <b>Host: {user} </b>
-      </p>
-      {members.map((item, index) => 
-        <Card key={index}>
-          <Card.Header as="h5">{item}</Card.Header>
-          <Card.Body>
-            <Card.Title>Check All Applicable Boxes</Card.Title>
-            <div className="categories">
-              {category.map((item, idx) => (
-                <div key={idx}>
-                  <input type="checkbox" onChange={(event) => collectFeedback(event, index, idx)} />
-                  <label> {criteria[item]}</label>
-                </div>
-              ))}
-            </div>
+      <h1 className="u-textCenter fb-header">
+        Feedback for Party: <span className="partyName">{party}</span>
+      </h1>
+      <div className="hosting">
+        <h4>
+          Host: <span className="hostName">{user} </span>
+        </h4>
+      </div>
+      {members.map((item, index) => (
+        <div>
+          <Card key={index}>
+            <Card.Header className="person" as="h5">
+              {item}
+            </Card.Header>
+            <Card.Body>
+              <Card.Title>Check All Applicable Boxes:</Card.Title>
+              <div className="categories">
+                {category.map((item, idx) => (
+                  <div key={idx}>
+                    <input
+                      type="checkbox"
+                      onChange={(event) => collectFeedback(event, index, idx)}
+                    />
+                    <label className="titles"> {criteria[item]}</label>
+                  </div>
+                ))}
+              </div>
             </Card.Body>
-        </Card>
-      )}
-      <button hidden = {location.state.show.showButtons} onClick={() => finishFeedback()}> Submit Feedback </button>
+          </Card>
+          <br />
+        </div>
+      ))}
+      <button
+        className="btn submit-button"
+        hidden={location.state.show.showButtons}
+        onClick={() => finishFeedback()}
+      >
+        {" "}
+        Submit Feedback{" "}
+      </button>
     </>
   );
 };
