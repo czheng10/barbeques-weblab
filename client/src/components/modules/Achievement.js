@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { get } from "../../../src/utilities";
+import "../../utilities.css";
 import "./Achievements.css";
 const criteria = [
   "Always on time",
@@ -22,11 +23,11 @@ const criteria = [
   "Seafood pro",
   "Yummy vegetables",
   "Breakfast food pro",
-  "Yummy noodles",
+  "Yummy noodles"
 ];
 const category = [
   "Punctual Peach",
-  "GrillBoss",
+  "Grill Boss",
   "Spice Girl",
   "Seasoned Veteran",
   "Smart Cookie",
@@ -42,10 +43,10 @@ const category = [
   "Pitcher Perfect",
   "Health Honey",
   "Saucy Sensation",
-  "Seafood splash",
+  "Seafood Splash",
   "Vegetable Visionary",
   "Breakfast Bunch",
-  "Un-pho-gettable",
+  "Un-pho-gettable"
 ];
 const imgsrc = [
   "punctualpeach.png",
@@ -67,7 +68,8 @@ const imgsrc = [
   "saucysensation.png",
   "seafoodsplash.png",
   "vegetablevisionary.png",
-  "unphogettable.png",
+  "breakfastbunch.png",
+  "unphogettable.png"
 ];
 const Achievement = ({ userId }) => {
   const [user, setUser] = useState(null);
@@ -81,23 +83,23 @@ const Achievement = ({ userId }) => {
       });
     }
   }, [userId]);
-
   return (
-    <div className="achievements-list">
-      {achievement
-        .filter((item) => item >= 10)
-        .map((item, index) => (
-          <div className="rewards" key={index}>
-            <div className="front">
-              <img className="icons" src={require("../../images/" + imgsrc[index]).default} />
-              <p className="rewardtitle">{category[index]}</p>
-            </div>
-            <div className="back">
-              <p className="rewardtitle">{criteria[index]}</p>
-            </div>
+    <div className = "achievement-list">
+    {achievement
+      .map((item, index) => (
+        item > 2 ?
+        <div className="rewards" key={index}>
+          <div className="front">
+            <img className="icons" src={require("../../images/" + imgsrc[index]).default} />
+            <p className="rewardtitle">{category[index]}</p>
           </div>
-        ))}
-    </div>
+          <div className="back">
+            <p className="rewardtitle">{criteria[index]}</p>
+          </div>
+        </div> :
+        <></>
+      ))}
+      </div>
   );
 };
 

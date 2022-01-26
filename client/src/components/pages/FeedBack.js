@@ -5,31 +5,31 @@ import { navigate } from "@reach/router";
 import "./FeedBack.css";
 import "../../utilities.css";
 
-const criteria = {
-  "GrillBoss": "Great at working the grill",
-  "Punctual Peach": "Always on time",
-  "Spice Girl": "Pro at spicy food",
-  "Seasoned Veteran": "Pro at seasoning",
-  "Smart Cookie": "Pro planner",
-  "Icing on the Cake": "Dessert master",
-  "Restaurant Egg-xpert": "Yelp Boss",
-  "Hearty Host": "Good host",
-  "Chomp Champ": "Brave taste-tester",
-  "Winner Winner Chicken Dinner": "Dinner conversation pro",
-  "Appetizer Ace": "Delicious appetizers",
-  "Protein Pro": "Pro with meat dishes",
-  "Presentation Pea": "Pretty plating",
-  "Soup-erhero": "Soup master",
-  "Pitcher Perfect": "Really good drinks",
-  "Health Honey": "Healthy dishes pro",
-  "Saucy Sensation": "Really good sauces",
-  "Seafood Splash": "Seafood pro",
-  "Vegetable Visionary": "Yummy vegetables",
-  "Breakfast Bunch": "Breakfast food pro",
-  "Un-pho-gettable": "Yummy noodles"};
+const criteria = [
+  "Always on time",
+  "Great at working the grill",
+  "Pro at spicy food",
+  "Pro at seasoning",
+  "Pro planner",
+  "Dessert master",
+  "Yelp Boss",
+  "Good host",
+  "Brave taste-tester",
+  "Dinner conversation pro",
+  "Delicious appetizers",
+  "Pro with meat dishes",
+  "Pretty plating",
+  "Soup master",
+  "Really good drinks",
+  "Healthy dishes pro",
+  "Really good sauces",
+  "Seafood pro",
+  "Yummy vegetables",
+  "Breakfast food pro",
+  "Yummy noodles"];
 const category = [
   "Punctual Peach",
-  "GrillBoss",
+  "Grill Boss",
   "Spice Girl",
   "Seasoned Veteran",
   "Smart Cookie",
@@ -118,11 +118,11 @@ const Survey = ({ location, userId, partyId }) => {
           Host: <span className="hostName">{host} </span>
         </h4>
       </div>
-      {members.map((item, index) => (
+      {members.map((person, index) => (
         <div key={index}>
           <Card>
             <Card.Header className="person" as="h5">
-              {item}
+              {person}
             </Card.Header>
             <Card.Body>
               <Card.Title>Check All Applicable Boxes:</Card.Title>
@@ -133,7 +133,7 @@ const Survey = ({ location, userId, partyId }) => {
                       type="checkbox"
                       onChange={(event) => collectFeedback(event, index, idx)}
                     />
-                    <label className="titles"> {criteria[item]}</label>
+                    <label className="titles"> {criteria[idx]}</label>
                   </div>
                 ))}
               </div>
